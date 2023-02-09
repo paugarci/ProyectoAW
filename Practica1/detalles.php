@@ -5,7 +5,7 @@
     <h1>Slogan</h1>
     <p><i>Domina el campo de juego con el poder de Zeus Airsoft</i></p>
     <h1>Autores</h1>
-    <p><a href="miembros.html">Ir a miembros</a></p>
+    <p><a href="miembros.php">Ir a miembros</a></p>
     <h1>Concepto</h1>
     <p>Zeus Airsoft es una página web diseñada para…</p>
     <ul>

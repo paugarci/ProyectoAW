@@ -1,33 +1,38 @@
+<?php
+  $navBar = array (
+    "index.php" => 'Inicio',
+    "detalles.php" => 'Detalles',
+    "bocetos.php" => 'Bocetos',
+    "miembros.php" => 'Miembros',
+    "planificacion.php" => ' Planificación',
+    "contacto.php" => 'Contacto'
+  );
+  $current_page = basename($_SERVER['PHP_SELF']); 
+?>
+
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">ZEUS Airsoft</a>
+    <a class="navbar-brand" href="index.php">
+    <img src="static/img/logo.png" alt="" width="40" height="auto" class="d-inline-block align-text-top">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
+        <?php foreach($navBar as $key => $value): ?>
         <li class="nav-item">
-          <a class="nav-link" href="index.php">Inicio</a>
+          <a class="nav-link<?= $key == $current_page ? ' active' : '' ?>" href="<?= $key?>"><?= $value ?></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="detalles.php">Detalles</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="bocetos.php">Bocetos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="miembros.php">Miembros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="planificacion.php">Planificación</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contacto.php">Contacto</a>
-        </li>
+        <?php endforeach ?>
       </ul>
-      <span class="navbar-text">
+      <form class="container-fluid justify-content-end d-flex">
+        <button class="btn btn-outline-light me-2" type="button">Iniciar sesión</button>
+        <button class="btn btn-success" type="button">Registrarse</button>
+      </form>
+      <!-- <span class="navbar-text">
         [TIPO DE USUARIO]
-      </span>
+      </span> -->
     </div>
   </div>
 </nav>
