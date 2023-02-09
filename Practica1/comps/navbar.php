@@ -26,10 +26,14 @@
         </li>
         <?php endforeach ?>
       </ul>
-      <form class="container-fluid justify-content-end d-flex">
-        <button class="btn btn-outline-light me-2" type="button">Iniciar sesión</button>
-        <button class="btn btn-success" type="button">Registrarse</button>
-      </form>
+      <!-- <div class="container-fluid justify-content-end d-flex"></div> -->
+        <form action="login.php">
+          <button class="btn btn-outline-light me-2" type="submit">Iniciar sesión</button>
+        </form>
+        <form action="register.php">
+          <button class="btn btn-success" type="submit">Registrarse</button>
+        </form>
+      <!-- </div> -->
       <!-- <span class="navbar-text">
         [TIPO DE USUARIO]
       </span> -->
