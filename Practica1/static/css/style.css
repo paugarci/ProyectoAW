@@ -38,3 +38,9 @@ body {
 .form-control, .form-check-input {
     border: 2px solid #00000080;
 }
+
+.bocetos {
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+}

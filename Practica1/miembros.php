@@ -12,42 +12,42 @@
     </thead>
     <tbody>
         <tr>
-            <td><img src="static/img/alex.jpg" class="rounded mx-auto d-block" alt="alexander"></td>
+            <td><img src="static/img/miembros/alex.jpg" class="rounded mx-auto d-block" alt="alexander"></td>
             <td>Alexander</td>
             <td>López Vega</td>
             <td>alexanlo@ucm.es</td>
             <td>Description goes here</td>
         </tr>
         <tr>
-            <td><img src="static/img/hugo.jpg" class="rounded mx-auto d-block" alt="hugo"></td>
+            <td><img src="static/img/miembros/hugo.jpg" class="rounded mx-auto d-block" alt="hugo"></td>
             <td>Hugo</td>
             <td>Silva Cacabelos</td>
             <td>hsilva@ucm.es</td>
             <td>Description goes here</td>
         </tr>
         <tr>
-            <td><img src="static/img/vicente.jpg" class="rounded mx-auto d-block" alt="vicente"></td>
+            <td><img src="static/img/miembros/vicente.jpg" class="rounded mx-auto d-block" alt="vicente"></td>
             <td>Vicente</td>
             <td>Garrido Juárez</td>
             <td>viceng01@ucm.es</td>
             <td>Description goes here</td>
         </tr>
         <tr>
-            <td><img src="static/img/dragos.jpg" class="rounded mx-auto d-block" alt="dragos"></td>
+            <td><img src="static/img/miembros/dragos.jpg" class="rounded mx-auto d-block" alt="dragos"></td>
             <td>Dragos</td>
             <td>Ionut Camarasán</td>
             <td>dragosca@ucm.es</td>
             <td>Description goes here</td>
         </tr>
         <tr>
-            <td><img src="static/img/paula.jpg" class="rounded mx-auto d-block" alt="paula"></td>
+            <td><img src="static/img/miembros/paula.jpg" class="rounded mx-auto d-block" alt="paula"></td>
             <td>Paula</td>
             <td>Garcia Pinilla</td>
             <td>paugar22@ucm.es</td>
             <td>Description goes here</td>
         </tr>
         <tr>
-            <td><img src="static/img/june.jpg" class="rounded mx-auto d-block" alt="june"></td>
+            <td><img src="static/img/miembros/june.jpg" class="rounded mx-auto d-block" alt="june"></td>
             <td>June</td>
             <td>Zuazo Berasategi</td>
             <td>jzuazo@ucm.es</td>
