@@ -1,38 +1,66 @@
 <?php require "comps/header.php" ?>
-<div class="d-flex align-items-center justify-content-center" id="contact-form">
-    <form>
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Nombre" id="nombre">
-        </div>
+<div class="container d-flex justify-content-center" id="borders-form">
+  <form class="needs-validation" novalidate="">
+    <div class="row g-3 p-4">
+      <h2 class="mb-3 d-flex justify-content-center">Contacta con nosotros</h2>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" placeholder="nombre@ejemplo.com" id="email" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">No publicaremos tus datos con nadie.</div>
-        </div>
+      <hr class="my-4">
 
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="evaluacion">
-            <label class="form-check-label" for="evaluacion">Evaluación</label>
+      <div class="col-sm-6">
+        <label for="firstName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="firstName" placeholder="Lorem" required="Mark">
+        <div class="invalid-feedback">
+          Por favor, rellene los campos obligatorios.
         </div>
+      </div>
 
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="sugerencias">
-            <label class="form-check-label" for="sugerencias">Sugerencias</label>
+      <div class="col-sm-6">
+        <label for="lastName" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Ipsum" required="Mark">
+        <div class="invalid-feedback">
+          Por favor, rellene los campos obligatorios.
         </div>
+      </div>
 
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="criticas">
-            <label class="form-check-label" for="criticas">Críticas</label>
+      <div class="col-12">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="usuario@dominio.ext">
+        <div class="invalid-feedback">
+          Por favor, introduzca una dirección de correo electrónico válida.
         </div>
-        <br>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="politica">
-            <label class="form-check-label" for="politica">Marque esta casilla para verificar que ha leído<br>nuestros términos y condiciones del servicio</label>
-        </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Envíar</button>
-    </form>
+
+      <div class="row g-3 m-1 d-flex justify-content-center">
+        <div class="form-check col-md-4">
+          <input id="evaluacion" name="contactReason" type="radio" class="form-check-input" checked="" required="">
+          <label class="form-check-label" for="credit">Evaluación</label>
+        </div>
+        <div class="form-check col-md-4">
+          <input id="sugerencias" name="contactReason" type="radio" class="form-check-input" required="">
+          <label class="form-check-label" for="debit">Sugerencias</label>
+        </div>
+        <div class="form-check col-md-4">
+          <input id="criticas" name="contactReason" type="radio" class="form-check-input" required="">
+          <label class="form-check-label" for="paypal">Críticas</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="textBox" class="form-label">Motivo de su consulta</label>
+        <textarea class="form-control" id="textBox" rows="5"></textarea>
+      </div>
+
+      <div class="form-check col-md-8">
+        <input type="checkbox" class="form-check-input" id="same-address">
+        <label class="form-check-label" for="same-address">Marque esta casilla para verificar que ha leído nuestros <a
+            href="#">términos y condiciones</a> de uso.</label>
+      </div>
+
+      <hr class="my-4">
+
+      <button class="w-100 btn btn-primary btn-lg" type="submit">Enviar</button>
+  </form>
 </div>
+
 <?php require "comps/footer.php" ?>

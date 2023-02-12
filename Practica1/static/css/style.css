@@ -7,10 +7,6 @@ body {
     text-align: center;
 }
 
-.center-table {
-    margin: 10px;
-}
-
 .center-table tbody {
     line-height: 100px;
 }
@@ -25,18 +21,19 @@ body {
     padding: 2px;
 }
 
-#contact-form {
-    margin-top: 150px;
-    margin-left: 35%;
-    margin-right: 35%;
-    padding: 6rem;
-    background-color: #4b4b4b80;
+#borders-form {
+    margin-top: 50px;
+    margin-bottom: 50px;
     border-radius: 10px;
-    border: 1px solid #4b4b4b80;
+    background-color: #ffffffc5;
 }
 
-.form-control, .form-check-input {
-    border: 2px solid #00000080;
+#borders-form form {
+    margin: 35px;
+}
+
+.form-control, .form-check-input, .form-check-input, .form-select {
+    border: 1.5px solid #00000080;
 }
 
 .bocetos {

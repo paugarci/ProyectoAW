@@ -1,3 +1,7 @@
+<!-- <?php
+    require "database.php";
+    $connection=$connection->query("SELECT * FROM users");
+?> -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
