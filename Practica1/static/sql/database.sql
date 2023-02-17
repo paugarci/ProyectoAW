@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS zeus_airsoft;
+DROP DATABASE IF EXISTS aw;
 
-CREATE DATABASE zeus_airsoft;
+CREATE DATABASE aw;
 
 USE zeus_airsoft;
 

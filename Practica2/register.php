@@ -1,16 +1,79 @@
-<?php require "comps/header.php" ?>
+<?php
+  $error = null;
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require "database.php";
+    
+    $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail");
+    $statement->bindParam(":mail", $_POST["mail"]);
+    
+    $selectedState = $connection->prepare("SELECT * FROM states WHERE name = :state");
+    $selectedState->bindParam(":state", $_POST["state"]);
+
+    if ($statement->rowCount() > 0)
+      $error = "Este mail ya está registrado";
+    else {
+      $name = trim(strip_tags($_POST["name"]));
+      $surname = trim(strip_tags($_POST["surname"]));
+      $mail = trim(strip_tags($_POST["mail"]));
+      $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+      $address1 = trim(strip_tags($_POST["address1"]));
+      $address2 = trim(strip_tags($_POST["address2"]));
+      $state = trim(strip_tags($_POST["state"]));
+      $zip = trim(strip_tags($_POST["zip"]));
+
+      if ($name == null || $surname == null || $mail == null || $password == null
+        || $address1 == null || $state == null || $zip == null) {
+        $error = "Campos incorrectos";
+      } else {
+        $connection
+        ->prepare("INSERT INTO users SET 
+            name='$name',
+            surname='$surname',
+            mail='$mail',
+            password='$password',
+            address1='$address1',
+            address2='$address2',
+            state='$state',
+            zip='$zip'")
+          ->execute();
+
+        $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
+        $statement->bindParam(":mail", $_POST["mail"]);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+        session_start();
+        $_SESSION["user"] = $user;
+
+        header("Location: index.php");
+      }
+    }
+  }
+
+  $states = $connection->query("SELECT * FROM states ORDER BY name ASC");
+
+  require "comps/header.php";
+?>
+
+
 <div class="container d-flex justify-content-center col-lg-5" id="borders-form">
   <form class="needs-validation" novalidate action="register.php" method="post">
     <div class="row g-3 p-4">
+      <?php if ($error): ?>
+        <div class="alert alert-danger m-2" role="alert" style="text-align: center">
+          <?= $error ?>
+        </div>
+      <?php endif ?>
       <h2 class="mb-3 d-flex justify-content-center">Registro</h2>
-    
+      
       <hr class="mt-1">
 
       <div class="col-sm-12">
         <label for="mail" class="form-label">Correo electrónico</label>
         <input type="email" class="form-control" name="mail" placeholder="usuario@dominio.ext">
         <div class="invalid-feedback">
-          Por favor, rellene los campos obligatorios.
+          Por favor, introduzca una dirección de correo electrónico válida.
         </div>
       </div>
 
@@ -63,25 +126,9 @@
         <label for="state" class="form-label">Comunidad Autónoma</label>
         <select class="form-select" name="state" required>
           <option>Seleccionar...</option>
-          <option>Andalucía</option>
-          <option>Aragón</option>
-          <option>Asturias</option>
-          <option>Baleares</option>
-          <option>Canarias</option>
-          <option>Cantabria</option>
-          <option>Castilla y León</option>
-          <option>Castilla-La Mancha</option>
-          <option>Cataluña</option>
-          <option>Ceuta</option>
-          <option>Extremadura</option>
-          <option>Galicia</option>
-          <option>La Rioja</option>
-          <option>Madrid</option>
-          <option>Melilla</option>
-          <option>Murcia</option>
-          <option>Navarra</option>
-          <option>País Vasco</option>
-          <option>Valencia</option>
+          <?php foreach ($states as $state): ?>
+            <option><?= $state["name"] ?></option>
+          <?php endforeach ?>
         </select>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
@@ -109,5 +156,4 @@
     <button class="w-100 btn btn-primary btn-lg" type="submit">Registrarse</button>
   </form>
 </div>
-
 <?php require "comps/footer.php" ?>
