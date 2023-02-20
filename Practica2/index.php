@@ -1,5 +1,5 @@
 <?php require "comps/header.php" ?>
-<div class="portrait">
+<div class="align-center m-5 text-center">
   <img src="static/img/logo.png" alt="logo">
   <hr class="my-4">
   <p>

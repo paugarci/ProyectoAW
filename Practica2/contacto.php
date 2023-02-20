@@ -1,48 +1,48 @@
 <?php require "comps/header.php" ?>
-<div class="container d-flex justify-content-center col-lg-4" id="borders-form">
-  <form class="needs-validation">
-    <div class="row g-3 p-4">
-      <h2 class="mb-3 d-flex justify-content-center">Contacta con nosotros</h2>
+<br>
+<div class="container d-flex justify-content-center col-sm-12 col-md-6 col-lg-6 col-xl-6" id="borders-form">
+  <form class="needs-validation" method="post" action="contacto.php">
+    <div class="row p-2 g-3">
+      <h2 class="d-flex justify-content-center">Contacta con nosotros</h2>
 
       <hr class="my-4">
 
-      <div class="col-sm-6">
-        <label for="firstName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Lorem" required="Mark">
+      <div class="col-6">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="name" placeholder="Lorem" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
       </div>
 
-      <div class="col-sm-6">
-        <label for="lastName" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Ipsum" required="Mark">
+      <div class="col-6">
+        <label for="surname" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" name="surname" placeholder="Ipsum" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
       </div>
 
       <div class="col-12">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="usuario@dominio.ext">
+        <label for="mail" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="mail" placeholder="usuario@dominio.ext" required>
         <div class="invalid-feedback">
           Por favor, introduzca una dirección de correo electrónico válida.
         </div>
       </div>
 
-
-      <div class="row g-3 m-1 d-flex justify-content-center">
-        <div class="form-check col-md-4">
+      <div class="row g-3 m-2 d-flex justify-content-center">
+        <div class="form-check col-4">
           <input id="evaluacion" name="contactReason" type="radio" class="form-check-input" checked="" required="">
-          <label class="form-check-label" for="credit">Evaluación</label>
+          <label class="form-check-label" for="evaluacion">Evaluación</label>
         </div>
-        <div class="form-check col-md-4">
+        <div class="form-check col-4">
           <input id="sugerencias" name="contactReason" type="radio" class="form-check-input" required="">
-          <label class="form-check-label" for="debit">Sugerencias</label>
+          <label class="form-check-label" for="sugerencias">Sugerencias</label>
         </div>
-        <div class="form-check col-md-4">
+        <div class="form-check col-4">
           <input id="criticas" name="contactReason" type="radio" class="form-check-input" required="">
-          <label class="form-check-label" for="paypal">Críticas</label>
+          <label class="form-check-label" for="criticas">Críticas</label>
         </div>
       </div>
 

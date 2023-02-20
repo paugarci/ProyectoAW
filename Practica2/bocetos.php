@@ -3,7 +3,7 @@
 <div class="alert alert-primary m-2" role="alert" style="text-align: center">
   <b>¡ATENCIÓN!</b> Los diseños expuestos en los bocetos pueden cambiar durante el desarrollo.
 </div>
-<div class="bocetos">
+<div class="mx-5 align-center">
 <h3>Login</h3>
 <img src="static/img/bocetos/login.png" class="d-block w-100" alt="login">
 <h3>Registro</h3>

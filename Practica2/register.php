@@ -1,9 +1,8 @@
 <?php
+  require "database.php";
   $error = null;
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require "database.php";
-    
     $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail");
     $statement->bindParam(":mail", $_POST["mail"]);
     
@@ -57,11 +56,11 @@
 ?>
 
 
-<div class="container d-flex justify-content-center col-lg-5" id="borders-form">
-  <form class="needs-validation" novalidate action="register.php" method="post">
+<div class="container d-flex col-lg-5" id="borders-form">
+  <form class="needs-validation" action="register.php" method="post">
     <div class="row g-3 p-4">
       <?php if ($error): ?>
-        <div class="alert alert-danger m-2" role="alert" style="text-align: center">
+        <div class="alert alert-danger m-2 align-center" role="alert">
           <?= $error ?>
         </div>
       <?php endif ?>
@@ -71,7 +70,7 @@
 
       <div class="col-sm-12">
         <label for="mail" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control" name="mail" placeholder="usuario@dominio.ext">
+        <input type="email" class="form-control" name="mail" placeholder="usuario@dominio.ext" required>
         <div class="invalid-feedback">
           Por favor, introduzca una dirección de correo electrónico válida.
         </div>
@@ -89,7 +88,7 @@
 
       <div class="col-sm-6">
         <label for="firstName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" name="name" placeholder="Lorem">
+        <input type="text" class="form-control" name="name" placeholder="Lorem" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
@@ -97,7 +96,7 @@
 
       <div class="col-sm-6">
         <label for="lastName" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" name="surname" placeholder="Ipsum">
+        <input type="text" class="form-control" name="surname" placeholder="Ipsum" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
@@ -105,7 +104,7 @@
 
       <div class="col-12">
         <label for="address1" class="form-label">Dirección de correo postal</label>
-        <input type="text" class="form-control" name="address1" placeholder="Calle/Avenida...">
+        <input type="text" class="form-control" name="address1" placeholder="Calle/Avenida..." required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
@@ -145,8 +144,8 @@
     </div>
     <div class="row g-3 m-1">
       <div class="form-check col-md-9">
-        <input type="checkbox" class="form-check-input" id="same-address">
-        <label class="form-check-label" for="same-address" required>Marque esta casilla para verificar que ha leído nuestros <a
+        <input type="checkbox" class="form-check-input" id="same-address" required>
+        <label class="form-check-label" for="same-address">Marque esta casilla para verificar que ha leído nuestros <a
             href="#">política de privacidad</a> y los <a href="#">términos y condiciones</a> del servicio.</label>
       </div>
     </div>
