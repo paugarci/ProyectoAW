@@ -5,7 +5,7 @@
     $admins = $connection->query("SELECT * FROM admins");
 ?>
 <div>
-    <table class="table table-striped" style="text-align: center;">
+    <table class="table table-striped align-middle text-center">
         <thead class="table-dark">
             <tr>
                 <th>Fotografía</th>

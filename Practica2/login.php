@@ -1,5 +1,6 @@
 <?php
   require "database.php";
+  $error = null;
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
     $statement->bindParam(":mail", $_POST["mail"]);
@@ -30,6 +31,13 @@
       <h2 class="mb-3 d-flex justify-content-center">Inciar sesión</h2>
 
       <hr class="my-4">
+      
+      <?php if ($error): ?>
+        <br>
+        <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
+          <?= $error ?>
+        </div>
+      <?php endif ?>
 
       <div class="col-sm-12">
         <label for="mail" class="form-label">Correo electrónico</label>
