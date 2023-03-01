@@ -52,7 +52,7 @@
 
   $states = $connection->query("SELECT * FROM states ORDER BY name ASC");
 
-  require "comps/header.php";
+  require "includes/comun/header.php";
 ?>
 
 
@@ -155,4 +155,4 @@
     <button class="w-100 btn btn-primary btn-lg" type="submit">Registrarse</button>
   </form>
 </div>
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

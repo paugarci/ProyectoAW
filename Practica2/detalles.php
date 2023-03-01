@@ -1,4 +1,4 @@
-<?php require "comps/header.php" ?>
+<?php require "includes/comun/header.php" ?>
   <div class="m-4 ms-5">
     <h1>Título</h1>
     <p><i>Zeus Airsoft</i></p>
@@ -45,4 +45,4 @@
       </ul>
     </ul>
   </div>
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

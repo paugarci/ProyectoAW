@@ -1,4 +1,4 @@
-<?php require "comps/header.php" ?>
+<?php require "includes/comun/header.php" ?>
 <div class="align-center m-5 text-center">
   <img src="static/img/logo.png" alt="logo">
   <hr class="my-4">
@@ -11,4 +11,4 @@
     detalles</a>.
   </p>
 </div>
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

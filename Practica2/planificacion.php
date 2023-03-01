@@ -1,3 +1,3 @@
-<?php require "comps/header.php" ?>
+<?php require "includes/comun/header.php" ?>
 
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

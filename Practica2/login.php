@@ -7,12 +7,12 @@
     $statement->execute();
 
     if ($statement->rowCount() == 0) {
-      $error = "Error! Invalid credentials.";
+      $error = "¡Error! Credenciales incorrectas.";
     } else {
       $user = $statement->fetch(PDO::FETCH_ASSOC);
 
       if (!password_verify($_POST["password"], $user["password"])) {
-        $error = "Error! Invalid credentials.";
+        $error = "¡Error! Credenciales incorrectas.";
       } else {
         session_start();
         
@@ -23,7 +23,7 @@
       }
     }
   }
-  require "comps/header.php";
+  require "includes/comun/header.php";
 ?>
 <div class="container d-flex justify-content-center col-lg-4" id="borders-form">
   <form class="needs-validation" method="post" action="login.php">
@@ -60,4 +60,4 @@
       <button class="w-100 btn btn-primary btn-lg" type="submit">Entrar</button>
   </form>
 </div>
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

@@ -1,5 +1,5 @@
 <?php
-    require "comps/header.php";
+    require "includes/comun/header.php";
     require "database.php";
 
     $admins = $connection->query("SELECT * FROM admins");
@@ -28,4 +28,4 @@
         </tbody>
     </table>
 </div>
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

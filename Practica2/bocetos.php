@@ -1,4 +1,4 @@
-<?php require "comps/header.php" ?>
+<?php require "includes/comun/header.php" ?>
 
 <div class="alert alert-primary m-2" role="alert" style="text-align: center">
   <b>¡ATENCIÓN!</b> Los diseños expuestos en los bocetos pueden cambiar durante el desarrollo.
@@ -33,4 +33,4 @@
   </div>
 </div>
 
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>

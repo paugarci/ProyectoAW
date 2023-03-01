@@ -1,4 +1,4 @@
-<?php require "comps/header.php" ?>
+<?php require "includes/comun/header.php" ?>
 <br>
 <div class="container d-flex justify-content-center col-sm-12 col-md-6 col-lg-6 col-xl-6" id="borders-form">
   <form class="needs-validation" method="post" action="contacto.php">
@@ -63,4 +63,4 @@
   </form>
 </div>
 
-<?php require "comps/footer.php" ?>
+<?php require "includes/comun/footer.php" ?>
