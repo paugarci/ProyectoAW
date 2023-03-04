@@ -2,16 +2,13 @@
   if(!isset($_SESSION["user"])) {
     session_start();
   }
+  
+  $current_page = basename($_SERVER['PHP_SELF']);
 
   $menu = array (
     "index.php" => 'Inicio',
-    "detalles.php" => 'Detalles',
-    "bocetos.php" => 'Bocetos',
-    "miembros.php" => 'Miembros',
-    "planificacion.php" => ' Planificación',
     "contacto.php" => 'Contacto'
   );
-  $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -30,6 +27,11 @@
           <a class="nav-link<?= $key == $current_page ? ' active' : '' ?>" href="<?= $key?>"><?= $value ?></a>
         </li>
         <?php endforeach ?>
+        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["privileged"] == 1): ?>
+          <li class="nav-item">
+            <a class="nav-link <?= 'admin.php' == $current_page ? ' active' : '' ?>" href="admin.php">Admin Dashboard</a>
+          </li>
+        <?php endif ?>
       </ul>
       <?php if (isset($_SESSION["user"])): ?>
         <div class="dropdown">

@@ -1,21 +1,30 @@
 <?php
   require "database.php";
+  include 'includes/DAO/UserDAO.php';
+
   $error = null;
+
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
-    $statement->bindParam(":mail", $_POST["mail"]);
-    $statement->execute();
 
-    if ($statement->rowCount() == 0) {
+    $database = new Database;
+    $connection = $database->getConnection();
+
+    $userModel = new UserDAO($connection);
+    $user = $userModel->get("mail", $_POST["mail"]);
+
+    if (!$user)
+    {
       $error = "¡Error! Credenciales incorrectas.";
-    } else {
-      $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-      if (!password_verify($_POST["password"], $user["password"])) {
+    }
+    else
+    {
+      if (!password_verify($_POST["password"], $user["password"]))
+      {
         $error = "¡Error! Credenciales incorrectas.";
-      } else {
+      }
+      else
+      {
         session_start();
-        
         unset($user["password"]);
         $_SESSION["user"] = $user;
 

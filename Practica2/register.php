@@ -10,48 +10,35 @@ $stateModel = new StateDAO($connection);
 
 $error = null;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  $userModel = new UserDAO($connection);
+  $user = $userModel->get("mail", $_POST["mail"]);
 
+  if ($user)
+  {
+    $error = "Este mail ya está registrado";
+  }
+  else
+  {
+    $userData = array (
+    "name" => $_POST["name"],
+    "surname" => $_POST["surname"],
+    "mail" => $_POST["mail"],
+    "password" => password_hash($_POST["password"], PASSWORD_BCRYPT),
+    "address1" => $_POST["address1"],
+    "address2" => $_POST["address2"],
+    "state" => $_POST["state"],
+    "zip" => $_POST["zip"]
+  );
+  $userModel->insert($userData);
+  $user = $userModel->get("mail", $_POST["mail"]);
 
-//   if ($user)
-//     $error = "Este mail ya está registrado";
-//   else {
-//     $name = trim(strip_tags($_POST["name"]));
-//     $surname = trim(strip_tags($_POST["surname"]));
-//     $mail = trim(strip_tags($_POST["mail"]));
-//     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-//     $address1 = trim(strip_tags($_POST["address1"]));
-//     $address2 = trim(strip_tags($_POST["address2"]));
-//     $state = trim(strip_tags($_POST["state"]));
-//     $zip = trim(strip_tags($_POST["zip"]));
+  session_start();
+  $_SESSION["user"] = $user;
 
-//     if ($name == null || $surname == null || $mail == null || $password == null
-//       || $address1 == null || $state == null || $zip == null) {
-//       $error = "Campos incorrectos";
-//     } else {
-//       $connection
-//       ->prepare("INSERT INTO users SET 
-//           name='$name',
-//           surname='$surname',
-//           mail='$mail',
-//           password='$password',
-//           address1='$address1',
-//           address2='$address2',
-//           state='$state',
-//           zip='$zip'")
-//         ->execute();
-
-//       $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
-//       $statement->bindParam(":mail", $_POST["mail"]);
-//       $statement->execute();
-//       $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-//       session_start();
-//       $_SESSION["user"] = $user;
-
-//       header("Location: index.php");
-//     }
-//   }
+  header("Location: index.php");
+  }
 }
 
 $states = $stateModel->getAll();

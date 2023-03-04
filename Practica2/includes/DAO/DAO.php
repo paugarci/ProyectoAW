@@ -1,9 +1,9 @@
 <?php
 class DAO {
-  private $table;
-  private $db;
+  private String $table;
+  private PDO $db;
 
-  public function __construct($table, PDO $connection)
+  public function __construct(String $table, PDO $connection)
   {
     $this->table = $table;
     $this->db = $connection;
@@ -17,47 +17,48 @@ class DAO {
     return $statement->fetchAll();
   }
 
-  public function get ($key, $info)
+  public function get (String $key, $value)
   {
     $statement = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$key} = :{$key} LIMIT 1");
-    $statement->bindParam(":{$key}", $info);
+    $statement->bindParam(":{$key}", $value);
 
     $statement->execute();
 
-    return $statement->fetchAll();
+    return $statement->fetch();
   }
 
   public function insert ($data)
   {
     $query = "INSERT INTO {$this->table} (";
-
-    foreach ($data as $field => $info)
+    
+    foreach ($data as $field => $value)
     {
       $query .= "{$field},";
     }
     $query = trim($query, ',');
-    $query .= ") infoS (";
-
-    foreach ($data as $field => $info)
+    $query .= ") VALUES (";
+    
+    foreach ($data as $field => $value)
     {
-      $query .= "':{$field}',";
+      $query .= ":$field,";
     }
     $query = trim($query, ',');
     $query .= ");";
     $statement = $this->db->prepare($query);
-
-    foreach ($data as $field => $info)
+    
+    foreach ($data as $field => $value)
     {
-      $statement->bindParam(":{$field}", $info);
+      $statement->bindParam(":$field", $data[$field]);
     }
-
+    echo "<pre>";
+    var_dump($statement);
     $statement->execute();
   }
 
-  public function update ($key, $info, $data)
+  public function update (String $key, $value, $data)
   {
     $query = "UPDATE {$this->table} SET ";
-    foreach ($data as $field => $info)
+    foreach ($data as $field)
     {
       $query .= "{$field} = :{$field},";
     }
@@ -65,18 +66,18 @@ class DAO {
     $query .= " WHERE {$key} = :{$key}";
     $statement = $this->db->prepare($query);
 
-    foreach ($data as $field => $info)
+    foreach ($data as $field)
     {
-      $statement->bindParam(":{$field}", $info);
+      $statement->bindParam(":{$field}", $value);
     }
-    $statement->bindParam(":{$key}", $info);
+    $statement->bindParam(":$field", $data[$field]);
     $statement->execute();
   }
 
-  public function delete ($key, $info)
+  public function delete (String $key, $value)
   {
     $statement = $this->db->prepare("DELETE FROM {$this->table} WHERE {$key} = :{$key}");
-    $statement->bindParam(":{$key}", $info);
+    $statement->bindParam(":{$key}", $value);
     $statement->execute();
   }
 }
