@@ -1,6 +1,6 @@
 <?php require "includes/comun/header.php" ?>
 <div class="align-center m-5 text-center">
-  <img src="static/img/logo.png" alt="logo">
+  <img src="img/logo.png" alt="logo">
   <hr class="my-4">
   <p>
     Zeus Airsoft es una tienda online diseñada para comprar, 

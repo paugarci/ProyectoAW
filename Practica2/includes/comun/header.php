@@ -1,7 +1,3 @@
-<?php
-    require "database.php";
-    $connection=$connection->query("SELECT * FROM users");
-?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="es">
 <head>
@@ -28,4 +24,4 @@
     <title>ZEUS AirSoft</title>
 </head>
 <body>
-    <?php require "comps/navbar.php" ?>
+    <?php require "includes/comun/navbar.php" ?>

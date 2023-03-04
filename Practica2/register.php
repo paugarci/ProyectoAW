@@ -1,58 +1,62 @@
 <?php
-  require "database.php";
-  $error = null;
+include 'Database.php';
+include 'includes/DAO/UserDAO.php';
+include 'includes/DAO/StateDAO.php';
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail");
-    $statement->bindParam(":mail", $_POST["mail"]);
-    
-    $selectedState = $connection->prepare("SELECT * FROM states WHERE name = :state");
-    $selectedState->bindParam(":state", $_POST["state"]);
+$database = new Database;
+$connection = $database->getConnection();
 
-    if ($statement->rowCount() > 0)
-      $error = "Este mail ya está registrado";
-    else {
-      $name = trim(strip_tags($_POST["name"]));
-      $surname = trim(strip_tags($_POST["surname"]));
-      $mail = trim(strip_tags($_POST["mail"]));
-      $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-      $address1 = trim(strip_tags($_POST["address1"]));
-      $address2 = trim(strip_tags($_POST["address2"]));
-      $state = trim(strip_tags($_POST["state"]));
-      $zip = trim(strip_tags($_POST["zip"]));
+$stateModel = new StateDAO($connection);
 
-      if ($name == null || $surname == null || $mail == null || $password == null
-        || $address1 == null || $state == null || $zip == null) {
-        $error = "Campos incorrectos";
-      } else {
-        $connection
-        ->prepare("INSERT INTO users SET 
-            name='$name',
-            surname='$surname',
-            mail='$mail',
-            password='$password',
-            address1='$address1',
-            address2='$address2',
-            state='$state',
-            zip='$zip'")
-          ->execute();
+$error = null;
 
-        $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
-        $statement->bindParam(":mail", $_POST["mail"]);
-        $statement->execute();
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        session_start();
-        $_SESSION["user"] = $user;
 
-        header("Location: index.php");
-      }
-    }
-  }
+//   if ($user)
+//     $error = "Este mail ya está registrado";
+//   else {
+//     $name = trim(strip_tags($_POST["name"]));
+//     $surname = trim(strip_tags($_POST["surname"]));
+//     $mail = trim(strip_tags($_POST["mail"]));
+//     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+//     $address1 = trim(strip_tags($_POST["address1"]));
+//     $address2 = trim(strip_tags($_POST["address2"]));
+//     $state = trim(strip_tags($_POST["state"]));
+//     $zip = trim(strip_tags($_POST["zip"]));
 
-  $states = $connection->query("SELECT * FROM states ORDER BY name ASC");
+//     if ($name == null || $surname == null || $mail == null || $password == null
+//       || $address1 == null || $state == null || $zip == null) {
+//       $error = "Campos incorrectos";
+//     } else {
+//       $connection
+//       ->prepare("INSERT INTO users SET 
+//           name='$name',
+//           surname='$surname',
+//           mail='$mail',
+//           password='$password',
+//           address1='$address1',
+//           address2='$address2',
+//           state='$state',
+//           zip='$zip'")
+//         ->execute();
 
-  require "includes/comun/header.php";
+//       $statement = $connection->prepare("SELECT * FROM users WHERE mail = :mail LIMIT 1");
+//       $statement->bindParam(":mail", $_POST["mail"]);
+//       $statement->execute();
+//       $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+//       session_start();
+//       $_SESSION["user"] = $user;
+
+//       header("Location: index.php");
+//     }
+//   }
+}
+
+$states = $stateModel->getAll();
+
+require "includes/comun/header.php";
 ?>
 
 
