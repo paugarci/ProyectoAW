@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="es">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,5 +23,5 @@
     </script>
     <title>ZEUS AirSoft</title>
 </head>
-<body>
+<body class="bg-light">
     <?php require "includes/comun/navbar.php" ?>

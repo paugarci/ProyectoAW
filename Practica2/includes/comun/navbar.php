@@ -7,14 +7,14 @@
 
   $menu = array (
     "index.php" => 'Inicio',
-    "contacto.php" => 'Contacto'
+    "contact.php" => 'Contacto'
   );
 ?>
 
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
-      <img src="img/logo.png" alt="" width="40" height="auto" class="d-inline-block align-text-top">
+      <img src="img/logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

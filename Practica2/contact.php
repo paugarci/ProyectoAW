@@ -1,6 +1,6 @@
 <?php require "includes/comun/header.php" ?>
 <br>
-<div class="container d-flex justify-content-center col-sm-12 col-md-6 col-lg-6 col-xl-6" id="borders-form">
+<div class="container d-flex justify-content-center col-sm-12 col-md-6 col-lg-6 col-xl-6">
   <form class="needs-validation" method="post" action="contacto.php">
     <div class="row p-2 g-3">
       <h2 class="d-flex justify-content-center">Contacta con nosotros</h2>
@@ -9,7 +9,7 @@
 
       <div class="col-6">
         <label for="name" class="form-label">Nombre</label>
-        <input type="text" class="form-control" name="name" placeholder="Lorem" required>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Lorem" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
@@ -17,7 +17,7 @@
 
       <div class="col-6">
         <label for="surname" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" name="surname" placeholder="Ipsum" required>
+        <input type="text" class="form-control" id="surname" name="surname" placeholder="Ipsum" required>
         <div class="invalid-feedback">
           Por favor, rellene los campos obligatorios.
         </div>
