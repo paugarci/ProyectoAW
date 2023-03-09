@@ -1,5 +1,6 @@
 <?php
-include 'Database.php';
+include 'database.php';
+include 'includes/DAO/DAO.php';
 include 'includes/DAO/UserDAO.php';
 include 'includes/DAO/StateDAO.php';
 

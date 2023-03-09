@@ -1,6 +1,5 @@
 <?php
-include 'DAO.php';
-class UserDAO extends DAO
+class ProductDAO extends DAO
 {
   public function __construct(PDO $connection)
   {
