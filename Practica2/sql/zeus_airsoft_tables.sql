@@ -48,6 +48,47 @@ CREATE TABLE `users` (
   `privileged` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_preguntas`
+--
+
+CREATE TABLE `foro_preguntas` (
+  `id` int(11) NOT NULL,
+  `pregunta` varchar(500) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_respuestas`
+--
+
+CREATE TABLE `foro_respuestas` (
+  `id` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL,
+  `respuesta` varchar(500) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Indices de la tabla `foro_preguntas`
+--
+ALTER TABLE `foro_preguntas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_foreign` (`id_pregunta`);
+
+
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
@@ -59,4 +100,31 @@ ALTER TABLE `users`
 
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `foro_preguntas`
+--
+ALTER TABLE `foro_preguntas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+  --
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  ADD CONSTRAINT `id_foreign` FOREIGN KEY (`id_pregunta`) REFERENCES `foro_preguntas` (`id`);
 COMMIT;
