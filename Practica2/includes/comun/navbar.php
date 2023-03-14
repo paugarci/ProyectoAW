@@ -7,7 +7,8 @@
 
   $menu = array (
     "index.php" => 'Inicio',
-    "contact.php" => 'Contacto'
+    "contact.php" => 'Contacto',
+    "foro.php" => 'Foro'
   );
 ?>
 

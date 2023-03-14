@@ -50,8 +50,8 @@ class DAO {
     {
       $statement->bindParam(":$field", $data[$field]);
     }
-    echo "<pre>";
-    var_dump($statement);
+    
+    //var_dump($statement);
     $statement->execute();
   }
 
