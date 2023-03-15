@@ -24,4 +24,8 @@
     <title>ZEUS AirSoft</title>
 </head>
 <body class="bg-light">
-    <?php require "includes/comun/navbar.php" ?>
+<?php
+require "includes/comun/navbar.php";
+if (isset($_SESSION["user"]) && $_SESSION["user"]["privileged"] == 1)
+    require "includes/comun/admin_toolbar.php";
+?>

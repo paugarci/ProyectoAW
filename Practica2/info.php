@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,39 +8,43 @@
 	
 </head>
 
+=======
+>>>>>>> Stashed changes
 <?php require "includes/comun/header.php" ?>
-<h1>GASTOS DE ENVÍO</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Destino</th>
-            <th>Tiempo de entrega</th>
-            <th>Gastos de envío</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>España peninsular</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega 24h (sin contar festivos, sábados y domingos)<br>El 97% de los pedidos llegan en 24h, el 3% restante en 48h</td>
-            <td>5,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Islas Baleares</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 3 días (Menorca e Ibiza pueden tener un retraso de hasta 5 días laborables)</td>
-            <td>15,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Portugal</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 2 días</td>
-            <td>5,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Resto de Europa<br>ALEMANIA, FRANCIA, AUSTRIA, BELGICA, DINAMARCA, ITALIA, LUXEMBURGO, PAISES BAJOS, REPUBLICA CHECA, ESLOVAQUIA, ESLOVENIA, HUNGRIA, POLONIA.</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 3 a 6 días<br>Gastos de envío gratis a partir de 200€ para toda Europa</td>
-            <td>9,95€ IVA Incluido</td>
-        </tr>
-    </tbody>
-</table>
+<div class="align-center m-5 text-center"></div>
+  <h1>GASTOS DE ENVÍO</h1>
+  <table class="table table-striped align-middle text-center">
+      <thead class="table-dark">
+          <tr>
+              <th>Destino</th>
+              <th>Tiempo de entrega</th>
+              <th>Gastos de envío</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>España peninsular</td>
+              <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega 24h (sin contar festivos, sábados y domingos)<br>El 97% de los pedidos llegan en 24h, el 3% restante en 48h</td>
+              <td>5,95€ IVA Incluido</td>
+          </tr>
+          <tr>
+              <td>Islas Baleares</td>
+              <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 3 días (Menorca e Ibiza pueden tener un retraso de hasta 5 días laborables)</td>
+              <td>15,95€ IVA Incluido</td>
+          </tr>
+          <tr>
+              <td>Portugal</td>
+              <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 2 días</td>
+              <td>5,95€ IVA Incluido</td>
+          </tr>
+          <tr>
+              <td>Resto de Europa<br>ALEMANIA, FRANCIA, AUSTRIA, BELGICA, DINAMARCA, ITALIA, LUXEMBURGO, PAISES BAJOS, REPUBLICA CHECA, ESLOVAQUIA, ESLOVENIA, HUNGRIA, POLONIA.</td>
+              <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 3 a 6 días<br>Gastos de envío gratis a partir de 200€ para toda Europa</td>
+              <td>9,95€ IVA Incluido</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
 <br>
 <p>LOS GASTOS DE ENVÍO SON GRATIS A PARTIR DE 200€ DE COMPRA (para la Península de España y Europa)</p>
 <ul>
