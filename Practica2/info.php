@@ -3,61 +3,8 @@
 <head>
 	<title>Gastos de envío</title>
 	<meta charset="utf-8">
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-		}
-
-		table {
-			border-collapse: collapse;
-			width: 100%;
-			max-width: 800px;
-			margin: auto;
-			text-align: center;
-			font-size: 16px;
-			border: 2px solid #333;
-		}
-
-		th, td {
-			border: 1px solid #333;
-			padding: 10px;
-		}
-
-		th {
-			background-color: #333;
-			color: #fff;
-			font-size: 18px;
-			font-weight: bold;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-		}
-
-		tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-
-		.note {
-			font-size: 14px;
-			font-style: italic;
-			margin-top: 20px;
-		}
-        .container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			
-		}
-        #map {
-            height: 500px;
-            width: 900px ;
-        }
-        
-		h1 {
-			text-align: center;
-		}
+    <link rel="stylesheet" href="info.css">
 	
-    
-	</style>
 </head>
 
 <?php require "includes/comun/header.php" ?>
@@ -104,120 +51,88 @@
     <li>Todos los productos disponibles en la tienda los tenemos en stock físico y para enviar inmediatamente.</li>
 </ul>
 <h1>DONDE ESTAMOS<h1>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9GE3d4rTQaEMO02CuGCIE4tgIcqKs45M"></script>
-    <br>
-    <div class="container">
-    <div id="map"></div>
-    </div>
-    <script>
-      // Código JavaScript que utiliza la API de Google Maps
-      function initMap() {
-        // Crea un objeto LatLng con la ubicación deseada
-        //40.452776278219496, -3.7335067213426227
-        var myLatLng = {lat: 40.452776278219496, lng: -3.7335067213426227};
-
-        // Crea un objeto Map con el centro en la ubicación deseada
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: myLatLng,
-          zoom: 12
-        });
-
-        // Crea un marcador en la ubicación deseada
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'Zeus-Airsoft'
-        });
-      }
-    </script>
-    <?php
-      // Código PHP para obtener la ubicación deseada
-      $lat = 40.452776278219496;
-      $lng = -3.7335067213426227;
+    <?php 
+        include 'mapa.php';
     ?>
-    <script>
-      // Llama a la función initMap después de que se cargue la API de Google Maps
-      google.maps.event.addDomListener(window, 'load', initMap);
-    </script>
 <h1>DEVOLUCION Y GARANTÍAS<h1>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Zeus-Airsoft sólo acepta devoluciones por posibles defectos en el producto</p>
+    <p>Zeus-Airsoft sólo acepta devoluciones por posibles defectos en el producto</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">No aceptamos devoluciones por malfuncionamiento de las réplicas debido a un mal uso,desgaste o de réplicas abiertas,modificadas o manipuladas.El plazo de devolución de productos en tu web es de 14 días naturales desde la recepción del producto, en tal caso si el motivo de la devolución no es de indole mayor se procederá a la devolución del importe mediante un vale de compra en la tienda.</p>
+    <p>No aceptamos devoluciones por malfuncionamiento de las réplicas debido a un mal uso,desgaste o de réplicas abiertas,modificadas o manipuladas.El plazo de devolución de productos en tu web es de 14 días naturales desde la recepción del producto, en tal caso si el motivo de la devolución no es de indole mayor se procederá a la devolución del importe mediante un vale de compra en la tienda.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">- Los gastos de devolución en el caso de cambio de producto o talla es de 10 €</p>
+    <p>- Los gastos de devolución en el caso de cambio de producto o talla es de 10 €</p>
 
     
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Para hacer uso de la garantía será imprescindible, presentar la marcadora en su embalaje original con sus complementos de origen.</p>
+    <p>Para hacer uso de la garantía será imprescindible, presentar la marcadora en su embalaje original con sus complementos de origen.</p>
     
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">El periodo de garantía para las réplicas será de 6 meses.Es muy importante para nosotros que el cliente no note la diferencia entre comprar en una tienda física y comprar en una tienda online, esa es sin duda nuestra nuestra prioridad y por ello ponemos especial atención a las devoluciones.
+    <p>El periodo de garantía para las réplicas será de 6 meses.Es muy importante para nosotros que el cliente no note la diferencia entre comprar en una tienda física y comprar en una tienda online, esa es sin duda nuestra nuestra prioridad y por ello ponemos especial atención a las devoluciones.
     Despues de ese periodo habria que someter a mantenimiento a las réplicas pagando el coste del mantenimiento</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">- Las imagenes de los productos en la web pueden ser a veces ligeramente distintas y no corresponder al 100%, por modificaciones del producto por parte del fabricante</p>
+    <p>- Las imagenes de los productos en la web pueden ser a veces ligeramente distintas y no corresponder al 100%, por modificaciones del producto por parte del fabricante</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">-Las gafas Bolle o Pegaso una vez abiertas del precinto no se pueden devolver pues estan vienen cerradas y precintadas y todos los clientes quieren que sean nuevas las gafas que les lleguen.</p>
+    <p>-Las gafas Bolle o Pegaso una vez abiertas del precinto no se pueden devolver pues estan vienen cerradas y precintadas y todos los clientes quieren que sean nuevas las gafas que les lleguen.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Si se debe realizar una devolución, se enviarár el producto tal y como se recibió, incluidos el embalaje original y todos los accesorios. Antes de enviar el producto, es necesario ponerse en contacto con nosotros al siguiente email info@Zeus-Airsoft.com para poder hablar sobre la devolución.</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Una vez hablemos sobre el posible problema que pueda tener el producto, enviaremos un mensajero de MRW para la recogida del producto.En el caso de que el producto este en mal estado y no sea culpa del cliente,Zeus-Airsoft correrá con los gastos de envió de ida y vuelta.</p>
+    <p>Si se debe realizar una devolución, se enviarár el producto tal y como se recibió, incluidos el embalaje original y todos los accesorios. Antes de enviar el producto, es necesario ponerse en contacto con nosotros al siguiente email info@Zeus-Airsoft.com para poder hablar sobre la devolución.</p>
+    <p>Una vez hablemos sobre el posible problema que pueda tener el producto, enviaremos un mensajero de MRW para la recogida del producto.En el caso de que el producto este en mal estado y no sea culpa del cliente,Zeus-Airsoft correrá con los gastos de envió de ida y vuelta.</p>
     
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">- En el caso de comprar una réplica y querer devolver el pedido sin motivo alguno ( aunque pueda parecer poco razonable esta situación nos ha ocurrido varias veces)  el coste por todas las gestiones realizadas por Zeus-Airsoft en el trámite de la réplica y su posterior coste de devolución de transporte será de 30 € .El proceso de probar , hacer factura , probar el vuelo , probar el crono y embalar es un proceso que lleva bastante tiempo y dinero por parte de nuestra tienda y debe de tenerse en cuenta y valorar nuestro trabajo. </p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En caso de ser replicas upgradeadas a peticion del cliente se cobrara el precio de volver a montar la replica de serie, pues un upgrade o volver a poner una replica de serie es un proceso lento y minucioso que debe de ser valorado.</p>
+    <p>- En el caso de comprar una réplica y querer devolver el pedido sin motivo alguno ( aunque pueda parecer poco razonable esta situación nos ha ocurrido varias veces)  el coste por todas las gestiones realizadas por Zeus-Airsoft en el trámite de la réplica y su posterior coste de devolución de transporte será de 30 € .El proceso de probar , hacer factura , probar el vuelo , probar el crono y embalar es un proceso que lleva bastante tiempo y dinero por parte de nuestra tienda y debe de tenerse en cuenta y valorar nuestro trabajo. </p>
+    <p>En caso de ser replicas upgradeadas a peticion del cliente se cobrara el precio de volver a montar la replica de serie, pues un upgrade o volver a poner una replica de serie es un proceso lento y minucioso que debe de ser valorado.</p>
 
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En el caso que el producto enviado no tenga ningún malfuncionamiento, este manipulado o el síntoma no quede cubierto por la garantía del producto, será el cliente el responsable de cubrir los gastos de devolución,la mano de obra y piezas empleados para solventar el problema.</p>
+    <p>En el caso que el producto enviado no tenga ningún malfuncionamiento, este manipulado o el síntoma no quede cubierto por la garantía del producto, será el cliente el responsable de cubrir los gastos de devolución,la mano de obra y piezas empleados para solventar el problema.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En caso de proceder a la devolución del dinero , se podrá elegir entre recibir el importe en cuenta o un vale para comprar en la tienda . En caso de extrema gravedad o solvencia económica por parte de la tienda se procederá siempre a la devolución del importe un en un vale de compra por valor del importe de la devolución.</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En el caso de que el cliente compre un producto de ropa en el cual está especificada perfectamente  la talla y se da el caso que no le queda bien y quiere descambiarlo,Zeus-Airsoft se ofrecerá a descambiarlo sin ningún problema, pero el cliente deberá correr con los gastos de envió de ida y vuelta</p>
+    <p>En caso de proceder a la devolución del dinero , se podrá elegir entre recibir el importe en cuenta o un vale para comprar en la tienda . En caso de extrema gravedad o solvencia económica por parte de la tienda se procederá siempre a la devolución del importe un en un vale de compra por valor del importe de la devolución.</p>
+    <p>En el caso de que el cliente compre un producto de ropa en el cual está especificada perfectamente  la talla y se da el caso que no le queda bien y quiere descambiarlo,Zeus-Airsoft se ofrecerá a descambiarlo sin ningún problema, pero el cliente deberá correr con los gastos de envió de ida y vuelta</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Las baterías Lipo tienen un periodo de garantía de 30 días, suficiente para comprobar que funcionan correctamente.</p>
+    <p>Las baterías Lipo tienen un periodo de garantía de 30 días, suficiente para comprobar que funcionan correctamente.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Cancelación de Pedidos</p>
+    <p>Cancelación de Pedidos</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Los pedidos podrán ser cancelados siempre y cuando el pedido no haya sido enviado desde nuestra instalaciones. Si el pedido fue enviado el cliente deberà pagar los gastos de envío correspondientes, que rondarán entre 10 y 15 € dependiendo del volumen y peso del pedido, pongase en contacto con nosotros y le indicaremos todos los pasos a seguir.</p>
+    <p>Los pedidos podrán ser cancelados siempre y cuando el pedido no haya sido enviado desde nuestra instalaciones. Si el pedido fue enviado el cliente deberà pagar los gastos de envío correspondientes, que rondarán entre 10 y 15 € dependiendo del volumen y peso del pedido, pongase en contacto con nosotros y le indicaremos todos los pasos a seguir.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Dirección y datos de la empresa:</p>
+    <p>Dirección y datos de la empresa:</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Calle del Prof. José García Santesmases, 9,</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Madrid 28040</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Madrid</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">España</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Telefono XXX-XXX-XXX</p>
+    <p>Calle del Prof. José García Santesmases, 9,</p>
+    <p>Madrid 28040</p>
+    <p>Madrid</p>
+    <p>España</p>
+    <p>Telefono XXX-XXX-XXX</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Dueño de la tienda Sergio Garcia Diez con NIF XXXXXXXXX</p>
+    <p>Dueño de la tienda Sergio Garcia Diez con NIF XXXXXXXXX</p>
 <h1>INFORMACIÓN VENTA Y REGLAMENTO<h1>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Debido a varias preguntas por parte los clientes, agregamos la siguiente información sobre la venta de réplicas en nuestra tienda.</p>
+    <p>Debido a varias preguntas por parte los clientes, agregamos la siguiente información sobre la venta de réplicas en nuestra tienda.</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">** Importante - Si se necesita comprar varias réplicas con nombres distintos, indicanoslo en el comentario del pedido para que podamos hacer cada factura con el nombre y datos correspondientes.</p>
-
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">¿Cómo enviamos los pedidos en Zeus-Airsoft y  las réplica que nos compráis?</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En nuestra empresa le damos un importancia muy grande a probar todas las réplicas antes de enviarlas para que el cliente cuando le llegue pueda disfrutarla sin ningún tipo de problema:</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">1 - Cuando el cliente realiza el pago , revisamos visualmente la réplica en busca de imperfecciones tanto de materiales como de pintura.</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">2 - Después de  comprobar que visualmente está todo bien , pasamos a probar con batería la réplica, cadencia de disparo y cronamos la réplica para ver que está dando los fps adecuados para cada tipo de réplica, en caso negativo revisamos la réplica hasta dar con la solución.</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">3 - Una vez pasamos crono, probamos la réplica en nuestra galería de 36 metros para ver que el hop up funciona perfectamente y la precisión y alcance son los adecuados, en caso negativo revisamos la réplica para dar con la solución.</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">4 - Una vez esta todo comprobado, pasamos a realizar la factura de la réplica con su número correspondiente ( todas las réplicas que vendemos tienen número de serie único del fabricante) </p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">5 - Embalamos la réplica con papel de burbuja para que no sufra ningún daño en su transporte, la envolvemos para una mayor seguridad y discreción en papel negro film y enviamos el pedido , el pedido para españa tardará por norma general 24 horas , si se piden modificaciones puede llegar a tardar entre 1 y 3 días, en todo caso siempre informamos en el proceso de compra o en los textos de los productos.</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Este es todo el proceso que realizamos en nuestra tienda antes del envío de las réplicas que vendemos en Zeus-Airsoft.</p>
-
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">6 - Si el cliente cuando le llega la réplica nota un mal funcionamiento de la réplica o cualquier otra irregularidad pedimos por favor que nos lo haga saber para poder resolverle el problema que tenga con la mayor rapidez posible.</p>
+    <p>** Importante - Si se necesita comprar varias réplicas con nombres distintos, indicanoslo en el comentario del pedido para que podamos hacer cada factura con el nombre y datos correspondientes.</p>
 
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Reglamentos de Armas </p>
+    <p>¿Cómo enviamos los pedidos en Zeus-Airsoft y  las réplica que nos compráis?</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En el siguiente link podreis ver todo el reglamento de Armas actual , para conocer todos los detalles:</p>
+    <p>En nuestra empresa le damos un importancia muy grande a probar todas las réplicas antes de enviarlas para que el cliente cuando le llegue pueda disfrutarla sin ningún tipo de problema:</p>
 
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;"><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202">https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202</a> </p>
+    <p>1 - Cuando el cliente realiza el pago , revisamos visualmente la réplica en busca de imperfecciones tanto de materiales como de pintura.</p>
+
+    <p>2 - Después de  comprobar que visualmente está todo bien , pasamos a probar con batería la réplica, cadencia de disparo y cronamos la réplica para ver que está dando los fps adecuados para cada tipo de réplica, en caso negativo revisamos la réplica hasta dar con la solución.</p>
+
+    <p>3 - Una vez pasamos crono, probamos la réplica en nuestra galería de 36 metros para ver que el hop up funciona perfectamente y la precisión y alcance son los adecuados, en caso negativo revisamos la réplica para dar con la solución.</p>
+
+    <p>4 - Una vez esta todo comprobado, pasamos a realizar la factura de la réplica con su número correspondiente ( todas las réplicas que vendemos tienen número de serie único del fabricante) </p>
+
+    <p>5 - Embalamos la réplica con papel de burbuja para que no sufra ningún daño en su transporte, la envolvemos para una mayor seguridad y discreción en papel negro film y enviamos el pedido , el pedido para españa tardará por norma general 24 horas , si se piden modificaciones puede llegar a tardar entre 1 y 3 días, en todo caso siempre informamos en el proceso de compra o en los textos de los productos.</p>
+
+    <p>Este es todo el proceso que realizamos en nuestra tienda antes del envío de las réplicas que vendemos en Zeus-Airsoft.</p>
+
+    <p>6 - Si el cliente cuando le llega la réplica nota un mal funcionamiento de la réplica o cualquier otra irregularidad pedimos por favor que nos lo haga saber para poder resolverle el problema que tenga con la mayor rapidez posible.</p>
+
+
+    <p>Reglamentos de Armas </p>
+
+    <p>En el siguiente link podreis ver todo el reglamento de Armas actual , para conocer todos los detalles:</p>
+
+    <p><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202">https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202</a> </p>
 <h1>CONDICIONES Y FORMAS DE PAGO<h1>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left; "> Todas las réplicas que vende Zeus-Airsoft tienen número  de serie unico del fabricante 
+    <p> Todas las réplicas que vende Zeus-Airsoft tienen número  de serie unico del fabricante 
     En caso de querer comprar una réplica la factura puede ir a nombre del menor siempre que se tenga más de 14 años, aconsejamos que los padres nos llamen para resolver las dudas que puedan tener.</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">Formas de Pago Disponibles</p>
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left;">En Zeus-Airsoft tenemos diferentes formas de pago, pago a plazos , paypal , transferencia bancaría y tarjeta de credito: </p>
+    <p>Formas de Pago Disponibles</p>
+    <p>En Zeus-Airsoft tenemos diferentes formas de pago, pago a plazos , paypal , transferencia bancaría y tarjeta de credito: </p>
     <h4>FINANCIACIÓN AL INSTANTE CON APLAZAME</h4>
     <p>Nuevo sistema de financiación ¡¡ en tan 1 minuto!!  Solo necesitas un número de teléfono móvil, un DNI Español y una tarjeta, serás capaz de financiar tus compras en nuestra tienda con un máximo de 1000 euros y hasta en 36 meses. El sistema de forma automática determinará si un cliente es apto o no para recibir la financiación, la empresa Aplázame es quien decide si da la financiación, nuestra tienda no puedo decidir en este proceso. El coste de financiar una compra será el siguiente comisión de apertura 0,00 €, TIN 22,11 %, 16,5% Tae  </p>
     <p>Pedido mínimo financiable - desde 99 €  </p>
@@ -240,7 +155,7 @@
     <p>Pague su pedido con su cuenta de Paypal.Este método de pago tiene una comisión por parte de Paypal, antes de finalizar el pedido puede revisar el importe de la comision, ya que lo calcula directamente el sistema y se lo muestra antes de confirmar el mismo.</p>
 <h1>AVISO LEGAL y POLITICA DE PRIVACIDAD ADAPTADO RGPD (Versión Mayo-18)<h1>
     
-    <p style="font-size: 16px; line-height: 1.5;font-weight: normal; text-align: left ">En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico de España, le informamos que esta página Web es propiedad de Sergio Garcia Diez y siguiendo los principios de licitud, lealtad y transparencia, ponemos a su disposición la siguiente información sobre el tratamiento que realizaremos de sus datos de carácter personal.</t>
+    <p >En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico de España, le informamos que esta página Web es propiedad de Sergio Garcia Diez y siguiendo los principios de licitud, lealtad y transparencia, ponemos a su disposición la siguiente información sobre el tratamiento que realizaremos de sus datos de carácter personal.</t>
     
     <h4>¿QUIÉN ES EL RESPONSABLE DEL TRATAMIENTO DE SUS DATOS DE CARÁCTER PERSONAL?</h4>
     
