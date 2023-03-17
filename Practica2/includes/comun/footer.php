@@ -5,52 +5,126 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-LhMWr+kf0+FhG7VO9yP+hj5xz5z5DfbyQ1hHxhkuUocP6UZ+i6eH7Ryf9cg4Q1gF4jYwB7VZqtf3Gz7V/Qj+nw==" crossorigin="anonymous" />
     </script>
+    
+    <style>
+        .bot {
+        color: #FFF; /* color del texto */
+        text-decoration: none; /* quitar subrayado */
+        padding: 10px; /* añadir un poco de espacio alrededor del texto */
+        border-radius: 5px; /* añadir bordes redondeados */
+        
+        }
+
+        .bot:hover {
+            background-color: #FFFFFF; /* color de fondo al pasar el ratón por encima */
+            text-decoration: none; /* quitar subrayado */
+            color: darkblue;
+        }
+        .wa{
+            text-decoration: none; /* quitar subrayado */
+            color: white;
+        }
+       
+        .wa:hover {
+            text-decoration: none; /* quitar subrayado */
+            color: green;
+        }
+
+        .ins{
+            text-decoration: none; /* quitar subrayado */
+            color: white;
+        }
+        .ins:hover {
+            text-decoration: none; /* quitar subrayado */
+            color: mediumvioletred;
+        }
+
+        .face{
+            text-decoration: none; /* quitar subrayado */
+            color: white;
+        }
+        .face:hover {
+            text-decoration: none; /* quitar subrayado */
+            color: darkblue;
+        }
+
+        .you{
+            text-decoration: none; /* quitar subrayado */
+            color: white;
+        }
+        .you:hover {
+            text-decoration: none; /* quitar subrayado */
+            color: red;
+        }
+    </style>
+   
 </head>
+
 <body>
+    
     <footer class="bg-dark text-light py-3" >
         <hr class="border border-primary border-3 opacity-75 m-1"> <!--Una linea antes de las row para que quede bien facehro-->
-		<div class="container text-center">
-			<div class="row mb-100">
-                <div class = "col-md-2 border-right border-primary">
+		<div class="container text-center " style ="width: 1500px">
+			<div class="row ">
+                <div class = "col-md-2 border-right border-primary" style = "margin-top: 20px">
                 <a href="index.php">
                     <img src="img/logo.png" style="display: block; ">
                 </a>
                 </div>
 				
-                <div class="col-md-3 border-left border-primary">
-                    <ul class="list-unstyled">
+                <div class="col-md-3 border-left border-primary " style = "margin-top: 20px;" >
+                <a href="contact.php" style="display: block; height: 100%; width: 100%; text-decoration: none; color: #FFFFFF;">
+                    <div  style="display: inline-block; margin-left: 20px;">
+                        <i class="fas fa-phone fw-bold fs-4" style="margin-right:5px;" ></i> 
+                        <h2 style="display: inline-block;"> 638-XXX-XXX </h2>
+                    </div>
+                    
+                    <p style="margin-top: -13px; margin-left: -35px;">Lunes a viernes</p>
+                    <p style="margin-top: -20px; margin-left: 39px;">Horario de 11:00 a 16:14h</p>
+
+                    <div style="display: inline-block;  margin-left: -2px; margin-top: -10px">
+                        <i class="fas fa-envelope fw-bold fs-4" style= "margin-right: 5px;"></i> 
+                        <h5 style="display: inline-block;"> info@Zeurs-Airsoft</h5>
+                        
+                    </div>
+                    <!-- <ul class="list-unstyled">
                     <li><a href="#">Términos y Condiciones</a></li>
-                    </ul>
+                    </ul> -->
+                    </a>
                 </div>
-                <div class="col-md-6 "><!-- aqui poner bordes para ir proband como queda-->
-                    <div class = "row "><!-- aqui poner bordes para ir proband como queda-->
-                        <div class = "col-md-2">
-                            <p><a href="index.php"> Inicio</a></p>
+                <div class="col-md-7 "><!-- aqui poner bordes para ir proband como queda-->
+                    <div class = "row " style = "margin-top: 20px;"><!-- aqui poner bordes para ir proband como queda-->
+                        <div class = "col-md-2 " style="text-aling: left;">
+                            <p><a class = "bot" href="index.php" > Inicio</a></p>
                         </div>
-                        <div class = "col-md-2">
-                            <p><a href="#">Novedades</a></p>
+                        
+                        <div class = "col-md-2 ">
+                            <p><a href="#" class = "bot">Novedades</a></p>
                         </div>
-                        <div class = "col-md-2">
-                            <p><a href="#">Ofertas</a></p>
+                        <div class = "col-md-2 ">
+                            <p><a href="#" class = "bot">Ofertas</a></p>
                         </div>
-                        <div class = "col-md-2">
-                            <p><a href="info.php">Informaión</a></p>
+                        <div class = "col-md-2 ">
+                            <p><a href="info.php" class = "bot">Informaión</a></p>
                         </div>
-                        <div class = "col-md-2">
-                            <p><a href="contact.php">Contacto</a></p>
+                        <div class = "col-md-2 ">
+                            <p><a href="contact.php" class = "bot">Contacto</a></p>
                         </div>
-                        <div class = "col-md-2">
+                        <div class = "col-md-1 ">
+                            <p><a href="faqs.php" class = "bot">FAQs</a></p>
+                        </div>
+                        <div class = "col-md-1 " >
                             <button class="btn btn-primary rounded-circle" onclick="topFunction()" title="Ir arriba">^</button> 
                         </div>
                     </div>
-                    <div class="col-md-12  text-right"><!-- aqui poner bordes para ir proband como queda-->
-                        <ul class="list-unstyled list-inline social text-center">
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram" style="font-size: 40px;"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-whatsapp" style="font-size: 40px;"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i class="fab fa-youtube" style="font-size: 40px;"></i></a></li>
-                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook" style="font-size: 40px;"></i></a></li>
+                    <div class="col-md-12  text-right" style = "margin-top: 20px"><!-- aqui poner bordes para ir proband como queda-->
+                        <ul class="list-unstyled list-inline social text-right">
+                            <li class="list-inline-item"><a href="#" class = "ins"><i class="fab fa-instagram" style="font-size: 50px;"></i></a></li>
+                            <li class="list-inline-item"><a href="#" class = "wa"><i class="fab fa-whatsapp" style="font-size: 50px;"></i></a></li>
+                            <li class="list-inline-item"><a href="#" class = "you"><i class="fab fa-youtube" style="font-size: 50px;"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class = "face"><i class="fab fa-facebook" style="font-size: 50px;"></i></a></li>
                         </ul>
                     </div>
 			</div>
