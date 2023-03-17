@@ -2,7 +2,7 @@
 include 'database.php';
 include 'includes/DAO/DAO.php';
 include 'includes/DAO/ProductDAO.php';
-include 'includes/comun/header.php';
+require 'includes/comun/header.php';
 
 $database = new Database;
 $productModel = new ProductDAO($database->getConnection());
@@ -27,4 +27,4 @@ $products = $productModel->getAll();
     </div>
   </div>
 
-<?php include "includes/comun/footer.php"; ?>
+<?php require "includes/comun/footer.php"; ?>

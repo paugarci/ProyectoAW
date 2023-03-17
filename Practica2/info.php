@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Gastos de envío</title>
-	<meta charset="utf-8">
-	
-</head>
-
 <?php require "includes/comun/header.php" ?>
 <div class="m-5">
     <div class="m-5 ">
