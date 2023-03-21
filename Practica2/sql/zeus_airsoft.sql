@@ -131,3 +131,35 @@ ALTER TABLE `foro_respuestas`
 ALTER TABLE `foro_respuestas`
   ADD CONSTRAINT `id_foreign` FOREIGN KEY (`id_pregunta`) REFERENCES `foro_preguntas` (`id`);
 COMMIT;
+
+---
+
+-- Eventos
+
+CREATE TABLE
+  `zeus_airsoft`.`eventos` 
+  (
+    `id` INT NOT NULL ,
+    `nombre` VARCHAR(64) NOT NULL ,
+    `descripcion` VARCHAR(512) NOT NULL ,
+    `fecha` DATE NOT NULL ,
+    PRIMARY KEY (`id`)
+  )
+ENGINE = InnoDB;
+
+INSERT INTO
+  `eventos`
+  (
+    `id`,
+    `nombre`,
+    `descripcion`,
+    `fecha`
+  )
+VALUES
+  (
+    '1',
+    'Asalto al fortificado',
+    'Los reclutas se dividirán en dos equipos: un equipo ofensor y otro equipo defensor. El equipo defensor montará posiciones de defensa alrededor de un punto de interés, defendiendo una bandera. El equipo ofensor deberá obtener la bandera.',
+    '2023-04-01'
+  )
+;
