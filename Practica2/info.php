@@ -1,60 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Gastos de envío</title>
-	<meta charset="utf-8">
-    <link rel="stylesheet" href="info.css">
-	
-</head>
-
 <?php require "includes/comun/header.php" ?>
-<h1>GASTOS DE ENVÍO</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Destino</th>
-            <th>Tiempo de entrega</th>
-            <th>Gastos de envío</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>España peninsular</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega 24h (sin contar festivos, sábados y domingos)<br>El 97% de los pedidos llegan en 24h, el 3% restante en 48h</td>
-            <td>5,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Islas Baleares</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 3 días (Menorca e Ibiza pueden tener un retraso de hasta 5 días laborables)</td>
-            <td>15,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Portugal</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 2 días</td>
-            <td>5,95€ IVA Incluido</td>
-        </tr>
-        <tr>
-            <td>Resto de Europa<br>ALEMANIA, FRANCIA, AUSTRIA, BELGICA, DINAMARCA, ITALIA, LUXEMBURGO, PAISES BAJOS, REPUBLICA CHECA, ESLOVAQUIA, ESLOVENIA, HUNGRIA, POLONIA.</td>
-            <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 3 a 6 días<br>Gastos de envío gratis a partir de 200€ para toda Europa</td>
-            <td>9,95€ IVA Incluido</td>
-        </tr>
-    </tbody>
-</table>
+<div class="m-5">
+    <div class="m-5 ">
+    <h1 class="text-center">GASTOS DE ENVÍO</h1><br>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Destino</th>
+                <th>Tiempo de entrega</th>
+                <th>Gastos de envío</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>España peninsular</td>
+                <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega 24h (sin contar festivos, sábados y domingos)<br>El 97% de los pedidos llegan en 24h, el 3% restante en 48h</td>
+                <td>5,95€ IVA Incluido</td>
+            </tr>
+            <tr>
+                <td>Islas Baleares</td>
+                <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 3 días (Menorca e Ibiza pueden tener un retraso de hasta 5 días laborables)</td>
+                <td>15,95€ IVA Incluido</td>
+            </tr>
+            <tr>
+                <td>Portugal</td>
+                <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 1 a 2 días</td>
+                <td>5,95€ IVA Incluido</td>
+            </tr>
+            <tr>
+                <td>Resto de Europa<br>ALEMANIA, FRANCIA, AUSTRIA, BELGICA, DINAMARCA, ITALIA, LUXEMBURGO, PAISES BAJOS, REPUBLICA CHECA, ESLOVAQUIA, ESLOVENIA, HUNGRIA, POLONIA.</td>
+                <td>Todos los pedidos<br>Independientemente del peso<br>Tiempo de entrega de 3 a 6 días<br>Gastos de envío gratis a partir de 200€ para toda Europa</td>
+                <td>9,95€ IVA Incluido</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <br>
-<p>LOS GASTOS DE ENVÍO SON GRATIS A PARTIR DE 200€ DE COMPRA (para la Península de España y Europa)</p>
-<ul>
-    <li>Se realizan envíos a toda la Peninsula, Baleares, Portugal y Europa de lunes a viernes (excepto fines de semana y festivos). No se realizan envíos a Ceuta, Melilla y Canarias.</li>
-    <li>Enviamos a Baleares por la empresa de transportes GLS</li>
-    <li>Los gastos de devolución por cambio de producto o talla es de 10 euros</li>
-    <li>Los gastos de devolución por recogida de producto para su posterior devolución del importe 5.95 €</li>
-    <li>Los pedidos confirmados y pagados antes de las 16:30h serán enviados en el mismo día.</li>
-    <li>Todos los productos disponibles en la tienda los tenemos en stock físico y para enviar inmediatamente.</li>
-</ul>
-<h1>DONDE ESTAMOS<h1>
-    <?php 
-        include 'mapa.php';
-    ?>
-<h1>DEVOLUCION Y GARANTÍAS<h1>
+    <p>LOS GASTOS DE ENVÍO SON GRATIS A PARTIR DE 200€ DE COMPRA (para la Península de España y Europa)</p>
+    <ul>
+        <li>Se realizan envíos a toda la Peninsula, Baleares, Portugal y Europa de lunes a viernes (excepto fines de semana y festivos). No se realizan envíos a Ceuta, Melilla y Canarias.</li>
+        <li>Enviamos a Baleares por la empresa de transportes GLS</li>
+        <li>Los gastos de devolución por cambio de producto o talla es de 10 euros</li>
+        <li>Los gastos de devolución por recogida de producto para su posterior devolución del importe 5.95 €</li>
+        <li>Los pedidos confirmados y pagados antes de las 16:30h serán enviados en el mismo día.</li>
+        <li>Todos los productos disponibles en la tienda los tenemos en stock físico y para enviar inmediatamente.</li>
+    </ul>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+<h1 class="text-center">DEVOLUCION Y GARANTÍAS</h1><br>
+
     <p>Zeus-Airsoft sólo acepta devoluciones por posibles defectos en el producto</p>
 
     <p>No aceptamos devoluciones por malfuncionamiento de las réplicas debido a un mal uso,desgaste o de réplicas abiertas,modificadas o manipuladas.El plazo de devolución de productos en tu web es de 14 días naturales desde la recepción del producto, en tal caso si el motivo de la devolución no es de indole mayor se procederá a la devolución del importe mediante un vale de compra en la tienda.</p>
@@ -98,7 +91,9 @@
     <p>Telefono XXX-XXX-XXX</p>
 
     <p>Dueño de la tienda Sergio Garcia Diez con NIF XXXXXXXXX</p>
-<h1>INFORMACIÓN VENTA Y REGLAMENTO<h1>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+<h1 class="text-center">INFORMACIÓN VENTA Y REGLAMENTO</h1><br>
     <p>Debido a varias preguntas por parte los clientes, agregamos la siguiente información sobre la venta de réplicas en nuestra tienda.</p>
 
     <p>** Importante - Si se necesita comprar varias réplicas con nombres distintos, indicanoslo en el comentario del pedido para que podamos hacer cada factura con el nombre y datos correspondientes.</p>
@@ -128,7 +123,9 @@
     <p>En el siguiente link podreis ver todo el reglamento de Armas actual , para conocer todos los detalles:</p>
 
     <p><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202">https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202</a> </p>
-<h1>CONDICIONES Y FORMAS DE PAGO<h1>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+    <h1 class="text-center">CONDICIONES Y FORMAS DE PAGO</h1><br>
     <p> Todas las réplicas que vende Zeus-Airsoft tienen número  de serie unico del fabricante 
     En caso de querer comprar una réplica la factura puede ir a nombre del menor siempre que se tenga más de 14 años, aconsejamos que los padres nos llamen para resolver las dudas que puedan tener.</p>
     <p>Formas de Pago Disponibles</p>
@@ -153,7 +150,11 @@
     <p>Una vez confirme la compra, será redirigido automáticamente a un servidor seguro HTTPS, donde podrá proceder al pago, necesitará el numero de tarjeta, fecha de caducidad y numero de seguridad que se encuentra en la parte trasera de su tarjeta.</p>
     <h4>PAYPAL</h4>
     <p>Pague su pedido con su cuenta de Paypal.Este método de pago tiene una comisión por parte de Paypal, antes de finalizar el pedido puede revisar el importe de la comision, ya que lo calcula directamente el sistema y se lo muestra antes de confirmar el mismo.</p>
-<h1>AVISO LEGAL y POLITICA DE PRIVACIDAD ADAPTADO RGPD (Versión Mayo-18)<h1>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+
+    <section id="politica">
+    <h1 class="text-center">AVISO LEGAL Y POLITICA DE PRIVACIDAD ADAPTADO RGPD (Versión Mayo-18)</h1><br>
     
     <p >En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico de España, le informamos que esta página Web es propiedad de Sergio Garcia Diez y siguiendo los principios de licitud, lealtad y transparencia, ponemos a su disposición la siguiente información sobre el tratamiento que realizaremos de sus datos de carácter personal.</t>
     
@@ -168,7 +169,7 @@
     
     <p>Domicilio social: Calle del Prof. José García Santesmases, 9, 28040 Madrid</p>
     
-    <p>La presente información regula las condiciones de uso, las limitaciones de responsabilidad y las obligaciones que los usuarios de la página Web que se publica bajo el nombre del dominio www.Zeus-Airsoft.com las cuales los usuarios asumen y se comprometen a respetar.</p>
+    <p>La presente información regula las condiciones de uso, las limitaciones de responsabilidad y las obligaciones que los usuarios de la página Web que se publica bajo el nombre del dominio <b>www.Zeus-Airsoft.com</b> las cuales los usuarios asumen y se comprometen a respetar.</p>
     
     <h4>¿CON QUÉ FINALIDAD TRATAMOS SUS DATOS?</h4>
     
@@ -237,8 +238,101 @@
     Por ello, le recomendamos su lectura, cada vez que nos facilite sus datos a través de la Página Web.</p>
 
     <h4>APLAZAME Financiación</h4>
-    <p>
+   
+    <p >
     El usuario acepta que todos sus datos de carácter personal sean íntegramente cedidos a Aplazame desde el momento en que el usuario haya iniciado la contratación del servicio de pago aplazado ofrecido por ésta última en el momento de elegir la forma de pago.
 
     Esta aceptación se extiende a terceras entidades que tuvieran que acceder a los ficheros para el buen fin del contrato.</p>
-<?php require "includes/comun/footer.php" ?>
+    </section>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+    <section id = "cookies">
+        
+    <h1 class = "text-center">Uso de cookies-RGPD - Version Mayo-18</h1> <br>
+    <br>
+    <p><b>Esta página web utiliza tecnología “cookies” </b><br><br>
+
+    Descripción: Las cookies constituyen una herramienta empleada por los servidores Web para almacenar y recuperar información acerca de sus visitantes. 
+    No es más que un fichero de texto que algunos servidores piden a nuestro navegador que escriba en nuestro disco duro, con información acerca de lo que hemos estado visitando por dichas páginas. <br><br>
+
+    Poseen una fecha de caducidad, que puede oscilar desde el tiempo que dure la sesión hasta una fecha futura especificada, a partir de la cual dejan de ser operativas. <b>www.Zeus-Airsoft.com</b> utiliza cookies para facilitar la navegación por dicho Portal y para obtener una mayor eficacia y personalización de los servicios ofrecidos a los Usuarios. Las cookies empleadas en <b>www.Zeus-Airsoft.com</b> se asocian únicamente con un Usuario anónimo y su ordenador, no proporcionan referencias que permitan deducir el nombre y apellidos del Usuario y no pueden leer datos de su disco duro ni incluir virus en sus equipos. Asimismo, <b>www.Zeus-Airsoft.com</b> no puede leer las cookies implantadas en el disco duro del Usuario desde otros servidores. <br><br>
+
+    El usuario puede libremente decidir acerca de la implantación o no en su disco duro de las cookies empleadas en <b>www.Zeus-Airsoft.com</b> En este sentido, el usuario puede configurar su navegador para aceptar o rechazar por defecto todas las cookies o para recibir un aviso en pantalla de la recepción de cada cookie y decidir en ese momento su implantación o no en su disco duro. <br>
+
+    Para ello le sugerimos consultar la sección de ayuda de su navegador para saber cómo cambiar la configuración que actualmente emplea. Aun cuando el Usuario configurase su navegador para rechazar todas las cookies o rechazase expresamente las cookies de <b>www.Zeus-Airsoft.com</b> podrá navegar por el Portal con el único inconveniente de no poder disfrutar de las funcionalidades del Portal que requieran la instalación de alguna de ellas. En cualquier caso, el Usuario podrá eliminar las cookies de <b>www.Zeus-Airsoft.com</b> implantadas en su disco duro en cualquier momento, siguiendo el procedimiento establecido en la sección de ayuda de su navegador. <br><br>
+
+    <b> ¿Qué tipos de cookies utiliza esta página web?</b> <br><br>
+
+    En primer lugar, esta página utiliza el servicio de análisis web “Google Analytics”, que utiliza cookies que nos permiten cuantificar el número de usuarios y así realizar la medición y análisis estadístico de la utilización que hacen los usuarios del servicio ofertado. Para ello se analiza su navegación en nuestra página web con el fin de mejorar la oferta de productos o servicios que le ofrecemos. Si desea más información acerca del uso de las cookies que realiza nuestro proveedor de servicios de análisis web visite su política de privacidad pulsando <b><a href= "https://policies.google.com/privacy?hl=es"> aquí</a></b> y <b><a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=es-419" >aquí</a>.</b> <br>
+
+    Por otro lado, este sitio web, utiliza cookies que son necesarias para prestar el servicio expresamente solicitado por el usuario, en concreto, las que facilitan la cumplimentación de formularios. <br>
+
+    Deshabilitación y eliminación de cookies: <br>
+
+    Las cookies pueden desactivarse, basta con configurar su navegador de Internet para que las borre, las bloquee o le avise en caso de instalación de las mismas. No obstante, si usted selecciona esta configuración puede que no tenga acceso a ciertas partes del sitio web, causar una navegación menos eficaz o no sacar partido a determinadas funcionalidades. <br>
+
+    Para continuar sin cambios en la configuración de las cookies, simplemente continúe en la página web. <br>
+    Para más información acerca de cómo deshabilitar las cookies consulte los siguientes enlaces: <br>
+
+    Chrome: pulse <b><a href="https://support.google.com/accounts/answer/61416?hl=es">aquí</a>.</b> <br>
+    Internet Explorer: pulse <b><a href="https://support.microsoft.com/es-es/windows/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d" >aquí</a>.</b> <br>
+    Firefox: pulse <b><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias?redirectslug=habilitar-y-deshabilitar-cookies-que-los-sitios-we&redirectlocale=es"> aquí</a>.</b> <br>
+    Safari: pulse <b><a href="https://support.apple.com/es-es/HT201265" >aquí</a>.</b> <br>
+    Opera: pulse <b><a href="https://help.opera.com/en/latest/web-preferences/#cookies">aquí</a>.</b></p>
+    </section>
+    <br>
+    <hr class="border border-primary border-3 opacity-75">
+    <section id= "condiciones">
+        <h1 class = "text-center">Terminos y Condiciones</h1><br>
+        <p> <u> <h4> 1. Información general y datos de contacto</h4></u> <br>
+
+        <b>Denominación social: Sergio Garcia Diez </b> <br>
+
+        <b> NIF:XXXXXXXXX</b> <br>
+
+        <b> Dirección de correo electrónico: info@Zeus-Airsoft.com </b> <br>
+
+        <b> Domicilio social: Calle del Prof. José García Santesmases, 9, 28040 Madrid </b> <br><br>
+
+        <u><h4> 2. Objeto y aceptación</h4></u> <br>
+
+        2.1. Este texto (en adelante, las "Condiciones Generales") regula el uso de los contenidos y la contratación de servicios que ofrecemos desde Zeus-Airsoft  a través de nuestro Sitio Web, por lo que cuando accede al mismo como visitante, usuario o cliente (en adelante, el "Usuario") queda automáticamente vinculado al cumplimiento de estas Condiciones Generales, lo que supone e implica que ha leído, comprende y acepta, sin limitaciones ni reservas, los avisos legales disponibles en el Sitio Web, incluido el texto de la Política de Privacidad de Compatinet, por lo que le recomendamos que los lea siempre que acceda a nuestro Sitio Web. <br>
+
+        2.2. Desde Zeus-Airsoft nos reservamos el derecho a modificar estas Condiciones Generales en cualquier momento, por lo que el texto puede haber sufrido modificaciones cuando vuelva a acceder al Sitio Web. Estas Condiciones Generales, así como cualquier otro aviso legal y las modificaciones de los mismos, son plenamente vigentes a partir de su publicación en el Sitio Web, por lo que como Usuario le damos la posibilidad de imprimirlos y almacenarlos. <br> <br>
+
+        <u> <h4> 3. Privacidad y proteccion de datos personales</h4></u><br>
+
+        3.1. En Zeus-Airsoft respetamos la privacidad de sus datos personales, por lo que le sugerimos que lea el texto de nuestra Politica de Privacidad para que entienda nuestras practicas de privacidad y proteccion de datos personales. Le informamos como Usuario que dicho aviso legal queda incluido por referencia en estas Condiciones Generales, de las que forma parte. <br><br>
+
+        <u><h4> 4. Descripcion y condiciones de los servicios </h4></u><br>
+
+        4.1. Todos los productos y servicios que le ofrecemos desde Compatinet a traves de nuestro Sitio Web www.Zeus-Airsoft.com  estan descritos en la pagina Web correspondiente a cada uno de los servicios, en la que incluimos como minimo la informacion esencial sobre el servicio y caracteristicas del producto, para que conozca en que consiste.   <br><br>
+
+        <u><h4> 6. Precios y formas de pago aceptadas</h4> </u> <br>
+
+        6.1. El precio de los articulos y servicios ofrecidos por Zeus-Airsoft a través del Sitio Web figura siempre en la página Web de descripción correspondiente a cada uno de los servicios. Todos los precios indicados en el Sitio Web incluyen los impuestos aplicables, por lo que son precios finales. <br>
+
+        6.2. En Zeus-Airsoft aceptamos como formas de pago tanto la transferencia o ingreso en cuenta de BBVA, como el pago mediante tarjeta de débito y paypal <br><br>
+
+        <u><h4> 7. Contenidos y licencia limitada de propiedad intelectual e industrial</h4> </u><br>
+
+        7.1. Los contenidos disponibles a través de nuestro Sitio Web, tales como textos, logotipos, imágenes, bases de datos, software o código fuente, a título meramente enunciativo, son propiedad de Zeus-Airsoft o, en su caso, de las personas o empresas que figuren como autores o titulares, tales como osCommerce, por lo que cualquier violacion de los citados derechos de propiedad intelectual e industrial será perseguida en aplicación de la normativa vigente. <br>
+
+        7.2. Como Usuario de nuestro Sitio Web le concedemos una licencia limitada, revocable y no exclusiva, para acceder a éste, su consulta y uso responsable, a título personal, no estando autorizado para reproducir, explotar, alterar, distribuir o comunicar públicamente a través de ningún medio la totalidad o parte de los contenidos disponibles en nuestro Sitio Web para usos diferentes a la obtención de información o contratación de los servicios que ofrecemos, no estando autorizado tampoco para descargar el Sitio Web o sus contenidos (excepto en la memoria "cache" del equipo que utilice) a través del uso de robots, arañas, rastreadores, o herramientas similares de extracción de datos que conlleven una sobrecarga injustificada del tráfico en nuestros servidores, con el consiguiente perjuicio para el resto de los Usuarios, o instrumentos que dañen o inutilicen nuestras infraestructuras o, en su caso, las de terceros. <br> <br>
+
+        <u><h4> 8. Nulidad e ineficacia </h4></u><br>
+
+        8.1. Desde Zeus-Airsoft le informamos como Usuario que en el supuesto de que alguna de las cláusulas de estas Condiciones Generales fuese declarada nula o ineficaz por un Juzgado, Tribunal u órgano administrativo competente, la nulidad o ineficacia afectará únicamente a dicha cláusula o a la parte de la misma que resulte nula o ineficaz, que se tendrá por no puesta de manera total o parcial, subsistiendo las Condiciones Generales en todo lo demás. <br><br>
+
+        <u><h4> 9. Normativa aplicable </h4></u><br>
+
+        9.1. Estas Condiciones Generales están sujetas a lo dispuesto en la Ley 7/1998, de 13 de abril, sobre condiciones generales de la contratación, en la Ley 26/1984, de 19 de julio, general para la defensa de los consumidores y usuarios, en el Real Decreto 1906/1999, de 17 de diciembre de 1999, por el que se regula la contratación telefónica o electrónica con condiciones generales, en la Ley Orgónica 15/1999, de 13 de diciembre, de protección de datos de carácter personal, en la Ley 7/1996, de 15 de enero, de ordenación del comercio minorista, en la Ley 34/2002 de 11 de julio, de servicios de la sociedad de la informacion y de comercio electrónico, y en la reciente Ley 44/2006, de 29 de diciembre, de mejora de la protección de los consumidores y usuarios, así como a lo dispuesto en el resto de normativa relacionada que pueda resultar de aplicación análoga en su caso. <br><br>
+
+        <u><h4> 10. Legislación aplicable y jurisdicción competente</h4> </u><br>
+
+        10.1. Desde Zeus-Airsoft le informamos como Usuario que estas Condiciones Generales del Sitio Web, así como las relaciones que se establezcan entre nosotros como partes, se regirán por lo dispuesto en la legislación española, que será de aplicación a las mismas. <br>
+
+        10.2. Asimismo, para la resolución de cualquier controversia o reclamación derivada de la interpretación de estas Condiciones Generales serán competentes los Juzgados y Tribunales de donde sea puesta la demanda. <br><br></p>
+    </section>
+    </div>
+    <?php require "includes/comun/footer.php" ?>
