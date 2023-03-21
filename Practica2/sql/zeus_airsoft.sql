@@ -131,3 +131,78 @@ ALTER TABLE `foro_respuestas`
 ALTER TABLE `foro_respuestas`
   ADD CONSTRAINT `id_foreign` FOREIGN KEY (`id_pregunta`) REFERENCES `foro_preguntas` (`id`);
 COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eventos`
+--
+
+CREATE TABLE `eventos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(64) NOT NULL,
+  `descripcion` varchar(512) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `eventos`
+--
+
+INSERT INTO `eventos` (`id`, `nombre`, `descripcion`, `fecha`) VALUES
+(1, 'Asalto al fortificado', 'Los reclutas se dividirán en dos equipos: un equipo ofensor y otro equipo defensor. El equipo defensor montará posiciones de defensa alrededor de un punto de interés, defendiendo una bandera. El equipo ofensor deberá obtener la bandera.', '2023-04-01'),
+(2, 'Combate a muerte por equipos', 'Dos equipos. Cada eliminación vale 1 punto. Cuando se acabe la ronda por tiempo, gana el equipo con mayor puntuación. Si todo el equipo está eliminado, se añade 5 puntos. 10 rondas en total.', '2023-04-02');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `eventos`
+--
+ALTER TABLE `eventos`
+  ADD PRIMARY KEY (`id`);
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events_users`
+--
+
+CREATE TABLE `events_users` (
+  `event_id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events_users`
+--
+
+INSERT INTO `events_users` (`event_id`, `user`) VALUES
+(1, 'vicenteesunputo@gmail.com'),
+(2, 'alex.lopez.ve@gmail.com'),
+(2, 'vicenteesunputo@gmail.com');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `events_users`
+--
+ALTER TABLE `events_users`
+  ADD PRIMARY KEY (`event_id`,`user`),
+  ADD KEY `user` (`user`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `events_users`
+--
+ALTER TABLE `events_users`
+  ADD CONSTRAINT `events_users_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `eventos` (`id`),
+  ADD CONSTRAINT `events_users_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`mail`);
+COMMIT;
