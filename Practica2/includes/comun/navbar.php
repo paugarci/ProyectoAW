@@ -8,11 +8,10 @@
   $menu = array (
     "index.php" => 'Inicio',
     "contact.php" => 'Contacto',
-    "foro.php" => 'Foro',
-    "info.php" => 'Información'
+    "foro.php" => 'Foro'
   );
-  
 ?>
+
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
@@ -61,4 +60,3 @@
     </div>
   </div>
 </nav>
-
