@@ -9,7 +9,8 @@
     "index.php" => 'Inicio',
     "contact.php" => 'Contacto',
     "foro.php" => 'Foro',
-    "info.php" => 'Información'
+    "info.php" => 'Información',
+    "product.php" => 'Productos'
   );
   
 ?>
