@@ -7,17 +7,11 @@ include 'includes/DAO/AnswerDAO.php';
 require "includes/comun/header.php";
 
 
-// Obtener la información del usuario actual desde la sesión
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
-// Verificar si el usuario actual es un administrador
-$isAdmin = $user && $user['privileged'] == 1;
-
-
-/*if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
     header("Location: index.php");
     exit;
-}*/
+}
 
 $database = new Database;
 $connection = $database->getConnection();
@@ -27,45 +21,17 @@ $answerDAO = new AnswerDAO($connection);
 
 if (isset($_POST['ask_question'])) {
     $question = $_POST['question'];
-    if (!isset($_SESSION['user'])) {
-        echo '<script>alert("Debes estar registrado para hacer una pregunta.");</script>';
-    } else {
-        $user = $_SESSION['user'];
-        $questionDAO->create(array('pregunta' => $question, 'fecha' => date('Y-m-d')));
-    }
+    $user = $_SESSION['user'];
+    $questionDAO->create(array('pregunta' => $question, 'fecha' => date('Y-m-d')));
 }
+
 if (isset($_POST['answer_question'])) {
     $answer = $_POST['answer'];
-    if (!isset($_SESSION['user'])) {
-        echo '<script>alert("Debes estar registrado para responder a una pregunta.");</script>';
-    } else {
-        $question_id = $_POST['question_id'];
-        $user = $_SESSION['user'];
-        $answerDAO->create(array('id_pregunta' => $question_id, 'respuesta' => $answer,  'fecha' => date('Y-m-d')));
-    }
+    $question_id = $_POST['question_id'];
+    $user = $_SESSION['user'];
+    $answerDAO->create(array('id_pregunta' => $question_id, 'respuesta' => $answer,  'fecha' => date('Y-m-d')));
 }
 
-// Procesar la eliminación de la pregunta si se ha enviado el formulario
-if (isset($_POST['delete_question'])) {
-    $question_id = $_POST['question_id'];
-    if (!isset($_SESSION['user'])) {
-        echo '<script>alert("Debes estar registrado para eliminar una pregunta.");</script>';
-    } else {
-        $answerDAO->deleteById($question_id);
-        $questionDAO->deleteById($question_id);
-    }
-}
-
-
-/*if (isset($_POST['delete_question'])) {
-    $question_id = $_POST['question_id'];
-    if (!isset($_SESSION['user'])) {
-        echo '<script>alert("Debes estar registrado para eliminar una pregunta.");</script>';
-    } else {
-        $answerDAO->deleteById($question_id);
-        $questionDAO->deleteById($question_id);
-    }
-}*/
 $questions = $questionDAO->getAll();
 $answers = $answerDAO->getAll();
 
@@ -103,7 +69,6 @@ $answers = $answerDAO->getAll();
                 <th scope="col">Pregunta</th>
                 <th scope="col">Respuestas</th>
                 <th scope="col">Responder</th>
-                <th scope="col"> </th>
             </tr>
         </thead>
         <tbody>
@@ -125,22 +90,15 @@ $answers = $answerDAO->getAll();
                             <input type="submit" name="answer_question" value="Responder" class="btn btn-primary">
                         </form>
                     </td>
-                    
-                    <?php if ($isAdmin): ?>
-                        <td>
-                            <form method="POST" action="">
-                                <input type="hidden" name="question_id" value="<?= $question['id'] ?>">
-                                <input type="submit" name="delete_question" value="Eliminar" class="btn btn-danger">
-                            </form>
-                        </td>
-                    <?php endif; ?>
-                    
-
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+
+    
+    
     <hr>
 
     <?php 

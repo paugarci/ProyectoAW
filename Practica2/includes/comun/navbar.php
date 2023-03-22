@@ -12,8 +12,8 @@
     "info.php" => 'Información',
     "product.php" => 'Productos'
   );
+  
 ?>
-
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
@@ -62,3 +62,4 @@
     </div>
   </div>
 </nav>
+

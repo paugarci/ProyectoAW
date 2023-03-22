@@ -10,14 +10,6 @@ class QuestionDAO extends DAO
   {
     $this->insert($data);
   }
-
-  public function deleteById($id)
-  {
-    $this->delete('id', $id);
-  }
-
-  
-
 }
 ?>
 
