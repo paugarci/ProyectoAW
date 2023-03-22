@@ -170,9 +170,87 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-=======
+
+-- --------------------------------------------------------
 -- --------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `foro_preguntas`
+--
+
+CREATE TABLE `foro_preguntas` (
+  `id` int(11) NOT NULL,
+  `pregunta` varchar(500) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_respuestas`
+--
+
+CREATE TABLE `foro_respuestas` (
+  `id` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL,
+  `respuesta` varchar(500) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Indices de la tabla `foro_preguntas`
+--
+ALTER TABLE `foro_preguntas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_foreign` (`id_pregunta`);
+
+
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`name`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`mail`);
+
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `foro_preguntas`
+--
+ALTER TABLE `foro_preguntas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+  --
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `foro_respuestas`
+--
+ALTER TABLE `foro_respuestas`
+  ADD CONSTRAINT `id_foreign` FOREIGN KEY (`id_pregunta`) REFERENCES `foro_preguntas` (`id`);
 --
 -- Table structure for table `eventos`
 --
@@ -244,5 +322,73 @@ ALTER TABLE `events_users`
 ALTER TABLE `events_users`
   ADD CONSTRAINT `events_users_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `eventos` (`id`),
   ADD CONSTRAINT `events_users_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`mail`);
+COMMIT;
+
+
+--
+-- Table structure for table `ofertas`
+--
+
+CREATE TABLE `ofertas` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(64) NOT NULL,
+  `descripcion` varchar(512) NOT NULL,
+  `codigo` varchar(64) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ofertas`
+--
+
+INSERT INTO `ofertas` (`id`, `nombre`, `descripcion`, `codigo`, `fecha`) VALUES
+(1, '2X1 en munición', 'Descuento del 50% en la primera compra de munición en nuestra tienda online.', 'OFTMUN23', '2023-04-01'),
+(2, 'Equipamiento gratis', 'Con la primera compra superior a 10€ en nuestra tienda te regalamos equipamiento valorado en más de 20€ gratis', 'OFTEQP23','2024-01-01');
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `ofertas`
+--
+ALTER TABLE `ofertas`
+  ADD PRIMARY KEY (`id`);
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offers_users`
+--
+
+CREATE TABLE `offers_users` (
+  `offer_id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `offers_users`
+--
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `offers_users`
+--
+ALTER TABLE `offers_users`
+  ADD PRIMARY KEY (`offer_id`,`user`),
+  ADD KEY `user` (`user`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `offers_users`
+--
+ALTER TABLE `offers_users`
+  ADD CONSTRAINT `offers_users_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `ofertas` (`id`),
+  ADD CONSTRAINT `offers_users_ibfk_2` FOREIGN KEY (`user`) REFERENCES `users` (`mail`);
 COMMIT;
 
