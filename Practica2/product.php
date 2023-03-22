@@ -2,7 +2,7 @@
 include 'database.php';
 include 'includes/DAO/DAO.php';
 include 'includes/DAO/ProductDAO.php';
-include 'includes/comun/header.php';
+require 'includes/comun/header.php';
 
 $database = new Database;
 $productModel = new ProductDAO($database->getConnection());
@@ -11,7 +11,7 @@ $products = $productModel->getAll();
 
 <div class="album py-5">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 g-3 justify-content-center align-items-center">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 justify-content-center align-items-center">
         
       <?php foreach ($products as $product): ?>
         <div class="card m-2">
@@ -27,4 +27,4 @@ $products = $productModel->getAll();
     </div>
   </div>
 
-<?php include "includes/comun/footer.php"; ?>
+<?php require "includes/comun/footer.php"; ?>
