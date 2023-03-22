@@ -7,10 +7,12 @@
 
   $menu = array (
     "index.php" => 'Inicio',
+    "product.php" => 'Productos',
+    "foro.php" => 'Foro',
+    "eventos.php" => 'Eventos',
     "contact.php" => 'Contacto',
     "foro.php" => 'Foro',
-    "info.php" => 'Información',
-    "product.php" => 'Productos'
+    "info.php" => 'Información'
   );
   
 ?>
