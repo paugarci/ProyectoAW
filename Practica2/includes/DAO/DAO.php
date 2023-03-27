@@ -19,12 +19,12 @@ class DAO {
 
   public function get (String $key, $value)
   {
-    $statement = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$key} = :{$key} LIMIT 1");
+    $statement = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$key} = :{$key}");
     $statement->bindParam(":{$key}", $value);
 
     $statement->execute();
 
-    return $statement->fetch();
+    return $statement->fetchAll();
   }
 
   public function insert ($data)

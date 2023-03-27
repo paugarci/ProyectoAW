@@ -4,7 +4,6 @@ abstract class User {
     private $m_Name;
     private $m_Email;
     private $m_PasswordHash;
-    private $m_Privileges;
 
     public function __construct($name, $email, $passwordHash) {
         $this->m_Name = $name;

@@ -1,106 +1,52 @@
 <?php
 
+include 'role.php';
+include 'includes/DAO/UserRolesDAO.php';
+
 class Privileges
 {
     const DELIMITER = '.';
 
-    private $m_PrivilegeMap;
+    private $m_PrivilegeSet;
 
     public function __construct()
     {
-        $this->m_PrivilegeMap = array();
+        $this->m_PrivilegeSet = array();
     }
 
-    public function hasPrivilege($privilegeKey)
-    {
-        $splitKey = explode(Privileges::DELIMITER, $privilegeKey);
+    public static function buildFromUser($connection, $userMail) {
+        $userRolesDAO = new UserRolesDAO($connection);
+        $userRoles = $userRolesDAO->get('mail', $userMail);
+        $privileges = new Privileges();
 
-        if (empty($splitKey))
-            return false;
+        foreach ($userRoles as $row) {
+            $role = Role::createFromFile($row['role']);
 
-        $valid = true;
-        $foundPrivilege = false;
-        $privilegeValue = false;
-
-        $keyIndex = 0;
-        $currentKey = $splitKey[$keyIndex];
-        $currentPrivilegeMap = $this->m_PrivilegeMap;
-
-        while ($valid && !$foundPrivilege) {
-            $value = $currentPrivilegeMap[$currentKey];
-
-            if (!is_array($value)) {
-                if (is_bool($value)) {
-                    $privilegeValue = $value;
-                    $foundPrivilege = true;
-                } else
-                    $valid = false;
-            } else {
-                if ($keyIndex >= count($splitKey))
-                    $valid = false;
-                else {
-                    $currentPrivilegeMap = $value;
-                    $currentKey = $splitKey[++$keyIndex];
-                }
+            if ($role != null) {
+                $privileges->merge($role->getPrivileges());
             }
         }
 
-        return $valid ? $privilegeValue : false;
+        return $privileges;
     }
-    public function addPrivilege($privilegeKey)
+    public function hasPrivilege($privilege)
     {
-        $splitKey = explode(self::DELIMITER, $privilegeKey);
-
-        if (empty($splitKey))
-            return;
-
-        $finished = false;
-
-        $keyIndex = 0;
-        $currentKey = $splitKey[$keyIndex];
-        $currentPrivilegeMap = $this->m_PrivilegeMap;
-        
-        while ($finished) {
-            if ($keyIndex == count($currentPrivilegeMap) - 1) {
-                $currentPrivilegeMap[$currentKey] = true;
-                $finished = true;
-            }     
-            else {
-                if (!isset($currentPrivilegeMap[$currentKey])) {
-                    $currentPrivilegeMap[$currentKey] = array();
-                }
-                
-                $currentKey = $splitKey[++$keyIndex];
-                $currentPrivilegeMap = $currentPrivilegeMap[$currentKey];
-            }       
+        return isset($this->m_PrivilegeSet[$privilege]);
+    }
+    public function getAllPrivileges() {
+        return $this->m_PrivilegeSet;
+    }
+    public function addPrivilege($privilege)
+    {
+        $this->m_PrivilegeSet[$privilege] = true;
+    }
+    public function removePrivilege($privilege)
+    {
+        unset($this->m_PrivilegeSet[$privilege]);
+    }
+    public function merge($privileges) {
+        foreach($privileges->m_PrivilegeSet as $key => $value) {
+            $this->addPrivilege($key);
         }
-    }
-    public function removePrivilege($privilegeKey)
-    {
-        $splitKey = explode(self::DELIMITER, $privilegeKey);
-
-        if (empty($splitKey))
-            return;
-
-            $finished = false;
-    
-            $keyIndex = 0;
-            $currentKey = $splitKey[$keyIndex];
-            $currentPrivilegeMap = $this->m_PrivilegeMap;
-            
-            while ($finished) {
-                if ($keyIndex == count($currentPrivilegeMap) - 1) {
-                    $currentPrivilegeMap[$currentKey] = true;
-                    $finished = false;
-                }     
-                else {
-                    if (!isset($currentPrivilegeMap[$currentKey])) {
-                        $currentPrivilegeMap[$currentKey] = array();
-                    }
-                    
-                    $currentKey = $splitKey[++$keyIndex];
-                    $currentPrivilegeMap = $currentPrivilegeMap[$currentKey];
-                }       
-            }
     }
 }
