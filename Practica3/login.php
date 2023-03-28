@@ -1,13 +1,12 @@
 <?php
-include 'database.php';
-include 'includes/DAO/DAO.php';
-include 'includes/DAO/UserDAO.php';
+
+require_once __DIR__ . '/includes/config.php';
 
 $error = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $database = new Database;
+  $database = new \Database;
   $connection = $database->getConnection();
 
   $userModel = new UserDAO($connection);
