@@ -1,8 +1,7 @@
 <?php
-namespace es\ucm\fdi\aw\DAO;
 class StateDAO extends DAO
 {
-  public function __construct($connection)
+  public function __construct(PDO $connection)
   {
     parent::__construct("states", $connection);
   }

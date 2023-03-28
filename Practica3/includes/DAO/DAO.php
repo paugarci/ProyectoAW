@@ -1,10 +1,9 @@
 <?php
-namespace es\ucm\fdi\aw\DAO;
 class DAO {
   private String $table;
-  private \PDO $db;
+  private PDO $db;
 
-  public function __construct(String $table, $connection)
+  public function __construct(String $table, PDO $connection)
   {
     $this->table = $table;
     $this->db = $connection;
@@ -56,24 +55,36 @@ class DAO {
     $statement->execute();
   }
 
-  public function update (String $key, $value, $data)
-  {
+  public function update(String $key, $value, $data)
+{
     $query = "UPDATE {$this->table} SET ";
-    foreach ($data as $field)
-    {
-      $query .= "{$field} = :{$field},";
+    foreach ($data as $field => $field_value) {
+        $query .= "{$field} = :{$field}, ";
     }
-    $query = trim($query, ',');
-    $query .= " WHERE {$key} = :{$key}";
+    $query = trim($query, ', ');
+    $query .= "WHERE {$key} = :{$key}";
     $statement = $this->db->prepare($query);
 
-    foreach ($data as $field)
-    {
-      $statement->bindParam(":{$field}", $value);
+    foreach ($data as $field => $field_value) {
+        $statement->bindValue(":{$field}", $field_value);
     }
-    $statement->bindParam(":$field", $data[$field]);
+    $statement->bindParam(":{$key}", $value);
+
     $statement->execute();
-  }
+}
+
+public function updateOnce(String $key, $value, $column, $column_value)
+{
+    $query = "UPDATE {$this->table} SET {$column} = :{$column} WHERE {$key} = :{$key}";
+    $statement = $this->db->prepare($query);
+
+    $statement->bindParam(":{$column}", $column_value);
+    $statement->bindParam(":{$key}", $value);
+
+    $statement->execute();
+}
+
+  
 
   public function delete (String $key, $value)
   {
