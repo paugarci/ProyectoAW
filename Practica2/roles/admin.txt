@@ -1,0 +1,9 @@
+product.create
+product.read
+product.update
+product.delete
+
+event.create
+event.read
+event.update
+event.delete
