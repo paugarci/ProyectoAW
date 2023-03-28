@@ -1,12 +1,13 @@
 <?php
-
-require_once __DIR__ . '/includes/config.php';
+include 'database.php';
+include 'includes/DAO/DAO.php';
+include 'includes/DAO/UserDAO.php';
 
 $error = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $database = new \Database;
+  $database = new Database;
   $connection = $database->getConnection();
 
   $userModel = new UserDAO($connection);
@@ -34,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 require "includes/comun/header.php";
 ?>
-<div class="wrapper">
 <div class="container d-flex justify-content-center col-lg-4" id="borders-form">
   <form class="needs-validation" method="post" action="login.php">
     <div class="row g-3 p-4">
@@ -70,6 +70,4 @@ require "includes/comun/header.php";
       <button class="w-100 btn btn-primary btn-lg" type="submit">Entrar</button>
   </form>
 </div>
-</div>
-<br><br>
 <?php require "includes/comun/footer.php" ?>

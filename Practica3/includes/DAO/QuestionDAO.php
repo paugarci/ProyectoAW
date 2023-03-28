@@ -1,8 +1,7 @@
 <?php
-namespace es\ucm\fdi\aw\DAO;
 class QuestionDAO extends DAO
 {
-  public function __construct($connection)
+  public function __construct(PDO $connection)
   {
     parent::__construct("foro_preguntas", $connection);
   }
@@ -17,7 +16,19 @@ class QuestionDAO extends DAO
     $this->delete('id', $id);
   }
 
+  public function getById($id)
+  {
+    $this->get('id', $id);
+  }
+
+  public function updateQ($id, $column, $value)
+{
+    $this->updateOnce('id', $id, $column, $value);
+}
+
+  
   
 
 }
 ?>
+

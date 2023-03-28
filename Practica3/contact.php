@@ -1,8 +1,5 @@
 <?php require "includes/comun/header.php" ?>
 <br>
-
-<div class="wrapper">
- 
 <div class="container d-flex justify-content-center col-sm-12 col-md-6 col-lg-6 col-xl-6">
   <form class="needs-validation" method="post" action="contacto.php">
     <div class="row p-2 g-3">
@@ -57,7 +54,7 @@
       <div class="form-check col-md-8">
         <input type="checkbox" class="form-check-input" id="same-address">
         <label class="form-check-label" for="same-address">Marque esta casilla para verificar que ha leído nuestros <a
-            href="info.php#condiciones">términos y condiciones</a> de uso.</label>
+            href="#">términos y condiciones</a> de uso.</label>
       </div>
 
       <hr class="my-4">
@@ -65,6 +62,5 @@
       <button class="w-100 btn btn-primary btn-lg" type="submit">Enviar</button>
   </form>
 </div>
- </div>
- <br><br>
+
 <?php require "includes/comun/footer.php" ?>
