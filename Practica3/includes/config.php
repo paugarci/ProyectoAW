@@ -1,51 +1,46 @@
 <?php
 
-/**
- * Parámetros de conexión a la BD
- */
-define('BD_HOST', 'localhost');
-define('BD_NAME', 'zeus_airsoft');
-define('BD_USER', 'root');
-define('BD_PASS', '');
+//  Project constants
+define('NAMESPACE_PREFIX', 'es\\ucm\\fdi\\aw\\');
+define('PROJECT_ROOT', dirname(__DIR__));
+define('INCLUDES_ROOT', PROJECT_ROOT . '\\includes');
+define('IMAGES_ROOT', PROJECT_ROOT . '\\images');
 
-/**
- * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
- */
+//  Database constants
+define('DATABASE_HOST', 'localhost');
+define('DATABASE_NAME', 'zeus_airsoft');
+define('DATABASE_USERNAME', 'default_user');
+define('DATABASE_PASSWORD', 'unacontrasenyamuyperoquemuylarga');
+
+//  Locale configuration
 ini_set('default_charset', 'UTF-8');
 setLocale(LC_ALL, 'es_ES.UTF.8');
 date_default_timezone_set('Europe/Madrid');
 
+//  Allow namespace to autoimport correct classes and files
 spl_autoload_register(function ($class) {
+	$namespaceLength = strlen(NAMESPACE_PREFIX);
 
-  $prefix = 'es\\ucm\\fdi\\aw\\';
-  $base_dir = __DIR__ . '/';
-  $len = strlen($prefix);
+	if (strncmp(NAMESPACE_PREFIX, $class, $namespaceLength) !== 0)
+		return;
 
-  if (strncmp($prefix, $class, $len) !== 0)
-  {
-    return;
-  }
-  
-  // get the relative class name
-  $relative_class = substr($class, $len);
-  
-  // replace the namespace prefix with the base directory, replace namespace
-  // separators with directory separators in the relative class name, append
-  // with .php
-  $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-  // if the file exists, require it
-  if (file_exists($file)) {
-      require $file;
-  }
+	// Get the relative class name
+	$relativeClass = substr($class, $namespaceLength);
+
+	/*  Replace the namespace prefix with the base directory
+            Replace namespace separators with directory separators in the relative class name
+            Append with .php
+        */
+
+	$file = INCLUDES_ROOT . '/' . str_replace('\\', '/', $relativeClass) . '.php';
+
+	// If the file exists, require it
+	if (file_exists($file)) {
+		require $file;
+	}
 });
 
-// Inicializa la aplicación
-$app = es\ucm\fdi\aw\Application::getSingleton();
-$app->init(array('host'=>BD_HOST, 'name'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS));
+    //  Application initialisation
+    //  TODO
 
-/**
- * @see http://php.net/manual/en/function.register-shutdown-function.php
- * @see http://php.net/manual/en/language.types.callable.php
- */
-register_shutdown_function(array($app, 'shutdown'));
-?>
+session_start();
