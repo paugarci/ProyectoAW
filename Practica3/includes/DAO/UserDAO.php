@@ -13,8 +13,8 @@ class UserDAO extends DAO
     private const TABLE_NAME = 'users';
 
     private const ID_KEY = 'id';
-    private const NAME_KEY= 'name';
-    private const SURNAME_KEY= 'surname';
+    private const NAME_KEY = 'name';
+    private const SURNAME_KEY = 'surname';
     private const EMAIL_KEY = 'email';
     private const PASSWORD_HASH_KEY = 'passwordHash';
 
@@ -25,7 +25,27 @@ class UserDAO extends DAO
     }
 
     //  Methods
-    protected function createDTOFromArray($array) : DTO
+    public function getUserRoles($userID): array
+    {
+        $query = "SELECT r.id, r.roleName FROM roles r INNER JOIN user_roles ur ON r.id = ur.roleID WHERE ur.userID = :userID;";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+
+        $results = array();
+        $roleDAO = new RoleDAO();
+
+        foreach ($statement as $result) {
+            array_push($results, $roleDAO->createDTOFromArray($result));
+        }
+
+
+
+        return $results;
+    }
+
+    protected function createDTOFromArray($array): DTO
     {
         $id = isset($array[self::ID_KEY]) ? $array[self::ID_KEY] : -1;
         $name = $array[self::NAME_KEY];
