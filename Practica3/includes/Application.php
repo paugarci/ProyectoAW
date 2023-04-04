@@ -1,93 +1,39 @@
-<?php 
-namespace es\ucm\fdi\aw; 
-class Application 
-{ 
-  private static $instance; 
+<?php
 
-  private $dbData; 
-  private $initialized = false; 
-  private $conn; 
+namespace es\ucm\fdi\aw;
 
-  public static function getSingleton() 
-  { 
-    if (!self::$instance instanceof self) 
-    { 
-      self::$instance = new self; 
-    } 
-    return self::$instance; 
-  } 
+require_once 'includes/config.php';
 
-  private function __construct() {} 
+use es\ucm\fdi\aw\database\DatabaseProxy;
 
-  public function __clone() 
-  { 
-    throw new \Exception('No se puede clonar este objeto.'); 
-  } 
+class Application
+{
+    //  Fields
+    private static $s_Instance;
 
-  public function __sleep() 
-  { 
-    throw new \Exception('No se puede serializar el objeto.'); 
-  } 
+    private $m_DatabaseProxy;
 
-  public function __wakeup() 
-  { 
-    throw new \Exception('No se puede deserializar el objeto.'); 
-  } 
+    //  Constructors
+    private function __construct()
+    {
+        $this->m_DatabaseProxy = new DatabaseProxy();
+    }
 
-  public function init($dbData) 
-  { 
-    if ( !$this->initialized ) 
-    { 
-      $this->dbData = $dbData; 
-    } 
-    session_start(); 
-    $this->initialized = true; 
-  } 
+    //  Methods
+    public static function getInstance() : Application
+    {
+        if (!isset(self::$s_Instance))
+            self::$s_Instance = new Application();
 
-  public function isInitialized() 
-  { 
-    if ( !$this->initialized ) 
-    { 
-      echo "App is not initialized"; 
-      exit(); 
-    } 
-  } 
+        return self::$s_Instance;
+    }
 
-  public function shutdown() 
-  { 
-    $this->isInitialized(); 
-
-    if ($this->conn !== null) 
-    { 
-      $this->conn == null; 
-    } 
-  } 
-
-  public function connect() 
-  { 
-    $this->isInitialized(); 
-
-    if (!$this->conn) 
-    { 
-      $host = $this->dbData['host']; 
-      $name = $this->dbData['name']; 
-      $user = $this->dbData['user']; 
-      $pass = $this->dbData['pass']; 
-
-      $options = [ 
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION, 
-        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC 
-      ]; 
-      try 
-      { 
-        $this->conn = new \PDO("mysql:{$host}=localhost;dbname={$name}", $user, $pass, $options); 
-      } 
-      catch (\PDOException $e)  
-      { 
-        die("PDO Connection Error: " . $e->getMessage()); 
-      } 
-    } 
-    return $this->conn; 
-  } 
-} 
-?>
+    public function getDatabaseProxy() : DatabaseProxy
+    {
+        return $this->m_DatabaseProxy;
+    }
+    public function loginUser($userDTO) : void
+    {
+        $_SESSION['user'] = $userDTO;
+    }
+}
