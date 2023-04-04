@@ -22,7 +22,6 @@ require_once 'includes/config.php';
             echo "Role ID: {$roleDTO->getID()}, Role name: {$roleDTO->getRoleName()}<br>";
         }
     }
-
     ?>
 </div>
 

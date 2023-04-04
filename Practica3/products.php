@@ -29,16 +29,12 @@ $productsPath = 'images/products/';
         <div class="text-start ms-3">
           <div class="text-black text-decoration-none">
             <?php
-              $price = strval($productDTO->getPrice());
-              $numCharacters = strlen($price);
-              $intPart = substr($price, $numCharacters - 3);
-              $decimalPart = substr($price, $numCharacters - 2, 2);
+            $price = strval($productDTO->getPrice());
+            $numCharacters = strlen($price);
+            $intPart = intval($price);
+            $decimalPart = "";
 
-              if(strlen($decimalPart) < 2)
-              {
-                $decimalPart = "0" . $decimalPart;
-              }
-              echo $decimalPart;
+            $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
             ?>
             <b class="fs-2"><?= $intPart ?></b>
             <sup class="fs-6"><?= $decimalPart ?></sup>
@@ -47,7 +43,6 @@ $productsPath = 'images/products/';
         </div>
         <br>
       </div>
-      <!-- <?php var_dump(is_int(strval($productDTO->getPrice()))); ?> -->
     <?php endforeach ?>
   </div>
 </div>
