@@ -27,7 +27,7 @@ class UserDAO extends DAO
     //  Methods
     public function getUserRoles($userID): array
     {
-        $query = "SELECT r.id, r.roleName FROM roles r INNER JOIN user_roles ur ON r.id = ur.roleID WHERE ur.userID = :userID;";
+        $query = "SELECT r.id, r.roleName FROM roles r INNER JOIN users_roles ur ON r.id = ur.roleID WHERE ur.userID = :userID;";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':userID', $userID);

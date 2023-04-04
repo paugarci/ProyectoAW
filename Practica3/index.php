@@ -14,6 +14,7 @@ require_once 'includes/config.php';
     <?php
     if (isset($_SESSION['user']))
     {
+        echo($_SESSION['user']->getID());
         $userDAO = new UserDAO();
         $roleDTOResults = $userDAO->getUserRoles($_SESSION['user']->getID());
 
@@ -25,7 +26,10 @@ require_once 'includes/config.php';
     ?>
 </div>
 
-<?php $content = ob_get_clean();
+<?php 
+
+$title = 'Inicio';
+$content = ob_get_clean();
 
 
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';
