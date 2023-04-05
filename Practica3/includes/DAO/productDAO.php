@@ -41,7 +41,7 @@ class ProductDAO extends DAO
             self::ID_KEY => $dto->getID(),
             self::NAME_KEY => $dto->getName(),
             self::DESCRIPTION_KEY => $dto->getDescription(),
-            self::IMG_PATH_KEY => $dto->getImgPath(),
+            self::IMG_PATH_KEY => $dto->getImgName(),
             self::PRICE_KEY => $dto->getPrice()
         );
     }

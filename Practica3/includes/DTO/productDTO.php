@@ -35,7 +35,7 @@ class ProductDTO extends DTO
         return $this->m_Description;
     }
     
-    public function getImgPath()
+    public function getImgName()
     {
         return $this->m_ImgPath;
     }

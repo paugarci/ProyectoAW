@@ -16,8 +16,8 @@ $productsPath = 'images/products/';
   <div class="row justify-content-center m-3">
     <?php foreach ($productDTOresults as $productDTO) : ?>
       <div class="card m-2 shadow d-flex flex-col h-auto" style="width: 300px;">
-        <div class="d-flex flex-fill">
-          <img class="img-fluid object-fit-contain" src="<?= $productsPath . $productDTO->getImgPath(); ?>">
+        <div class="d-flex flex-fill" id="product-img">
+          <img class="img-fluid object-fit-contain" src="<?= $productsPath . $productDTO->getImgName(); ?>">
         </div>
         <hr class="my-3">
         <div class="text-start">
@@ -36,9 +36,8 @@ $productsPath = 'images/products/';
 
             $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
             ?>
-            <b class="fs-2"><?= $intPart ?></b>
-            <sup class="fs-6"><?= $decimalPart ?></sup>
-            <b class="fs-2">€</b>
+            <b class="fs-2"><?= $intPart ?></b><sup class="fs-5"><?= $decimalPart ?>
+          </sup><b class="fs-2"> €</b>
           </div>
         </div>
         <br>
@@ -47,26 +46,19 @@ $productsPath = 'images/products/';
   </div>
 </div>
 
+<style>
+    #product-img {
+        transition: all 0.3s;
+    }
+
+    #product-img:hover {
+        transform: scale(1.1);
+    }
+</style>
+
 <?php
 $title = 'Productos';
 $content = ob_get_clean();
 
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';
 ?>
-
-<!-- <div class="card m-2">
-      <img src="<?= $productsPath . $productDTO->getImgPath(); ?>" class="card-img-top object-fit-contain" style="height: 300px;">
-      <hr class="my-1">
-      <div class="row card-body">
-        <div class="text-start">
-          <a href="#" class="text-muted text-decoration-none">
-            <p><?= $productDTO->getName(); ?></p>
-          </a>
-        </div>
-        <div class="text-start">
-          <a href="#" class="text-dark text-large text-decoration-none">
-            <b><?= $productDTO->getPrice(); ?> €</b>
-          </a>
-        </div>
-      </div>
-    </div> -->

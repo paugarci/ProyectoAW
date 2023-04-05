@@ -40,8 +40,6 @@ class UserDAO extends DAO
             array_push($results, $roleDAO->createDTOFromArray($result));
         }
 
-
-
         return $results;
     }
 
