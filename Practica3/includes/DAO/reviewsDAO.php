@@ -22,6 +22,43 @@ class ReviewsDAO extends DAO
     }
 
     //  Methods
+    /*
+    public function getProductsReviews($productID): array
+    {
+        $query = "SELECT r.* FROM product_user_reviews pur INNER JOIN reviews r ON pur.review_id = r.id WHERE pur.product_id = :productID";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':productID', $productID);
+        $statement->execute();
+
+        $results = array();
+        $reviewDAO = new reviewsDAO();
+
+        foreach ($statement as $result) {
+            array_push($results, $reviewDAO->createDTOFromArray($result));
+        }
+
+        return $results;
+    }*/
+
+    public function getUsersProductsReviews($productID): array
+    {
+        $query = "SELECT r.* FROM product_user_reviews pur INNER JOIN reviews r INNER JOIN products p ON pur.review_id = r.id AND pur.product_id = p.id WHERE pur.user_id = :userID AND pur.product_id = :productID";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':productID', $productID);
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+
+        $results = array();
+        $reviewDAO = new reviewsDAO();
+
+        foreach ($statement as $result) {
+            array_push($results, $reviewDAO->createDTOFromArray($result));
+        }
+
+        return $results;
+    }
 
     protected function createDTOFromArray($array): DTO
     {
@@ -30,7 +67,7 @@ class ReviewsDAO extends DAO
         $review = $array[self::REVIEW_KEY];
         $date = $array[self::DATE_KEY];
 
-        return new ProductDTO($id, $comment, $review, $date);
+        return new ReviewsDTO($id, $comment, $review, $date);
     }
 
     protected function createArrayFromDTO($dto): array
@@ -42,6 +79,7 @@ class ReviewsDAO extends DAO
             self::DATE_KEY => $dto->getDate()
         );
     }
+
 }
 
 ?>

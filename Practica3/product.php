@@ -8,7 +8,6 @@ require_once 'includes/config.php';
 ob_start();
 
 $productID = $_GET["productID"];
-$reviewID = $_GET["review_id"];
 
 //Products
 
@@ -20,35 +19,32 @@ $error = "";
 //Reviews
 
 $reviewsDAO = new reviewsDAO;
-$reviewsDTOResults = $reviewsDAO->read($reviewID);
+$reviewsDTOResults = $reviewsDAO->getUsersProductsReviews($productID);
 
-if (count($productDTOResults) == 0) {
-    $title = "Producto no encontrado";
+if (count($reviewsDTOResults) == 0) {
+    $comment = "Sin reviews de este producto";
 
     $error = '
         <div class="alert alert-danger m-2 text-center">
-            No existe este producto
+            No existen reviews de este producto
         </div>';
-} else if (count($productDTOResults) > 1) {
-    $title = "Producto no encontrado";
+} else if (count($reviewsDTOResults) > 1) {
+    $comment = "Sin reviews de este producto";
 
     $error = <<<HTML_ERROR
         <div class="alert alert-danger m-2 text-center">
-            Hay más de un producto con esta ID
+            Hay más de una review de este producto con esta ID
         </div>
     HTML_ERROR;
 } else {
-    $product = $productDTOResults[0];
-    $title = $product->getName();
-
-    $price = strval($product->getPrice());
-    $numCharacters = strlen($price);
-    $intPart = intval($price);
-    $decimalPart = "";
     
-    $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
-}
-$error
+    $reviews = $reviewsDTOResults[0];
+    $review = $reviews->getReview();
+
+    $comment = $reviews->getComment();
+    $date = $reviews->getDate();
+    }
+$error;
 
 
 if (count($productDTOResults) == 0) {
@@ -96,8 +92,16 @@ $error
                 <button class="btn btn-outline-primary" id="add-to-cart">Add to Cart</button>
             </div>
         </div>
-        <div class="mt-5"><?= 
         <div class="mt-5"><?= $product->getDescription() ?></div>
+        <?php foreach ($reviewsDTOResults as $reviewsDTO) : ?>
+            <?php
+            $reviewsDTO->getReview();
+            <div class="mt-5"><?= $reviewsDTO->getReview() ?></div>
+            <div class="mt-5"><?= $reviewsDTO->getUser() ?></div>
+            <div class="mt-5"><?= $reviewsDTO->getComment() ?></div>
+            <div class="mt-5"><?= $reviewsDTO->getDate() ?></div>
+            ?>
+        <?php endforeach ?>
     </div>
 </div>
 <?php
