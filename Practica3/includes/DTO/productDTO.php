@@ -44,6 +44,7 @@ class ProductDTO extends DTO
     {
         return $this->m_Price;
     }
+
     public function setName($name)
     {
         $this->m_Name = $name;
@@ -63,4 +64,6 @@ class ProductDTO extends DTO
     {
         $this->m_Price = $price;
     }
+
+    
 }
