@@ -16,6 +16,7 @@ class ProductDAO extends DAO
     private const DESCRIPTION_KEY = 'description';
     private const IMG_PATH_KEY = 'imgPath';
     private const PRICE_KEY = 'price';
+    private const OFFER_KEY = 'offer';
 
     //  Constructors
     public function __construct()
@@ -32,8 +33,8 @@ class ProductDAO extends DAO
         $description = $array[self::DESCRIPTION_KEY];
         $imgPath = $array[self::IMG_PATH_KEY];
         $price = $array[self::PRICE_KEY];
-
-        return new ProductDTO($id, $name, $description, $imgPath, $price);
+        $offer = $array[self::OFFER_KEY];
+        return new ProductDTO($id, $name, $description, $imgPath, $price, $offer);
     }
     protected function createArrayFromDTO($dto): array
     {
@@ -42,7 +43,8 @@ class ProductDAO extends DAO
             self::NAME_KEY => $dto->getName(),
             self::DESCRIPTION_KEY => $dto->getDescription(),
             self::IMG_PATH_KEY => $dto->getImgPath(),
-            self::PRICE_KEY => $dto->getPrice()
+            self::PRICE_KEY => $dto->getPrice(),
+            self::OFFER_KEY => $dto->getOffer(),
         );
     }
 }

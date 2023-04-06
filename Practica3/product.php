@@ -36,7 +36,6 @@ if (count($productDTOResults) == 0) {
     $numCharacters = strlen($price);
     $intPart = intval($price);
     $decimalPart = "";
-    
     $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
 }
 $error
@@ -51,8 +50,19 @@ $error
                 <h3> <?= $product->getName() ?> </h3>
             </div>
             <hr class="mt-2">
-            <h3><?= $product->getPrice() ?>€</h3>
-            
+            <?php
+                if ($product->getOffer() != 0) {
+            ?>
+                
+                <h3><?= $product->getOfferPrice()?>€</h3>   
+                <h4 class="text-decoration-line-through text-danger"><?= $product->getPrice() ?>€</h4>
+            <?php
+            } else {
+            ?>
+                <h3><?= $product->getPrice() ?>€</h3>
+            <?php
+            }
+            ?>
             <div class="buttons d-flex flex-row mt-5 gap-3">
                 <button class="btn btn-primary" id="buy-now">Buy Now</button>
                 <button class="btn btn-outline-primary" id="add-to-cart">Add to Cart</button>

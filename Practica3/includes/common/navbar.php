@@ -39,7 +39,7 @@ $menu = array(
                         Hola, <?= $_SESSION["user"]->getName() ?>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#">Cuenta</a></li>
+                        <li><a class="dropdown-item" href="account.php">Cuenta</a></li>
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
                         <li><a class="dropdown-item" href="#">Lista de deseos</a></li>
                         <li>
