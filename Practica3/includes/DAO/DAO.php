@@ -1,95 +1,121 @@
-<?php 
-namespace es\ucm\fdi\aw\DAO; 
-class DAO { 
-  private String $table; 
-  private \PDO $db; 
+<?php
 
-  public function __construct(String $table) 
-  { 
-    $this->table = $table; 
-    $this->db = \es\ucm\fdi\aw\Application::getSingleton()->connect();
-  } 
+namespace es\ucm\fdi\aw\DAO;
 
-  public function getAll () 
-  { 
-    $statement = $this->db->prepare("SELECT * FROM {$this->table}"); 
-    $statement->execute(); 
+require_once 'includes/config.php';
 
-    return $statement->fetchAll(); 
-  } 
+use es\ucm\fdi\aw\Application;
+use es\ucm\fdi\aw\DTO\DTO;
 
-  public function get (String $key, $value) 
-  { 
-    $statement = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$key} = :{$key} LIMIT 1"); 
-    $statement->bindParam(":{$key}", $value); 
+//  Note: possible SQL injection when using parameters. Investigate
+abstract class DAO
+{
+    //  Constants
+    private const ID_KEY = 'id';
 
-    $statement->execute(); 
+    //  Fields
+    protected $m_TableName;
+    protected $m_DatabaseProxy;
 
-    return $statement->fetch(); 
-  } 
+    //  Constructors
+    public function __construct($tableName)
+    {
+        $this->m_TableName = $tableName;
+        $this->m_DatabaseProxy = Application::getInstance()->getDatabaseProxy();
+    }
 
-  public function insert ($data) 
-  { 
-    $query = "INSERT INTO {$this->table} ("; 
+    //  Methods
+    public function create($dto) : bool
+    {
+        $dtoArray = $this->createArrayFromDTO($dto);
+        $dtoArrayKeys = array_keys($dtoArray);
+
+        $columns = $dtoArrayKeys[0];
+        $values = ":{$dtoArrayKeys[0]}";
+
+        for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
+            $column = $dtoArrayKeys[$i];
+
+            if ($dtoArray[$column] == null)
+                continue;
+
+            $columns .= ", $column";
+            $values .= ", :$column";
+        }
+
+        $query = "INSERT INTO {$this->m_TableName} ($columns) VALUES ($values);";
+        $statement = $this->m_DatabaseProxy->prepare($query);
+
+        foreach ($dtoArrayKeys as $key)
+            $statement->bindParam(":$key", $dtoArray[$key]);
+        
+        return $statement->execute();
+    }
+    public function read($id = null, $filters = array()) : array
+    {
+        if ($id != null)
+            $filters[self::ID_KEY] = $id;
     
-    foreach ($data as $field => $value) 
-    { 
-      $query .= "{$field},"; 
-    } 
-    $query = trim($query, ','); 
-    $query .= ") VALUES ("; 
-    
-    foreach ($data as $field => $value) 
-    { 
-      $query .= ":$field,"; 
-    } 
-    $query = trim($query, ','); 
-    $query .= ");"; 
-    $statement = $this->db->prepare($query); 
-    
-    foreach ($data as $field => $value) 
-    { 
-      $statement->bindParam(":$field", $data[$field]); 
-    } 
-    
-    //var_dump($statement); 
-    $statement->execute(); 
-  } 
+        $filterConstraint = " WHERE ";
 
-  public function update (String $key, $value, $data) 
-  { 
-    $query = "UPDATE {$this->table} SET "; 
-    foreach ($data as $field) 
-    { 
-      $query .= "{$field} = :{$field},"; 
-    } 
-    $query = trim($query, ','); 
-    $query .= " WHERE {$key} = :{$key}"; 
-    $statement = $this->db->prepare($query); 
+        $filterKeys = array_keys($filters);
+        $numFilters = count($filters);
 
-    foreach ($data as $field) 
-    { 
-      $statement->bindParam(":{$field}", $value); 
-    } 
-    $statement->bindParam(":$field", $data[$field]); 
-    $statement->execute(); 
-  }
+        for ($i = 0; $i < $numFilters; ++$i)
+        {
+            $filterConstraint .= "{$filterKeys[$i]} = :{$filterKeys[$i]}";
 
-  public function updateOnce(String $key, $value, $column, $column_value) 
-{ 
-    $query = "UPDATE {$this->table} SET {$column} = :{$column} WHERE {$key} = :{$key}"; 
-    $statement = $this->db->prepare($query); 
+            if ($i < $numFilters - 1)
+                $filterConstraint .= ' AND ';
+        }        
 
-    $statement->bindParam(":{$column}", $column_value); 
-    $statement->bindParam(":{$key}", $value); 
+        $query = "SELECT * FROM {$this->m_TableName}" . ($numFilters > 0 ? $filterConstraint : '');
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        
+        foreach ($filters as $filterKey => $filterValue)
+            $statement->bindParam(":$filterKey", $filterValue);
 
-    $statement->execute(); 
-} 
-  public function delete (String $key, $value) 
-  { 
-    $statement = $this->db->prepare("DELETE FROM {$this->table} WHERE {$key} = :{$key}"); 
-    $statement->bindParam(":{$key}", $value); 
-    $statement->execute(); 
-  } 
-} 
-?>
+        $statement->execute();
+        $results = array();
+
+        foreach ($statement as $result)
+            array_push($results, $this->createDTOFromArray($result));
+
+        return $results;
+    }
+    public function update($dto) : bool
+    {
+        $dtoArray = $this->createArrayFromDTO($dto);
+        $dtoArrayKeys = array_keys($dtoArray);
+        
+        $updateVariables = "{$dtoArrayKeys[0]} = {$dtoArray[$dtoArrayKeys[0]]}";
+
+        for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
+            $column = $dtoArrayKeys[$i];
+            $updateVariables .= ", $column = :$column";
+        }
+
+        $idKey = self::ID_KEY;
+        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()}";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+
+        foreach ($dtoArrayKeys as $key)
+            $statement->bindParam(":$key", $dtoArray[$key]);
+
+        return $statement->execute();
+    }
+    public function delete($id) : bool
+    {
+        $idKey = self::ID_KEY;
+        $query = "DELETE FROM {$this->m_TableName} WHERE $idKey = :$idKey";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam($idKey, $id);
+        
+        return $statement->execute();
+    }
+
+    protected abstract function createDTOFromArray($array) : DTO;
+    protected abstract function createArrayFromDTO($DTO) : array;
+}
