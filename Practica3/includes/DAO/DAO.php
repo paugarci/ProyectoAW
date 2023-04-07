@@ -100,11 +100,26 @@ abstract class DAO
 
         $statement = $this->m_DatabaseProxy->prepare($query);
 
-        foreach ($dtoArrayKeys as $key)
-            $statement->bindParam(":$key", $dtoArray[$key]);
+        foreach ($dtoArrayKeys as $key) {
+            $value = $dtoArray[$key];
+            $statement->bindParam(":$key", $value);
+        }
+        
 
         return $statement->execute();
     }
+
+    public function updateColumn($id, $columnName, $columnValue) : bool
+        {
+            $idKey = self::ID_KEY;
+            $query = "UPDATE {$this->m_TableName} SET $columnName = :columnValue WHERE $idKey = :id";
+            $statement = $this->m_DatabaseProxy->prepare($query);
+            $statement->bindParam(":id", $id);
+            $statement->bindParam(":columnValue", $columnValue);
+            return $statement->execute();
+        }
+
+
     public function delete($id) : bool
     {
         $idKey = self::ID_KEY;
@@ -115,6 +130,19 @@ abstract class DAO
         
         return $statement->execute();
     }
+
+    public function deleteById(String $key, $value) : bool
+    {
+        $idKey = $key;
+        $query = "DELETE FROM {$this->m_TableName} WHERE $idKey = :$idKey";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam($idKey, $value);
+        
+        return $statement->execute();
+    }
+
+    
 
     protected abstract function createDTOFromArray($array) : DTO;
     protected abstract function createArrayFromDTO($DTO) : array;

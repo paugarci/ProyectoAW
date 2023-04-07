@@ -26,7 +26,7 @@ if (!isset($title))
 		<main class="flex-fill">
 			<?= $content ?>
 		</main>
-		<?php require dirname(__DIR__) . '/common/footer.php' ?>
+		<?php //require dirname(__DIR__) . '/common/footer.php' ?>
 	</div>
 </body>
 
