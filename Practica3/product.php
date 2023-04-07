@@ -1,7 +1,9 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
-use es\ucm\fdi\aw\DAO\reviewsDAO;
+use es\ucm\fdi\aw\DAO\ReviewsDAO;
+use es\ucm\fdi\aw\DAO\UserReviewDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 
 require_once 'includes/config.php';
 
@@ -16,10 +18,18 @@ $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
 $error = "";
 
+//User Intermediate
+$userReviewsDAO = new UserReviewDAO;
+$userID = $userReviewsDAO->read()[0]->getUserID();
+
+//User
+$user = new UserDAO;
+
 //Reviews
 
-$reviewsDAO = new reviewsDAO;
-$reviewsDTOResults = $reviewsDAO->getUsersProductsReviews($productID);
+$reviewsDAO = new ReviewsDAO;
+$reviewsDTOResults = $reviewsDAO->read();
+var_dump($reviewsDTOResults);
 
 if (count($reviewsDTOResults) == 0) {
     $comment = "Sin reviews de este producto";
@@ -28,21 +38,13 @@ if (count($reviewsDTOResults) == 0) {
         <div class="alert alert-danger m-2 text-center">
             No existen reviews de este producto
         </div>';
-} else if (count($reviewsDTOResults) > 1) {
-    $comment = "Sin reviews de este producto";
+} else {
 
     $error = <<<HTML_ERROR
         <div class="alert alert-danger m-2 text-center">
             Hay más de una review de este producto con esta ID
         </div>
     HTML_ERROR;
-} else {
-    
-    $reviews = $reviewsDTOResults[0];
-    $review = $reviews->getReview();
-
-    $comment = $reviews->getComment();
-    $date = $reviews->getDate();
     }
 $error;
 
@@ -92,18 +94,22 @@ $error
                 <button class="btn btn-outline-primary" id="add-to-cart">Add to Cart</button>
             </div>
         </div>
-        <div class="mt-5"><?= $product->getDescription() ?></div>
-        <?php foreach ($reviewsDTOResults as $reviewsDTO) : ?>
-            <?php
-            $reviewsDTO->getReview();
-            <div class="mt-5"><?= $reviewsDTO->getReview() ?></div>
-            <div class="mt-5"><?= $reviewsDTO->getUser() ?></div>
-            <div class="mt-5"><?= $reviewsDTO->getComment() ?></div>
-            <div class="mt-5"><?= $reviewsDTO->getDate() ?></div>
+        <div class="mt-5 py-2"><?= $product->getDescription() ?></div>
+            <?php $i=0;?>
+            <?php foreach ($reviewsDTOResults as $review) {
+                
+                echo "<div>";
+                $userData = $user->read($userID);
+                echo "{$userData[0]->getName()} {$userData[0]->getSurname()}";
+                echo "<p>{$review->getComment()}</p>";
+                echo "<p>Valoración: {$review->getReview()}</p>";
+                echo "<p>{$review->getDate()}</p>";
+                echo "</div>";
+                $i++;
+            }
             ?>
-        <?php endforeach ?>
+        </div>
     </div>
-</div>
 <?php
 $content = ob_get_clean();
 ?>
