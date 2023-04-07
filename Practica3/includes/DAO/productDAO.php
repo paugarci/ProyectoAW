@@ -47,4 +47,5 @@ class ProductDAO extends DAO
             self::OFFER_KEY => $dto->getOffer(),
         );
     }
+    
 }

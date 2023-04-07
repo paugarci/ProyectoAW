@@ -77,4 +77,8 @@ class ProductDTO extends DTO
     public function getOfferPrice() {
         return $this->m_PriceOffer;
     }
+
+    public function setOfferPrice($priceOffer) {
+        $this->m_PriceOffer = $priceOffer;
+    }
 }
