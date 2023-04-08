@@ -1,5 +1,6 @@
 <?php
 
+use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 
@@ -14,7 +15,15 @@ $userQuestionDAO = new UserQuestionDAO;
 $questionAuthors = $userQuestionDAO->read();
 
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['questionID']) && !empty($_GET['questionID'])) {
+    
+    $answerDAO = new AnswerDAO;
+    $answersToDelete = $answerDAO->getQuestionAnswers($_GET['questionID']);
+
     $questionDAO->delete($_GET['questionID']);
+
+    foreach ($answersToDelete as $answer)
+        $answerDAO->delete($answer->getID());
+
     header("Location: {$_SESSION['url']}");
 }
 

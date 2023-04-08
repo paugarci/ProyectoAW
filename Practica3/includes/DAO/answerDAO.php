@@ -22,6 +22,24 @@ class AnswerDAO extends DAO
     }
 
     //  Methods
+
+    public function getQuestionAnswers($questionID): array
+    {
+        $query = "SELECT * FROM answers a INNER JOIN users_answers ua ON a.id = ua.answerID WHERE ua.questionID = :questionID;";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':questionID', $questionID);
+        $statement->execute();
+
+        $results = array();
+        $answerDAO = new AnswerDAO;
+
+        foreach ($statement as $result) {
+            array_push($results, $answerDAO->createDTOFromArray($result));
+        }
+        
+        return $results;
+    }
     public function getAnswerAuthor($answerID, $questionID): array
     {
         $query = "SELECT * FROM users u INNER JOIN users_answers ua ON u.id = ua.userID WHERE ua.questionID = :questionID AND ua.answerID = :answerID;";
