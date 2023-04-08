@@ -4,15 +4,16 @@ use es\ucm\fdi\aw\DAO\ProductDAO;
 
 require_once 'includes/config.php';
 
-$productDAO = new ProductDAO;
+$title = 'Añadir producto';
 
 ob_start();
 ?>
 
-
+<div class="container justify-content-center col-lg-5">
+    <?= ($loginForm = new es\ucm\fdi\aw\forms\AddProductForm())->handleForm(); ?>
+</div>
 
 <?php
-$title = 'Añadir producto';
 $content = ob_get_clean();
 
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';

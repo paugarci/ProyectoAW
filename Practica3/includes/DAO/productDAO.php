@@ -14,7 +14,7 @@ class ProductDAO extends DAO
     private const ID_KEY = 'id';
     private const NAME_KEY = 'name';
     private const DESCRIPTION_KEY = 'description';
-    private const IMG_PATH_KEY = 'imgPath';
+    private const IMG_PATH_KEY = 'imgName';
     private const PRICE_KEY = 'price';
 
     //  Constructors

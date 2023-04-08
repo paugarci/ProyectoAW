@@ -72,7 +72,7 @@ class QuestionForm extends Form
 
             <div class="col-sm-12 my-2">
                 <label for="message" class="form-label">Contenido</label>
-                <textarea type="message" class="form-control" name="message" rows="20" style="resize: none"></textarea>
+                <textarea type="message" class="form-control" name="message" rows="20" style="resize: none" required></textarea>
                 <div class="invalid-feedback">
                     Por favor, rellene los campos obligatorios.
                 </div>

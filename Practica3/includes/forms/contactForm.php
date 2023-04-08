@@ -52,7 +52,7 @@ class ContactForm extends Form
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Lorem" required>
                 <div class="invalid-feedback">
-                Por favor, rellene los campos obligatorios.
+                    Por favor, rellene los campos obligatorios.
                 </div>
             </div>
 
@@ -60,7 +60,7 @@ class ContactForm extends Form
                 <label for="surname" class="form-label">Apellidos</label>
                 <input type="text" class="form-control" id="surname" name="surname" placeholder="Ipsum" required>
                 <div class="invalid-feedback">
-                Por favor, rellene los campos obligatorios.
+                    Por favor, rellene los campos obligatorios.
                 </div>
             </div>
 
@@ -68,7 +68,7 @@ class ContactForm extends Form
                 <label for="mail" class="form-label">Correo electrónico</label>
                 <input type="email" class="form-control" id="mail" placeholder="usuario@dominio.ext" required>
                 <div class="invalid-feedback">
-                Por favor, introduzca una dirección de correo electrónico válida.
+                    Por favor, introduzca una dirección de correo electrónico válida.
                 </div>
             </div>
 
