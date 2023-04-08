@@ -74,10 +74,10 @@ if (count($productDTOResults) == 0) {
 }
 $error
 ?>
-<div class="container shadow">
+<div class="container">
     <div class="row m-3 p-4 d-flex flex-row shadow">
         <div class="col col-md-6 d-flex flex-col">
-            <img class="shadow" src="<?= $productsPath . $product->getImgName(); ?>">
+            <img class="img-fluid object-fit-contain" src="<?= $productsPath . $product->getImgName(); ?>">
         </div>
         <div class="col col-md-6">
             <div class="d-flex justify-content-start">

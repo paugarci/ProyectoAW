@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2023 a las 18:56:59
+-- Tiempo de generación: 08-04-2023 a las 14:04:14
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `zeus_airsoft`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `answers`
+--
+
+CREATE TABLE `answers` (
+  `id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `creationDate` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -42,8 +54,8 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
-  `imgPath` varchar(256) NOT NULL,
-  `price` double NOT NULL,
+  `imgName` varchar(256) NOT NULL,
+  `price` double NOT NULL
   `offer` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -51,7 +63,7 @@ CREATE TABLE `products` (
 -- Volcado de datos para la tabla `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `imgPath`, `price`) VALUES
+INSERT INTO `products` (`id`, `name`, `description`, `imgName`, `price`) VALUES
 (1, 'Colt M4A1 5.56x45', 'La carabina Colt M4A1 es una variante completamente automática de la carabina M4 básica y fue diseñada principalmente para uso en operaciones especiales. Sin embargo, EE. UU. El Comando de Operaciones Especiales ( USSOCOM ) pronto adoptará el M4A1 para casi todas las unidades de operaciones especiales, seguido más tarde por la introducción general del M4A1 en servicio con los EE. UU. Ejército y Cuerpo de Marines.', 'm4a1.jpg', 668.11),
 (2, 'Kalashnikov AK-74 5.45x39', 'El rifle de asalto Kalashnikov de 5,45 mm, desarrollado en 1970 por M. T. Kalashnikov, se convirtió en una nueva evolución de AKM debido a la adopción de la nueva munición 5,45x39 por parte de los militares.', 'ak74.png', 10),
 (3, 'DSR-1 AMP de Ares', 'Es un auténtico modelo de coleccionista, salieron muy pocas unidades y es muy difícil conseguir uno, en ZEUS AirSoft tenemos uno y además nuevo. No deje escapar ésta oportunidad de hacerte con esta fiel copia del fusil de francotirador usado por el GEO de la Policía Nacional española, cualquier amante de éste gran grupo especial desearía tener algo así.', '91BWA.jpg', 0),
@@ -69,6 +81,30 @@ INSERT INTO `products` (`id`, `name`, `description`, `imgPath`, `price`) VALUES
 CREATE TABLE `products_categories` (
   `productID` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `message` text DEFAULT NULL,
+  `creationDate` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `questions_answers`
+--
+
+CREATE TABLE `questions_answers` (
+  `questionID` int(11) NOT NULL,
+  `answerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -116,6 +152,29 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `passwordHash`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `users_answers`
+--
+
+CREATE TABLE `users_answers` (
+  `userID` int(11) NOT NULL,
+  `answerID` int(11) NOT NULL,
+  `questionID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users_questions`
+--
+
+CREATE TABLE `users_questions` (
+  `userID` int(11) NOT NULL,
+  `questionID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users_roles`
 --
 
@@ -138,6 +197,12 @@ INSERT INTO `users_roles` (`userID`, `roleID`) VALUES
 --
 
 --
+-- Indices de la tabla `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -156,6 +221,18 @@ ALTER TABLE `products_categories`
   ADD PRIMARY KEY (`productID`,`categoryID`);
 
 --
+-- Indices de la tabla `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `questions_answers`
+--
+ALTER TABLE `questions_answers`
+  ADD PRIMARY KEY (`questionID`,`answerID`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -166,6 +243,21 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `users_answers`
+--
+ALTER TABLE `users_answers`
+  ADD PRIMARY KEY (`userID`,`answerID`,`questionID`),
+  ADD KEY `questionID` (`questionID`),
+  ADD KEY `answerID` (`answerID`);
+
+--
+-- Indices de la tabla `users_questions`
+--
+ALTER TABLE `users_questions`
+  ADD KEY `userID` (`userID`),
+  ADD KEY `questionID` (`questionID`);
 
 --
 -- Indices de la tabla `users_roles`
@@ -179,6 +271,12 @@ ALTER TABLE `users_roles`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -189,6 +287,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -205,6 +309,21 @@ ALTER TABLE `users`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `users_answers`
+--
+ALTER TABLE `users_answers`
+  ADD CONSTRAINT `users_answers_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_answers_ibfk_3` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_questions`
+--
+ALTER TABLE `users_questions`
+  ADD CONSTRAINT `users_questions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_questions_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users_roles`
