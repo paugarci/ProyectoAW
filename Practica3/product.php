@@ -1,18 +1,52 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 
 require_once 'includes/config.php';
 
 ob_start();
 
 $productID = $_GET["productID"];
-
 $productDAO = new ProductDAO;
+$user = new UserDAO;
+$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
+
 $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
 $error = "";
 
+if (isset($_GET["offer"])) {
+    if($_GET["offer"] < 0 || $_GET["offer"] > 100){
+        $title = "Descuento imposible de aplicar";
+
+        $error = <<<HTML_ERROR
+            <div class="alert alert-danger m-2 text-center">
+                El descuento debe estar en un rango de 0-100
+            </div>'; 
+            HTML_ERROR;
+    }else{
+        $offer = $_GET["offer"];
+        $productDTOResults[0]->setOffer($offer);
+        $price = $productDTOResults[0]->getPrice();
+        $price = $price - ($price * $productDTOResults[0]->getOffer())/100;
+        $productDTOResults[0]->setOfferPrice($price);
+        $productDAO->updateColumn($productID, "offer", $offer);
+    }
+}
+if(isset($_POST['quantity'])) {
+    $quantity = $_POST['quantity'];
+    echo "Cantidad: " . $quantity;
+    
+    if(isset($_SESSION['cart'][$productID])){
+      $_SESSION['cart'][$productID]['quantity'] += $quantity;
+    } else {
+      $_SESSION['cart'][$productID] = array('quantity' => $quantity);
+    }
+    header('Location: product.php?productID='.$productDTO->getID());
+    exit;
+  }
+  
 if (count($productDTOResults) == 0) {
     $title = "Producto no encontrado";
 
@@ -36,7 +70,6 @@ if (count($productDTOResults) == 0) {
     $numCharacters = strlen($price);
     $intPart = intval($price);
     $decimalPart = "";
-    
     $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
 }
 $error
@@ -51,11 +84,45 @@ $error
                 <h3> <?= $product->getName() ?> </h3>
             </div>
             <hr class="mt-2">
-            <h3><?= $product->getPrice() ?>€</h3>
-            
-            <div class="buttons d-flex flex-row mt-5 gap-3">
-                <button class="btn btn-primary" id="buy-now">Comprar</button>
-                <button class="btn btn-outline-primary" id="add-to-cart">Añadir al carrito</button>
+            <?php
+                if ($product->getOffer() != 0) {
+            ?>
+                <h3><?= number_format($product->getOfferPrice(),2)?>€</h3>   
+                <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(),2) ?>€</h5>
+            <?php
+            } else {
+            ?>
+                <h3><?=  number_format($product->getPrice(),2) ?>€</h3>
+            <?php
+            }
+            ?>
+            <?php if ($role == "admin") {  ?>
+                <form action="product.php" method="get">
+                    <div class="form-floating">
+                    
+                        <textarea class="form-control" id="floatingTextarea" name="offer"></textarea>
+                        <label for="floatingTextarea">Introduce el descuento</label>
+                        <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
+                        <button class="btn btn-primary" id="apply-offer">Aplicar Descuento</button>
+                    </div>
+                    <div>
+                </form>
+
+
+                </div>
+            <?php } ?>
+            <div class="buttons py-3">
+                <button class="btn btn-primary " id="buy-now">Buy Now</button>
+                <form class = "py-3" action="" method="post">
+                    <label for="quantity"> Cantidad:</label>
+                    <div class="form-floating">
+
+                        <input  type="number" id="quantity" name="quantity" min="1" max="100">
+
+                        <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
+                        <button class="btn btn-outline-primary" id="add-to-cart">Añadir al carro</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="mt-5"><?= $product->getDescription() ?></div>
