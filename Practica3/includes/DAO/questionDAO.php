@@ -5,13 +5,14 @@ namespace es\ucm\fdi\aw\DAO;
 require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\DTO\DTO;
-use es\ucm\fdi\aw\DTO\AnswerDTO;
+use es\ucm\fdi\aw\DTO\QuestionDTO;
 
-class AnswerDAO extends DAO
+class QuestionDAO extends DAO
 {
-    private const TABLE_NAME = 'answers';
-    
+    private const TABLE_NAME = 'questions';
+
     private const ID_KEY = 'id';
+    private const TITLE_KEY = 'title';
     private const MESSAGE_KEY = 'message';
     private const CREATION_DATE_KEY = 'creationDate';
 
@@ -22,13 +23,12 @@ class AnswerDAO extends DAO
     }
 
     //  Methods
-    public function getAnswerAuthor($answerID, $questionID): array
+    public function getQuestionAuthor($questionID): array
     {
-        $query = "SELECT * FROM users u INNER JOIN users_answers ua ON u.id = ua.userID WHERE ua.questionID = :questionID AND ua.answerID = :answerID;";
+        $query = "SELECT * FROM users u INNER JOIN users_questions uq ON u.id = uq.userID WHERE uq.questionID = :questionID;";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':questionID', $questionID);
-        $statement->bindParam(':answerID', $answerID);
         $statement->execute();
 
         $results = array();
@@ -44,17 +44,19 @@ class AnswerDAO extends DAO
     protected function createDTOFromArray($array): DTO
     {
         $id = $array[self::ID_KEY];
+        $title = $array[self::TITLE_KEY];
         $message = $array[self::MESSAGE_KEY];
         $creationDate = $array[self::CREATION_DATE_KEY];
 
-        return new AnswerDTO($id, $message, $creationDate);
+        return new QuestionDTO($id, $title, $message, $creationDate);
     }
-
     protected function createArrayFromDTO($dto): array
     {
         $dtoArray = array(
+            self::TITLE_KEY => $dto->getTitle(),
             self::MESSAGE_KEY => $dto->getMessage()
         );
+
         
         if ($dto->getID() != -1)
             $dtoArray[self::ID_KEY] = $dto->getID();
