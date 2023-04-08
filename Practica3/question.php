@@ -70,8 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
     HTML_ERROR;
     }
 }
+ob_start();
 ?>
-<?= $error ?>
+<?= $error ?? "" ?>
 <div class="container justify-content-center col-lg-8 shadow my-5">
     <div class="mx-5 p-4">
         <h3><?= $question->getTitle(); ?></h3>
