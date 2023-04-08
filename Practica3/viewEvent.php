@@ -1,19 +1,14 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\EventDAO;
+use es\ucm\fdi\aw\DAO\EventRolesDAO;
+use es\ucm\fdi\aw\forms\AbandonEventForm;
+use es\ucm\fdi\aw\forms\JoinEventForm;
 
 require_once 'includes/config.php';
 
 if (!isset($_SESSION['user']))
     goto end;
-
-$maximumPlayersPerRole = array(
-    'fusilero' => 45,
-    'tirador selecto' => 4,
-    'apoyo' => 4,
-    'francotirador' => 4
-);
-$playersPerRole = array();
 
 if (!isset($_GET['eventID'])) {
     $error = 'Ha ocurrido un error inesperado (no existe identificador de evento).';
@@ -21,6 +16,8 @@ if (!isset($_GET['eventID'])) {
     $eventID = $_GET['eventID'];
     $eventDAO = new EventDAO();
     $eventDTOResults = $eventDAO->read($eventID);
+    $eventRolesDAO = new EventRolesDAO();
+    $availableRoles = $eventRolesDAO->read();
 
     if (count($eventDTOResults) == 0) {
         $error = 'No existe este evento.';
@@ -28,9 +25,9 @@ if (!isset($_GET['eventID'])) {
         $eventDTO = $eventDTOResults[0];
         $eventID = $eventDTO->getID();
 
-        foreach (array_keys($maximumPlayersPerRole) as $role)
-            $playersPerRole[$role] = $eventDAO->getCountByRole($eventID, $role);
-
+        $roleNames = $eventRolesDAO->getRolesName();
+        $playersPerRole = $eventRolesDAO->getCountPerRole($eventID);
+        $maximumsPerRole = $eventRolesDAO->getMaximumsPerRole();
         $playersResults = $eventDAO->getPlayersForEvent($eventID);
     }
 }
@@ -52,9 +49,10 @@ if (!isset($_GET['eventID'])) {
 
     <h4>Roles ocupados</h4>
     <ul class="list-group list-group-flush">
-        <?php foreach ($playersPerRole as $role => $count) : ?>
+        <?php foreach ($roleNames as $roleID => $roleName) :
+        ?>
 
-            <li class="list-group-item"><b><?= ucfirst($role) ?>:</b> <?= $count ?>/<?= $maximumPlayersPerRole[$role] ?></li>
+            <li class="list-group-item"><b><?= ucfirst($roleName) ?>:</b> <?= isset($playersPerRole[$roleID]) ? $playersPerRole[$roleID] : 0 ?> / <?= $maximumsPerRole[$roleID] ?></li>
 
         <?php endforeach; ?>
     </ul>
@@ -72,19 +70,16 @@ if (!isset($_GET['eventID'])) {
             <thead>
                 <th scope="col">Nombre</th>
                 <th scope="col">Rol</th>
-                <th scope="col">Equipo</th>
             </thead>
             <tbody>
                 <?php foreach ($playersResults as $playerInfo) : ?>
                     <?php
                     $playerName = $playerInfo['name'];
-                    $playerRole = ucfirst($playerInfo['eventRole']);
-                    $playerTeam = isset($playerInfo['team']) ? $playerInfo['team'] : 'Ninguno';
+                    $playerRole = ucfirst($eventRolesDAO->read($playerInfo['eventRoleID'])[0]->getName());
                     ?>
                     <tr>
                         <td><?= $playerName ?></td>
                         <td><?= $playerRole ?></td>
-                        <td><?= $playerTeam ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -102,28 +97,12 @@ if (!isset($_GET['eventID'])) {
     if ($eventDAO->playerHasJoinedEvent($userID, $eventID)) :
     ?>
 
-        <form action="myEvents.php" method="GET">
-            <input type="hidden" name="action" value="abandon">
-            <button type="submit" class="btn btn-outline-danger" name="eventID" value="<?= $eventID ?>">Abandonar</button>
-        </form>
+        <?=($form =new AbandonEventForm($eventID))->handleForm();?>
 
     <?php else : ?>
 
         <br>
-        <form action="myEvents.php" method="GET">
-            <input type="hidden" name="action" value="join">
-            <div class="form-group">
-                <label for="eventRole">Rol</label>
-                <select name="eventRole" id="eventRole" class="form-select">
-                    <option value="fusilero" selected>Fusilero</option>
-                    <option value="tiradorSelecto">Tirador selecto</option>
-                    <option value="apoyo">Apoyo</option>
-                    <option value="francotirador">Francotirador</option>
-                </select>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-outline-primary" name="eventID" value="<?= $eventID ?>">Unirse</button>
-        </form>
+        <?=($form = new JoinEventForm($eventID))->handleForm();?>
 
     <?php endif; ?>
 

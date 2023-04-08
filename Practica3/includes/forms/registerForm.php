@@ -59,6 +59,8 @@ class RegisterForm extends Form
             return;
         }
 
+        $userDTO = $userDAO->read(null, ['email' => $email])[0];
+
         Application::getInstance()->loginUser($userDTO);
     }
     protected function generateFormFields($data)

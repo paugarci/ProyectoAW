@@ -24,13 +24,13 @@ class EventDAO extends DAO
     }
 
     //  Methods
-    public function getCountByRole($eventID, $role): int
+    public function getCountByRoleID($eventID, $roleID): int
     {
-        $query = "SELECT COUNT(eu.eventRole) FROM events_users eu WHERE eu.eventID = :eventID AND eu.eventRole = :role GROUP BY eu.eventRole";
+        $query = "SELECT COUNT(eu.eventRoleID) FROM events_users eu WHERE eu.eventID = :eventID AND eu.eventRoleID = :roleID GROUP BY eu.eventRoleID";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':eventID', $eventID);
-        $statement->bindParam(':role', $role);
+        $statement->bindParam(':roleID', $roleID);
         $statement->execute();
 
         $result = $statement->fetch(); //  Should always be only 1 element (maybe check if more than 1 result was returned?)
@@ -42,7 +42,7 @@ class EventDAO extends DAO
     }
     public function getPlayersForEvent($eventID): array
     {
-        $query = "SELECT u.*, eu.* FROM users u INNER JOIN events_users eu ON u.id = eu.userID WHERE eu.eventID = :eventID";
+        $query = "SELECT u.name, eu.eventRoleID FROM users u INNER JOIN events_users eu ON u.id = eu.userID WHERE eu.eventID = :eventID";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':eventID', $eventID);
@@ -60,14 +60,14 @@ class EventDAO extends DAO
 
         return $statement->fetchAll();
     }
-    public function joinEvent($playerID, $eventID, $eventRole): bool
+    public function joinEvent($playerID, $eventID, $eventRoleID): bool
     {
-        $query = "INSERT INTO events_users (eventID, userID, eventRole) VALUES (:eventID, :userID, :eventRole)";
+        $query = "INSERT INTO events_users (eventID, userID, eventRoleID) VALUES (:eventID, :userID, :eventRoleID)";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':eventID', $eventID);
         $statement->bindParam(':userID', $playerID);
-        $statement->bindParam(':eventRole', $eventRole);
+        $statement->bindParam(':eventRoleID', $eventRoleID);
 
         return $statement->execute();
     }

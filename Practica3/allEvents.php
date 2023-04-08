@@ -14,7 +14,7 @@ ob_start();
 
 ?>
 
-<h4>Eventos</h4>
+<h4>Todos los eventos</h4>
 
 <?php if (count($eventsDTOResults) == 0) : ?>
 
