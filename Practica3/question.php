@@ -17,21 +17,6 @@ $questionDTOResults = $questionDAO->read($questionID);
 
 $answerDAO = new AnswerDAO;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
-    $answerMessage = $_POST["answerMessage"];
-    $answerDAO->create(new AnswerDTO(-1, $answerMessage, null));
-
-    $answer = $answerDAO->read(null, ["message" => $answerMessage])[0];
-
-    $answerID = $answer->getID();
-    $answerAuthorID = $_SESSION["user"]->getID();
-
-    $userAnswerDAO = new UserAnswerDAO;
-    $userAnswerDAO->create(new UserAnswerDTO($answerAuthorID, $answerID, $questionID));
-
-    header("Location: question.php?questionID=$questionID&author=$questionAuthor");
-}
-
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['answerID']) && !empty($_GET['answerID'])) {
     $answerDAO->delete($_GET['answerID']);
     header("Location: {$_SESSION['url']}");
@@ -59,11 +44,34 @@ if (count($questionDTOResults) == 0) {
     $userQuestionDAO = new UserQuestionDAO;
     $answers = $answerDAO->read();
 }
-$error;
 
-ob_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
+    if (isset($_SESSION['user'])) {
+        $answerMessage = $_POST["answerMessage"];
+        $answerDAO->create(new AnswerDTO(-1, $answerMessage, null));
+
+        $answer = $answerDAO->read(null, ["message" => $answerMessage])[0];
+
+        $answerID = $answer->getID();
+        $answerAuthorID = $_SESSION["user"]->getID();
+
+        $userAnswerDAO = new UserAnswerDAO;
+        $userAnswerDAO->create(new UserAnswerDTO($answerAuthorID, $answerID, $questionID));
+
+        header("Location: question.php?questionID=$questionID&author=$questionAuthor");
+    } else {
+
+        $title = "Pregunta no encontrada";
+
+        $error = <<<HTML_ERROR
+        <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
+            <b>Error:</b> Debes identificarte para poder escribir en el foro.
+        </div>
+    HTML_ERROR;
+    }
+}
 ?>
-
+<?= $error ?>
 <div class="container justify-content-center col-lg-8 shadow my-5">
     <div class="mx-5 p-4">
         <h3><?= $question->getTitle(); ?></h3>

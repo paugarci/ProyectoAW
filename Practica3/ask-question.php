@@ -13,9 +13,15 @@ $title = "Añadir pregunta";
 ob_start();
 ?>
 
-<div class="col-8 container justify-content-center shadow">
-    <?= ($questionForm = new es\ucm\fdi\aw\forms\QuestionForm())->handleForm(); ?>
-</div>
+<?php if (isset($_SESSION['user'])) : ?>
+    <div class="col-8 container justify-content-center shadow">
+        <?= ($questionForm = new es\ucm\fdi\aw\forms\QuestionForm())->handleForm(); ?>
+    </div>
+<?php else : ?>
+    <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
+        <b>Error:</b> Debes identificarte para poder escribir en el foro.
+    </div>
+<?php endif ?>
 
 <?php $content = ob_get_clean(); ?>
 
