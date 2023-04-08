@@ -11,7 +11,6 @@ class RoleDAO extends DAO
 {
     //  Constants
     private const TABLE_NAME = 'roles';
-
     private const ID_KEY = 'id';
     private const ROLE_NAME_KEY = 'roleName';
 

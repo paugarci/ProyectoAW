@@ -48,7 +48,7 @@ abstract class DAO
 
         foreach ($dtoArrayKeys as $key)
             $statement->bindParam(":$key", $dtoArray[$key]);
-        
+
         return $statement->execute();
     }
     public function read($id = null, $filters = array()) : array
@@ -67,14 +67,15 @@ abstract class DAO
 
             if ($i < $numFilters - 1)
                 $filterConstraint .= ' AND ';
-        }        
+        }
 
         $query = "SELECT * FROM {$this->m_TableName}" . ($numFilters > 0 ? $filterConstraint : '');
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
-        foreach ($filters as $filterKey => $filterValue)
-            $statement->bindParam(":$filterKey", $filterValue);
 
+        foreach ($filters as $filterKey => $filterValue)
+            $statement->bindValue(":$filterKey", $filterValue);
+
+            
         $statement->execute();
         $results = array();
 
@@ -100,11 +101,15 @@ abstract class DAO
 
         $statement = $this->m_DatabaseProxy->prepare($query);
 
-        foreach ($dtoArrayKeys as $key)
-            $statement->bindParam(":$key", $dtoArray[$key]);
+        foreach ($dtoArrayKeys as $key) {
+            $value = $dtoArray[$key];
+            $statement->bindParam(":$key", $value);
+        }
+        
 
         return $statement->execute();
     }
+
     public function delete($id) : bool
     {
         $idKey = self::ID_KEY;

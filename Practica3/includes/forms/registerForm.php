@@ -3,8 +3,11 @@
 namespace es\ucm\fdi\aw\forms;
 
 use es\ucm\fdi\aw\Application;
+use es\ucm\fdi\aw\DAO\RoleDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\DAO\UserRoleDAO;
 use es\ucm\fdi\aw\DTO\UserDTO;
+use es\ucm\fdi\aw\DTO\UserRoleDTO;
 
 require_once 'includes/config.php';
 
@@ -58,6 +61,18 @@ class RegisterForm extends Form
             $this->m_Errors['unknown'] = 'An unknown error has ocurred.';
             return;
         }
+
+        $userDTO = $userDAO->read(null, ['email' => $email])[0];
+        
+        // Preferimos utilizar un método más ortodoxo para pedir la ID del rol
+        // a la DAO, pero se podría perfectamente introducir el ID del rol a pelo.
+        $roleDAO = new RoleDAO();
+        $defaultRole = $roleDAO->read(null, ["roleName" => "user"])[0];
+        
+        $userRoleDAO = new UserRoleDAO();
+        $userRoleDTO = new UserRoleDTO($userDTO->getID(), $defaultRole->getID());
+
+        $userRoleDAO->create($userRoleDTO);
 
         Application::getInstance()->loginUser($userDTO);
     }

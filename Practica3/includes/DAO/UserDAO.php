@@ -27,7 +27,7 @@ class UserDAO extends DAO
     //  Methods
     public function getUserRoles($userID): array
     {
-        $query = "SELECT r.id, r.roleName FROM roles r INNER JOIN user_roles ur ON r.id = ur.roleID WHERE ur.userID = :userID;";
+        $query = "SELECT r.id, r.roleName FROM roles r INNER JOIN users_roles ur ON r.id = ur.roleID WHERE ur.userID = :userID;";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam(':userID', $userID);
@@ -40,14 +40,12 @@ class UserDAO extends DAO
             array_push($results, $roleDAO->createDTOFromArray($result));
         }
 
-
-
         return $results;
     }
 
     protected function createDTOFromArray($array): DTO
     {
-        $id = isset($array[self::ID_KEY]) ? $array[self::ID_KEY] : -1;
+        $id = $array[self::ID_KEY] ?? -1;
         $name = $array[self::NAME_KEY];
         $surname = $array[self::SURNAME_KEY];
         $email = $array[self::EMAIL_KEY];
