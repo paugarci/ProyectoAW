@@ -82,7 +82,7 @@ abstract class Form
         $formIDKey = self::FORM_ID_KEY;
         $formFieldsHTML = $this->generateFormFields($data);
         $classAttribute = ($this->m_ClassAttribute != null) ? "class=\"{$this->m_ClassAttribute}\"" : '';
-        $encodeTypeAttribute = ($this->m_EncodeTypeAttribute != null) ? "class=\"{$this->m_EncodeTypeAttribute}\"" : '';
+        $encodeTypeAttribute = ($this->m_EncodeTypeAttribute != null) ? "enctype=\"{$this->m_EncodeTypeAttribute}\"" : '';
 
         return <<<HTML_FORM
         <form method="{$this->m_Method}" action="{$this->m_Action}" id="{$this->m_FormID}" {$classAttribute} {$encodeTypeAttribute}>

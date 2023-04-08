@@ -1,12 +1,22 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 
 require_once 'includes/config.php';
 
 $productDAO = new ProductDAO;
 $productDTOresults = $productDAO->read();
 $productsPath = 'images/products/';
+
+if (isset($_SESSION["user"])) {
+    $userDAO = new UserDAO;
+    $userRoles = $userDAO->getUserRoles($_SESSION["user"]->getID());
+
+    foreach ($userRoles as $role)
+        if ($role->getRoleName() == "admin")
+            $isAdmin = true;
+}
 
 ob_start();
 ?>
@@ -42,6 +52,7 @@ ob_start();
             </div>
         <?php endforeach ?>
     </div>
+    <?php if (isset($isAdmin)): ?>
     <div class="d-flex justify-content-end mb-4">
         <a class="btn btn-primary text-center" href="add-product.php">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -50,6 +61,7 @@ ob_start();
             Añadir producto
         </a>
     </div>
+    <?php endif ?>
 </div>
 
 <style>
