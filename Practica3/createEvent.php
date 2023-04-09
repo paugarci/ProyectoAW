@@ -1,16 +1,17 @@
 <?php
 
-use es\ucm\fdi\aw\forms\DeleteEventForm;
+use es\ucm\fdi\aw\forms\CreateEventForm;
 
 require_once 'includes/config.php';
 
 if (!isset($_SESSION['user']))
     goto end;
 
-    ob_start();
+ob_start();
+
 ?>
 
-<?=($form = new DeleteEventForm($_GET['eventID']))->handleForm(); ?>
+<?=($form = new CreateEventForm())->handleForm(); ?>
 
 <?php
 end:

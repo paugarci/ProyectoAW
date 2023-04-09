@@ -1,6 +1,7 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\EventDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 
 require_once 'includes/config.php';
 
@@ -13,6 +14,30 @@ $eventsDTOResults = $eventDAO->read();
 ob_start();
 
 ?>
+
+<?php
+$userID = $_SESSION['user']->getID();
+$userDAO = new UserDAO();
+$userRoles = $userDAO->getUserRoles($userID);
+$isAdmin = false;
+
+foreach ($userRoles as $userRole) {
+    if ($userRole->getRoleName() == 'admin') {
+        $isAdmin = true;
+        break;
+    }
+}
+
+$isViewingAsAdmin = ((array)json_decode($_COOKIE['events_cookie']))['view_mode'] == 'admin';
+
+if ($isAdmin && $isViewingAsAdmin) :
+?>
+    <h4>Crear eventos</h4>
+    <form action="createEvent.php">
+        <button class="btn btn-primary">Crear</button>
+    </form>
+    <br>
+<?php endif; ?>
 
 <h4>Todos los eventos</h4>
 

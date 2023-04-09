@@ -6,7 +6,7 @@ ob_start();
 ?>
 
 <p>
-    Aquí podrás consultar toda la información acerca de los próximos eventos, gestionar los eventos a los que estás apuntado y consultar información acerca de tu equipo si es que estás en uno.
+    Aquí podrás consultar toda la información acerca de los próximos eventos y gestionar los eventos a los que estás apuntado.
 </p>
 
 <?php
