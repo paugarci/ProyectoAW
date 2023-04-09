@@ -98,6 +98,10 @@ abstract class DAO
         $idKey = self::ID_KEY;
         $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()}";
 
+        echo '<pre>';
+        print_r($query);
+        die;
+
         $statement = $this->m_DatabaseProxy->prepare($query);
 
         foreach ($dtoArrayKeys as $key)

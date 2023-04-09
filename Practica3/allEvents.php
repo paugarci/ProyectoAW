@@ -24,7 +24,7 @@ ob_start();
 
 <?php else : ?>
 
-    <form action="viewEvent.php" method="GET">
+    <form action="readEvent.php" method="GET">
         <div class="list-group">
             <?php foreach ($eventsDTOResults as $eventDTO) : ?>
 

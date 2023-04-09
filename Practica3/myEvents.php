@@ -52,7 +52,7 @@ ob_start();
                         <?= $eventRolesDAO->getRoleForPlayer($playerID, $eventID); ?>
                     </td>
                     <td>
-                        <form class="d-inline" action="viewEvent.php" method="GET">
+                        <form class="d-inline" action="readEvent.php" method="GET">
                             <button type="submit" class="btn btn-primary" name="eventID" value="<?= $eventID ?>">Inspeccionar</button>
                         </form>
                         <?= ($form = new AbandonEventForm($eventID, true))->handleForm(); ?>

@@ -2,8 +2,8 @@
 
 use es\ucm\fdi\aw\DAO\EventDAO;
 use es\ucm\fdi\aw\DAO\EventRolesDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\forms\AbandonEventForm;
-use es\ucm\fdi\aw\forms\JoinEventForm;
 
 require_once 'includes/config.php';
 
@@ -31,6 +31,8 @@ if (!isset($_GET['eventID'])) {
         $playersResults = $eventDAO->getPlayersForEvent($eventID);
     }
 }
+
+ob_start();
 
 ?>
 
@@ -90,21 +92,58 @@ if (!isset($_GET['eventID'])) {
     <br>
 
     <h4>Acciones</h4>
-    <?php
+    <div class="d-flex flex-row">
+        <div class="px-1">
+            <?php
 
-    $userID = $_SESSION['user']->getID();
+            $userID = $_SESSION['user']->getID();
 
-    if ($eventDAO->playerHasJoinedEvent($userID, $eventID)) :
-    ?>
+            if ($eventDAO->playerHasJoinedEvent($userID, $eventID)) :
+            ?>
 
-        <?=($form =new AbandonEventForm($eventID))->handleForm();?>
+                <?= ($form = new AbandonEventForm($eventID))->handleForm(); ?>
 
-    <?php else : ?>
+            <?php else : ?>
 
-        <br>
-        <?=($form = new JoinEventForm($eventID))->handleForm();?>
+                <form action="joinEvent.php" method="GET">
+                    <input type="hidden" name="eventID" value="<?=$eventID?>">
+                    <button class="btn btn-primary">Unirse</button>
+                </form>
 
-    <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
+        <?php
+
+        $userDAO = new UserDAO();
+        $userRoles = $userDAO->getUserRoles($userID);
+        $isAdmin = false;
+
+        foreach ($userRoles as $userRole) {
+            if ($userRole->getRoleName() == 'admin') {
+                $isAdmin = true;
+                break;
+            }
+        }
+
+        $isViewingAsAdmin = ((array)json_decode($_COOKIE['events_cookie']))['view_mode'] == 'admin';
+
+        if ($isAdmin && $isViewingAsAdmin) :
+        ?>
+
+            <div class="px-5 d-flex flex-row">
+                <form action="updateEvent.php" method="GET" class="px-1">
+                    <input type="hidden" name="eventID" value="<?=$eventID?>">
+                    <button class="btn btn-primary">Modificar</button>
+                </form>
+                <form action="deleteEvent.php" method="GET" class="px-1">
+                    <input type="hidden" name="eventID" value="<?=$eventID?>">
+                    <button class="btn btn-outline-danger">Eliminar</button>
+                </form>
+            </div>
+
+        <?php endif; ?>
+    </div>
 
 <?php endif; ?>
 

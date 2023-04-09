@@ -50,7 +50,7 @@ class AbandonEventForm extends Form
     protected function generateFormFields($data)
     {
         return <<<HTML
-        <button type="submit" class="btn btn-outline-danger" name="eventID" value="{$this->m_EventID}">Abandonar</button>
+            <button type="submit" class="btn btn-outline-danger" name="eventID" value="{$this->m_EventID}">Abandonar</button>
         HTML;
     }
 }

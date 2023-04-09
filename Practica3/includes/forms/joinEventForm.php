@@ -58,7 +58,10 @@ class JoinEventForm extends Form
     protected function generateFormFields($data)
     {
         $eventRolesDAO = new EventRolesDAO();
+        $eventDAO = new EventDAO();
+
         $roles = $eventRolesDAO->getRolesName();
+        $eventDTO = $eventDAO->read($this->m_EventID)[0];
         $options = '';
 
         foreach ($roles as $roleID => $roleName)
@@ -77,6 +80,8 @@ class JoinEventForm extends Form
 
         return <<<HTML
         $errors
+        <h4>{$eventDTO->getName()}</h4>
+        <p>{$eventDTO->getDescription()}</p>
         <div class="form-group">
             <label for="eventRole">Rol</label>
             <select name="eventRoleID" id="eventRole" class="form-select">

@@ -60,8 +60,8 @@ ob_start();
     if ($canSeeButton) :
     ?>
         <div class="flex-fill d-flex flex-column justify-content-end">
-            <form method="POST">
-                <button class="w-100 btn btn-outline-primary" name="switch_view_mode" value="1">Cambiar a vista de <?= ucfirst($eventsCookie['view_mode']) ?></button>
+            <form method="POST" action="events.php">
+                <button class="w-100 btn btn-outline-primary" name="switch_view_mode" value="1">Modo <?= ucfirst($eventsCookie['view_mode']) ?></button>
             </form>
         </div>
     <?php endif; ?>
