@@ -34,12 +34,12 @@ class ProductDAO extends DAO
         $imgName = $array[self::IMG_NAME_KEY];
         $price = $array[self::PRICE_KEY];
         $offer = $array[self::OFFER_KEY];
-        return new ProductDTO($id, $name, $description, $imgPath, $price, $offer);
+        return new ProductDTO($id, $name, $description, $imgName, $price, $offer);
     }
     protected function createArrayFromDTO($dto): array
     {
         $dtoArray = array(
-            self::ID_KEY => (int) $dto->getID(),
+            self::ID_KEY => $dto->getID(),
             self::NAME_KEY => $dto->getName(),
             self::DESCRIPTION_KEY => $dto->getDescription(),
             self::IMG_NAME_KEY => $dto->getImgName(),

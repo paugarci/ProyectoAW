@@ -33,28 +33,29 @@ class EditProductForm extends Form
         $imgName = basename($_FILES["fileToUpload"]["name"]);
         $targetFile = $targetDir . $imgName;
 
-        // $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 
-        // if (!$isImage) {
-        //     $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
-        //     return;
-        // }
+        if (!$isImage) {
+            $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
+            return;
+        }
 
-    // unlink($targetDir . $data["imgName"]);
+    unlink($targetDir . $data["imgName"]);
 
-    // if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
-    //     $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
-    //     return;
-    // }
+    if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+        $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
+        return;
+    }
 
         $productDAO = new ProductDAO;
 
         $id = $data["id"];
         $name = $data["name"];
         $price = $data["price"];
+        $offer = $data["offer"];
         $description = $data["description"];
 
-        $productDAO->update(new ProductDTO($id, $name, $description, $imgName, $price));
+        $productDAO->update(new ProductDTO($id, $name, $description, $imgName, $price, $offer));
     }
     protected function generateFormFields($data)
     {
@@ -83,9 +84,16 @@ class EditProductForm extends Form
                 <label for="name" class="form-label">Nombre del producto</label>
                 <input type="text" class="form-control" name="name" value="{$product->getName()}" required>
             </div>
-            <div class="col-12 my-1">
+            <div class="col-6 my-1">
                 <label for="price" class="form-label">Precio del producto</label>
                 <input type="number" step=".01" class="form-control" name="price" value="{$product->getPrice()}" required>
+            </div>
+            <div class="col-6 my-1">
+                <label for="price" class="form-label">Oferta del producto</label>
+                <div class="input-group">
+                    <input type="number" min="0" max="100" class="form-control" name="offer" value="{$product->getOffer()}" required>
+                    <span class="input-group-text">%</span>
+                </div>
             </div>
             <div class="form-group my-1">
                 <label for="textBox" class="form-label">Descripción del producto</label>
@@ -97,7 +105,7 @@ class EditProductForm extends Form
             </div>
             <input type="hidden" name="id" value="{$product->getID()}">
             <input type="hidden" name="imgName" value="{$product->getImgName()}">
-            <input type="submit" value="Añadir" class="btn btn-primary my-3">
+            <input type="submit" value="Guardar cambios" class="btn btn-primary my-3">
         </div>
         HTML_FORM;
     }

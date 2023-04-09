@@ -14,7 +14,7 @@ class ProductDTO extends DTO
     private $m_Offer;
     private $m_PriceOffer;
 
-    public function __construct($id, $name, $description, $imgPath, $price, $offer)
+    public function __construct($id, $name, $description, $imgName, $price, $offer)
     {
         $this->m_ID = $id;
         $this->m_Name = $name;
