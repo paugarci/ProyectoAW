@@ -90,7 +90,7 @@ abstract class DAO
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
         
-        $updateVariables = "{$dtoArrayKeys[0]} = {$dtoArray[$dtoArrayKeys[0]]}";
+        $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
             $column = $dtoArrayKeys[$i];
@@ -99,11 +99,12 @@ abstract class DAO
 
         $idKey = self::ID_KEY;
         $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()};";
+        // $query = "UPDATE products SET id = 15, name = 'holi', description = 'nuevaDesc', imgName = 'nuevafoto.png', price = '123', offer = '0' WHERE id = 15;";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
 
         foreach ($dtoArrayKeys as $key)
-            $statement->bindParam(":$key", $dtoArray[$key]);
+            $statement->bindValue(":$key", $dtoArray[$key]);
 
         return $statement->execute();
     }

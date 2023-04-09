@@ -39,7 +39,7 @@ class ProductDAO extends DAO
     protected function createArrayFromDTO($dto): array
     {
         $dtoArray = array(
-            self::ID_KEY => (int) $dto->getID(),
+            self::ID_KEY => $dto->getID(),
             self::NAME_KEY => $dto->getName(),
             self::DESCRIPTION_KEY => $dto->getDescription(),
             self::IMG_NAME_KEY => $dto->getImgName(),

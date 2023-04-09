@@ -52,8 +52,9 @@ class AddProductForm extends Form
         $name = $data["name"];
         $price = $data["price"];
         $description = $data["description"];
+        $offer = $data["offer"];
 
-        $productDAO->create(new ProductDTO(null, $name, $description, $imgName, $price));
+        $productDAO->create(new ProductDTO(null, $name, $description, $imgName, $price, $offer));
     }
     protected function generateFormFields($data)
     {
@@ -78,15 +79,16 @@ class AddProductForm extends Form
             <div class="col-12 my-1">
                 <label for="name" class="form-label">Nombre del producto</label>
                 <input type="text" class="form-control" name="name" required>
-                <div class="invalid-feedback">
-                    Por favor, rellene los campos obligatorios.
-                </div>
             </div>
-            <div class="col-12 my-1">
+            <div class="col-6 my-1">
                 <label for="price" class="form-label">Precio del producto</label>
                 <input type="number" step=".01" class="form-control" name="price" required>
-                <div class="invalid-feedback">
-                    Por favor, rellene los campos obligatorios.
+            </div>
+            <div class="col-6 my-1">
+                <label for="price" class="form-label">Oferta del producto</label>
+                <div class="input-group">
+                    <input type="number" min="0" max="100" class="form-control" name="offer" required>
+                    <span class="input-group-text">%</span>
                 </div>
             </div>
             <div class="form-group my-1">
