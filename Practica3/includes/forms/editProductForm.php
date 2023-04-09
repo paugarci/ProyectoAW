@@ -30,30 +30,36 @@ class EditProductForm extends Form
     protected function processForm($data)
     {
         $targetDir = IMAGES_ROOT . "/products/";
-        $imgName = basename($_FILES["fileToUpload"]["name"]);
-        $targetFile = $targetDir . $imgName;
 
-        $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if (isset($_FILES["fileToUpload"]["name"]) && !empty($_FILES["fileToUpload"]["name"])) {
 
-        if (!$isImage) {
-            $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
-            return;
+            $imgNewName = basename($_FILES["fileToUpload"]["name"]);
+            $targetFile = $targetDir . $imgNewName;
+
+            $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+            if (!$isImage) {
+                $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
+                return;
+            }
+
+            unlink($targetDir . $data["imgName"]);
+
+            if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+                $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
+                return;
+            }
         }
-
-    unlink($targetDir . $data["imgName"]);
-
-    if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
-        $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
-        return;
-    }
 
         $productDAO = new ProductDAO;
 
         $id = $data["id"];
         $name = $data["name"];
+        $description = $data["description"];
+        $imgName = $imgNewName ?? $data["imgName"];
         $price = $data["price"];
         $offer = $data["offer"];
-        $description = $data["description"];
+
 
         $productDAO->update(new ProductDTO($id, $name, $description, $imgName, $price, $offer));
     }

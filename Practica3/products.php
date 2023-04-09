@@ -41,18 +41,10 @@ ob_start();
                         <button type="submit" class="btn btn-link text-dark text-decoration-none"><?= $productDTO->getName(); ?></button>
                     </form>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col text-start">
                         <div class="text-black text-decoration-none">
-                            <?php
-                            $price = strval($productDTO->getPrice());
-                            $numCharacters = strlen($price);
-                            $intPart = intval($price);
-                            $decimalPart = "";
-                            $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
-                            ?>
-                            <b class="fs-2"><?= $intPart ?></b><sup class="fs-5"><?= $decimalPart ?>
-                            </sup><b class="fs-2"> €</b>
+                            <b class="fs-4"><?= $productDTO->getPrice() ?>€</b>
                         </div>
                     </div>
                     <?php if (isset($isAdmin)) : ?>
