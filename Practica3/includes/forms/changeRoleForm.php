@@ -4,14 +4,16 @@ namespace es\ucm\fdi\aw\forms;
 
 use es\ucm\fdi\aw\DAO\RoleDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\DAO\UserRoleDAO;
+use es\ucm\fdi\aw\DTO\UserRoleDTO;
 
 require_once 'includes/config.php';
 
-class AddRoleForm extends Form
+class ChangeRoleForm extends Form
 {
     //  Constants
     private const FORM_ID = 'change-role_form';
-    private const URL_REDIRECTION = 'forum.php';
+    private const URL_REDIRECTION = 'admin-panel.php';
 
     //  Constructors
     public function __construct()
@@ -22,8 +24,22 @@ class AddRoleForm extends Form
     //  Methods
     protected function processForm($data)
     {
-        echo 'TODO';
-        die;
+        $userID = $_REQUEST["user"];
+        $roleID = $_REQUEST["role"];
+
+        if ($userID == 0 || $roleID == 0) {
+            $this->m_Errors["fields_not_selected"] = "Seleccione tanto usuario como rol para llevar a cabo esta acción";
+            return;
+        }
+
+        $userRoleDAO = new UserRoleDAO;
+
+        if (isset($_POST["addRole"])) {
+            $userRoleDAO->create(new UserRoleDTO($userID, $roleID));
+        }
+        if (isset($_POST["deleteRole"])) {
+            $userRoleDAO->deleteCompoundKey($userID, $roleID);
+        }
     }
     protected function generateFormFields($data)
     {
@@ -64,15 +80,15 @@ class AddRoleForm extends Form
         <div class="row">
             <div class="col-12 my-2">
                 <label for="name" class="form-label">Usuario</label>
-                <select class="form-select" aria-label=".form-select-lg example">
-                    <option selected>Seleccione un usuario</option>
+                <select class="form-select" aria-label=".form-select-lg example" name="user">
+                    <option selected value="0">Seleccione un usuario</option>
                     {$usersHTML}
                 </select>
             </div>
             <div class="col-12 my-2">
                 <label for="name" class="form-label">Rol</label>
-                <select class="form-select" aria-label=".form-select-lg example">
-                    <option selected>Seleccione un rol</option>
+                <select class="form-select" aria-label=".form-select-lg example" name="role">
+                    <option selected value="0">Seleccione un rol</option>
                     {$rolesHTML}
                 </select>
             </div>

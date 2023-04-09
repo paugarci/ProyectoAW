@@ -38,7 +38,7 @@ ob_start();
                             <b class="fs-4"><?= $productDTO->getPrice() ?>€</b>
                         </div>
                     </div>
-                    <?php if (isset($_SESSION["isAdmin"])) : ?>
+                    <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>
                         <div class="col text-end">
                             <a href="edit-product.php?productID=<?= $productDTO->getID() ?>" class="btn btn-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -77,7 +77,7 @@ ob_start();
             </div>
         <?php endforeach ?>
     </div>
-    <?php if (isset($_SESSION["isAdmin"])) : ?>
+    <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>
         <div class="d-flex justify-content-end mb-4">
             <a class="btn btn-primary text-center" href="add-product.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">

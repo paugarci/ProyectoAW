@@ -93,7 +93,7 @@ ob_start();
                                     <h5><?= $answerAuthor ?></h5>
                                 </b></p>
                         </div>
-                        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID() || isset($_SESSION["isAdmin"])) : ?>
+                        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID() || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
                             <div class="d-flex flex-col col-5 justify-content-end">
                                 <p class="text-sm"><?= $answer->getCreationDate() ?></h5>
                                 </p>

@@ -2,7 +2,6 @@
 
 use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
-use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 
 require_once 'includes/config.php';
@@ -57,7 +56,7 @@ ob_start();
                                 </button>
                             </form>
                             <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
-                            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID() || isset($_SESSION["isAdmin"])) : ?>
+                            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID() || $_SESSION['isAdmin'] == true) : ?>
                                 <div class="d-flex flex-col col-1 justify-content-start">
                                     <button type="button" class="ms-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm-modal-<?= $question->getID() ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
