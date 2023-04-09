@@ -6,6 +6,7 @@ require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\Application;
 use es\ucm\fdi\aw\DTO\DTO;
+use PDO;
 
 //  Note: possible SQL injection when using parameters. Investigate
 abstract class DAO
@@ -48,7 +49,7 @@ abstract class DAO
 
         foreach ($dtoArrayKeys as $key)
             $statement->bindParam(":$key", $dtoArray[$key]);
-        
+
         return $statement->execute();
     }
     public function read($id = null, $filters = array()) : array
@@ -67,14 +68,15 @@ abstract class DAO
 
             if ($i < $numFilters - 1)
                 $filterConstraint .= ' AND ';
-        }        
+        }
 
         $query = "SELECT * FROM {$this->m_TableName}" . ($numFilters > 0 ? $filterConstraint : '');
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
-        foreach ($filters as $filterKey => $filterValue)
-            $statement->bindParam(":$filterKey", $filterValue);
 
+        foreach ($filters as $filterKey => $filterValue)
+            $statement->bindValue(":$filterKey", $filterValue);
+
+            
         $statement->execute();
         $results = array();
 
@@ -88,15 +90,16 @@ abstract class DAO
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
         
-        $updateVariables = "{$dtoArrayKeys[0]} = {$dtoArray[$dtoArrayKeys[0]]}";
+        $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
             $column = $dtoArrayKeys[$i];
-            $updateVariables .= ", $column = :$column";
+            $updateVariables .= ", {$column} = :{$column}";
         }
 
         $idKey = self::ID_KEY;
-        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()}";
+        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()};";
+        // $query = "UPDATE products SET id = 15, name = 'holi', description = 'nuevaDesc', imgName = 'nuevafoto.png', price = '123', offer = '0' WHERE id = 15;";
 
         echo '<pre>';
         print_r($query);
@@ -105,10 +108,11 @@ abstract class DAO
         $statement = $this->m_DatabaseProxy->prepare($query);
 
         foreach ($dtoArrayKeys as $key)
-            $statement->bindParam(":$key", $dtoArray[$key]);
+            $statement->bindValue(":$key", $dtoArray[$key]);
 
         return $statement->execute();
     }
+
     public function delete($id) : bool
     {
         $idKey = self::ID_KEY;
