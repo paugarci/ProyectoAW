@@ -6,6 +6,7 @@ require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\Application;
 use es\ucm\fdi\aw\DTO\DTO;
+use PDO;
 
 //  Note: possible SQL injection when using parameters. Investigate
 abstract class DAO
@@ -93,19 +94,16 @@ abstract class DAO
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
             $column = $dtoArrayKeys[$i];
-            $updateVariables .= ", $column = :$column";
+            $updateVariables .= ", {$column} = :{$column}";
         }
 
         $idKey = self::ID_KEY;
-        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()}";
+        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()};";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
 
-        foreach ($dtoArrayKeys as $key) {
-            $value = $dtoArray[$key];
-            $statement->bindParam(":$key", $value);
-        }
-        
+        foreach ($dtoArrayKeys as $key)
+            $statement->bindParam(":$key", $dtoArray[$key]);
 
         return $statement->execute();
     }

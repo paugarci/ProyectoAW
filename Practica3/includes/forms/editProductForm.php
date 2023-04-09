@@ -7,10 +7,10 @@ use es\ucm\fdi\aw\DTO\ProductDTO;
 
 require_once 'includes/config.php';
 
-class AddProductForm extends Form
+class EditProductForm extends Form
 {
     //  Constants
-    private const FORM_ID = 'add-product_form';
+    private const FORM_ID = 'edit-product_form';
     private const URL_REDIRECTION = 'products.php';
     private const ENCODE_TYPE = 'multipart/form-data';
 
@@ -18,7 +18,7 @@ class AddProductForm extends Form
     public function __construct()
     {
         parent::__construct(
-            self::FORM_ID, 
+            self::FORM_ID,
             array(
                 parent::URL_REDIRECTION_KEY => self::URL_REDIRECTION,
                 parent::ENCODE_TYPE_KEY => self::ENCODE_TYPE
@@ -33,27 +33,28 @@ class AddProductForm extends Form
         $imgName = basename($_FILES["fileToUpload"]["name"]);
         $targetFile = $targetDir . $imgName;
 
-        $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        // $isImage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 
-        if (!$isImage)
-            $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
+        // if (!$isImage) {
+        //     $this->m_Errors['file_not_image'] = "Este archivo no es una imagen";
+        //     return;
+        // }
 
-        if (file_exists($targetFile))
-            $this->m_Errors['iamge_already_exists'] = "Esta imagen ya se ha subido antes, pruebe con otra por favor";
+    // unlink($targetDir . $data["imgName"]);
 
-        if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile))
-            $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
-
-        if (count($this->m_Errors) > 0)
-            return;
+    // if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+    //     $this->m_Errors['unknown_error'] = "Ha ocurrido un error inesperado al subir la imagen";
+    //     return;
+    // }
 
         $productDAO = new ProductDAO;
 
+        $id = $data["id"];
         $name = $data["name"];
         $price = $data["price"];
         $description = $data["description"];
 
-        $productDAO->create(new ProductDTO(null, $name, $description, $imgName, $price));
+        $productDAO->update(new ProductDTO($id, $name, $description, $imgName, $price));
     }
     protected function generateFormFields($data)
     {
@@ -69,6 +70,9 @@ class AddProductForm extends Form
             }
         }
 
+        $productDAO = new ProductDAO;
+        $product = $productDAO->read($_GET['productID'])[0];
+
         return <<<HTML_FORM
         <div class="container shadow">
 
@@ -77,26 +81,22 @@ class AddProductForm extends Form
         <div class="row m-3 p-4">
             <div class="col-12 my-1">
                 <label for="name" class="form-label">Nombre del producto</label>
-                <input type="text" class="form-control" name="name" required>
-                <div class="invalid-feedback">
-                    Por favor, rellene los campos obligatorios.
-                </div>
+                <input type="text" class="form-control" name="name" value="{$product->getName()}" required>
             </div>
             <div class="col-12 my-1">
                 <label for="price" class="form-label">Precio del producto</label>
-                <input type="number" step=".01" class="form-control" name="price" required>
-                <div class="invalid-feedback">
-                    Por favor, rellene los campos obligatorios.
-                </div>
+                <input type="number" step=".01" class="form-control" name="price" value="{$product->getPrice()}" required>
             </div>
             <div class="form-group my-1">
                 <label for="textBox" class="form-label">Descripción del producto</label>
-                <textarea class="form-control" style="resize: none;" rows="10" name="description"></textarea>
+                <textarea class="form-control" style="resize: none;" rows="10" name="description">{$product->getDescription()}</textarea>
             </div>
             <div class="col-12 my-3">
-                Imagen del producto:<br>
+                Imagen nueva:<br>
                 <input class="card mt-2 p-2" type="file" name="fileToUpload">
             </div>
+            <input type="hidden" name="id" value="{$product->getID()}">
+            <input type="hidden" name="imgName" value="{$product->getImgName()}">
             <input type="submit" value="Añadir" class="btn btn-primary my-3">
         </div>
         HTML_FORM;
