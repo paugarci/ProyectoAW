@@ -1,8 +1,19 @@
 <?php
 
+use es\ucm\fdi\aw\DAO\UserDAO;
+
 require_once 'includes/config.php';
 
 $_SESSION['url'] = $_SERVER['REQUEST_URI'];
+
+if (isset($_SESSION["user"])) {
+    $userDAO = new UserDAO;
+    $userRoles = $userDAO->getUserRoles($_SESSION["user"]->getID());
+
+    foreach ($userRoles as $role)
+        if ($role->getRoleName() == "admin")
+            $_SESSION['isAdmin'] = true;
+}
 
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
@@ -49,10 +60,11 @@ $menu = array(
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="account.php">Cuenta</a></li>
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
-                        <li><a class="dropdown-item" href="#">Lista de deseos</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                        <?php if (isset($_SESSION["isAdmin"])): ?>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="admin-panel.php">Administrar</a></li>
+                        <?php endif ?>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
                     </ul>
                 </div>

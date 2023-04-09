@@ -28,15 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['questionID']) && !empty(
     header("Location: {$_SESSION['url']}");
 }
 
-if (isset($_SESSION["user"])) {
-    $userDAO = new UserDAO;
-    $userRoles = $userDAO->getUserRoles($_SESSION["user"]->getID());
-
-    foreach ($userRoles as $role)
-        if ($role->getRoleName() == "admin")
-            $isAdmin = true;
-}
-
 ob_start();
 ?>
 <div class="container">
@@ -66,7 +57,7 @@ ob_start();
                                 </button>
                             </form>
                             <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
-                            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID() || isset($isAdmin)) : ?>
+                            <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID() || isset($_SESSION["isAdmin"])) : ?>
                                 <div class="d-flex flex-col col-1 justify-content-start">
                                     <button type="button" class="ms-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm-modal-<?= $question->getID() ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
