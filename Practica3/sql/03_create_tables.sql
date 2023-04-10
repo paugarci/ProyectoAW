@@ -47,6 +47,67 @@ CREATE TABLE `categories` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
+(12, 'Asalto al fortificado', 'Esta es la descripción del evento. Debe contener un texto medianamente largo que describe en profundidad las actividades que se realizarán a lo largo del evento para informar a los participantes.', '2023-04-15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events_users`
+--
+
+CREATE TABLE `events_users` (
+  `eventID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `eventRoleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events_users`
+--
+
+INSERT INTO `events_users` (`eventID`, `userID`, `eventRoleID`) VALUES
+(12, 6, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_roles`
+--
+
+CREATE TABLE `event_roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `maximum` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event_roles`
+--
+
+INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
+(1, 'Fusilero', 45),
+(2, 'Tirador selecto', 4),
+(3, 'Apoyo', 4),
+(4, 'Francotirador', 4);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `products`
 --
 
