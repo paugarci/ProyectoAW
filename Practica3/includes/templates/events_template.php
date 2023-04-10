@@ -6,8 +6,10 @@ require_once 'includes/config.php';
 
 define('EVENTS_COOKIE_NAME', 'events_cookie');
 
-if (!isset($_COOKIE[EVENTS_COOKIE_NAME]))
+if (!isset($_COOKIE[EVENTS_COOKIE_NAME])) {
     setcookie(EVENTS_COOKIE_NAME, json_encode(array()));
+    header("Location: {$_SERVER['PHP_SELF']}");
+}
 
 $eventsCookie = (array)json_decode($_COOKIE[EVENTS_COOKIE_NAME]);
 
