@@ -62,7 +62,7 @@ class ReviewsDAO extends DAO
 
     protected function createDTOFromArray($array): DTO
     {
-        var_dump($array);
+        //var_dump($array);
         $id = $array[self::ID_KEY];
         $comment = $array[self::COMMENT_KEY];
         $review = $array[self::REVIEW_KEY];
@@ -73,12 +73,17 @@ class ReviewsDAO extends DAO
 
     protected function createArrayFromDTO($dto): array
     {
-        return array(
-            self::ID_KEY => $dto->getID(),
+        $dtoArray = array(
+            //self::ID_KEY => $dto->getID(),
             self::COMMENT_KEY => $dto->getComment(),
             self::REVIEW_KEY => $dto->getReview(),
             self::DATE_KEY => $dto->getDate()
         );
+
+        if ($dto->getID() != -1)
+            $dtoArray[self::ID_KEY] = $dto->getID();
+
+        return $dtoArray;
     }
 
 }

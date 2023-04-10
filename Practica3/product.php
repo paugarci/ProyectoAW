@@ -19,19 +19,18 @@ $productsPath = 'images/products/';
 $error = "";
 
 //User Intermediate
-$userReviewsDAO = new UserReviewDAO;
-$userID = $userReviewsDAO->read()[0]->getUserID();
+$userReviewDAO = new UserReviewDAO;
 
 //User
 $user = new UserDAO;
+//$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
 
 //Reviews
-
 $reviewsDAO = new ReviewsDAO;
 $reviewsDTOResults = $reviewsDAO->read();
-var_dump($reviewsDTOResults);
 
-if (count($reviewsDTOResults) == 0) {
+
+/*if (count($reviewsDTOResults) == 0) {
     $comment = "Sin reviews de este producto";
 
     $error = '
@@ -46,8 +45,7 @@ if (count($reviewsDTOResults) == 0) {
         </div>
     HTML_ERROR;
     }
-$error;
-
+$error;*/
 
 if (count($productDTOResults) == 0) {
     $title = "Producto no encontrado";
@@ -94,22 +92,32 @@ $error
                 <button class="btn btn-outline-primary" id="add-to-cart">Add to Cart</button>
             </div>
         </div>
-        <div class="mt-5 py-2"><?= $product->getDescription() ?></div>
-            <?php $i=0;?>
-            <?php foreach ($reviewsDTOResults as $review) {
-                
-                echo "<div>";
-                $userData = $user->read($userID);
-                echo "{$userData[0]->getName()} {$userData[0]->getSurname()}";
-                echo "<p>{$review->getComment()}</p>";
-                echo "<p>Valoración: {$review->getReview()}</p>";
-                echo "<p>{$review->getDate()}</p>";
-                echo "</div>";
-                $i++;
-            }
-            ?>
+        <div class="mt-5 py-2">
+            <?= $product->getDescription() ?>
         </div>
+        
+        <h2 id="reviews">Reseñas (<?= count($reviewsDTOResults) ?>)</h2>
+            <?php foreach ($reviewsDTOResults as $review): ?>
+                <div class="card m-1 ps-4 pt-2 pb-2">
+                    <?php $user = $userReviewDAO->getUserReviews($review->getID())[0] ?>
+                    <div class="row">
+                        Usuario: <?= $user->getName() ?> <?= $user->getSurname() ?>
+                    </div>
+                    <div class="row">
+                        Comentario: <?= $review->getComment() ?>
+                    </div>
+                    <div class="row">
+                        Valoración: <?= $review->getReview() ?>
+                    </div>
+                    <div class="row">
+                        Fecha: <?= $review->getDate() ?>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+        <?= ($reviewForm = new es\ucm\fdi\aw\forms\ReviewForm($productID))->handleForm(); ?>
     </div>
+</div>
 <?php
 $content = ob_get_clean();
 ?>

@@ -2,6 +2,8 @@
 
 require_once 'includes/config.php';
 
+$_SESSION['url'] = $_SERVER['REQUEST_URI'];
+
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
 $menu = array(

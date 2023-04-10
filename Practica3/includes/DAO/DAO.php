@@ -47,7 +47,7 @@ abstract class DAO
         $statement = $this->m_DatabaseProxy->prepare($query);
 
         foreach ($dtoArrayKeys as $key)
-            $statement->bindParam(":$key", $dtoArray[$key]);
+            $statement->bindValue(":$key", $dtoArray[$key]);
         
         return $statement->execute();
     }

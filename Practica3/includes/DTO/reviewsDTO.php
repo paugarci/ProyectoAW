@@ -38,16 +38,6 @@ class ReviewsDTO extends DTO
     {
         return $this->m_Date;
     }
-
-    public function setComment($comment)
-    {
-        $this->m_Comment = $comment;
-    }
-
-    public function setReview($review)
-    {
-        $this->m_Review = $review;
-    }
 }
 
 ?>
