@@ -26,7 +26,7 @@ abstract class DAO
     }
 
     //  Methods
-    public function create($dto) : bool
+    public function create($dto): bool
     {
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
@@ -52,18 +52,17 @@ abstract class DAO
 
         return $statement->execute();
     }
-    public function read($id = null, $filters = array()) : array
+    public function read($id = null, $filters = array()): array
     {
         if ($id != null)
             $filters[self::ID_KEY] = $id;
-    
+
         $filterConstraint = " WHERE ";
 
         $filterKeys = array_keys($filters);
         $numFilters = count($filters);
 
-        for ($i = 0; $i < $numFilters; ++$i)
-        {
+        for ($i = 0; $i < $numFilters; ++$i) {
             $filterConstraint .= "{$filterKeys[$i]} = :{$filterKeys[$i]}";
 
             if ($i < $numFilters - 1)
@@ -76,7 +75,7 @@ abstract class DAO
         foreach ($filters as $filterKey => $filterValue)
             $statement->bindValue(":$filterKey", $filterValue);
 
-            
+
         $statement->execute();
         $results = array();
 
@@ -85,11 +84,11 @@ abstract class DAO
 
         return $results;
     }
-    public function update($dto) : bool
+    public function update($dto): bool
     {
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
-        
+
         $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
@@ -109,17 +108,17 @@ abstract class DAO
         return $statement->execute();
     }
 
-    public function delete($id) : bool
+    public function delete($id): bool
     {
         $idKey = self::ID_KEY;
         $query = "DELETE FROM {$this->m_TableName} WHERE $idKey = :$idKey";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam($idKey, $id);
-        
+
         return $statement->execute();
     }
 
-    protected abstract function createDTOFromArray($array) : DTO;
-    protected abstract function createArrayFromDTO($DTO) : array;
+    protected abstract function createDTOFromArray($array): DTO;
+    protected abstract function createArrayFromDTO($DTO): array;
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2023 a las 22:37:27
+-- Tiempo de generación: 10-04-2023 a las 17:55:17
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -43,6 +43,67 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
+(12, 'Asalto al fortificado', 'Esta es la descripción del evento. Debe contener un texto medianamente largo que describe en profundidad las actividades que se realizarán a lo largo del evento para informar a los participantes.', '2023-04-15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events_users`
+--
+
+CREATE TABLE `events_users` (
+  `eventID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `eventRoleID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events_users`
+--
+
+INSERT INTO `events_users` (`eventID`, `userID`, `eventRoleID`) VALUES
+(12, 6, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_roles`
+--
+
+CREATE TABLE `event_roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `maximum` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event_roles`
+--
+
+INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
+(1, 'Fusilero', 45),
+(2, 'Tirador selecto', 4),
+(3, 'Apoyo', 4),
+(4, 'Francotirador', 4);
 
 -- --------------------------------------------------------
 
@@ -96,6 +157,13 @@ CREATE TABLE `questions` (
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `questions`
+--
+
+INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
+(94, 'adsfasdf', 'asdfasdf', '2023-04-10 03:45:26');
+
 -- --------------------------------------------------------
 
 --
@@ -147,7 +215,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `passwordHash`) VALUES
 (6, 'Alexander', 'López Vega', 'alex.lopez.ve@gmail.com', '$2y$10$bOVt7M3p2mQtvQTkStsNj.x3Rw9rKmvvHrqTt.RF7z46bJONYM2AG'),
-(12, 'Hugo', 'Silva', 'hsilva@ucm.es', '$2y$10$J.hO7gzo7cEjUbkH4oy6nuBV80raqlHCo6h41t2vt5vqwwwXFm8Qy');
+(12, 'Hugo', 'Silva', 'hsilva@ucm.es', '$2y$10$J.hO7gzo7cEjUbkH4oy6nuBV80raqlHCo6h41t2vt5vqwwwXFm8Qy'),
+(13, 'Pepe', 'Gómez', 'pepegomez@gmail.com', '$2y$10$qHjUQ/YMGBNZAD7kDMvCvePRB9MooK4aKSd46EdL0NYWZZsTBrZmO');
 
 -- --------------------------------------------------------
 
@@ -172,6 +241,13 @@ CREATE TABLE `users_questions` (
   `questionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `users_questions`
+--
+
+INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
+(12, 94);
+
 -- --------------------------------------------------------
 
 --
@@ -191,7 +267,8 @@ INSERT INTO `users_roles` (`userID`, `roleID`) VALUES
 (6, 1),
 (12, 1),
 (6, 2),
-(12, 2);
+(12, 2),
+(13, 2);
 
 --
 -- Índices para tablas volcadas
@@ -275,7 +352,7 @@ ALTER TABLE `users_roles`
 -- AUTO_INCREMENT de la tabla `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -287,13 +364,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -305,7 +382,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
