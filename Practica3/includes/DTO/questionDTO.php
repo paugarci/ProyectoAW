@@ -7,33 +7,35 @@ require_once 'includes/config.php';
 class QuestionDTO extends DTO
 {
     private $m_ID;
-    private $m_Pregunta;
-    private $m_Fecha;
+    private $m_Title;
+    private $m_Message;
+    private $m_Date;
 
-    public function __construct($id, $pregunta, $fecha)
+    public function __construct($id, $title, $message, $date)
     {
         $this->m_ID = $id;
-        $this->m_Pregunta = $pregunta;
-        $this->m_Fecha = $fecha;
+        $this->m_Title = $title;
+        $this->m_Message = $message;
+        $this->m_Date = $date;
     }
+
     public function getID()
     {
         return $this->m_ID;
     }
-    
-    public function getPregunta()
+
+    public function getTitle()
     {
-        return $this->m_Pregunta;
+        return $this->m_Title;
     }
-    
-    public function getFecha()
+
+    public function getMessage()
     {
-        return $this->m_Fecha;
+        return $this->m_Message;
     }
-   
-    public function setPregunta($pregunta)
+
+    public function getCreationDate()
     {
-        $this->m_Pregunta = $pregunta;
+        return $this->m_Date;
     }
-    
 }

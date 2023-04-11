@@ -9,11 +9,12 @@ use es\ucm\fdi\aw\DTO\QuestionDTO;
 
 class QuestionDAO extends DAO
 {
+    private const TABLE_NAME = 'questions';
 
-    private const TABLE_NAME = 'foro_preguntas';
     private const ID_KEY = 'id';
-    private const PREGUNTA_KEY = 'pregunta';
-    private const FECHA_KEY = 'fecha';
+    private const TITLE_KEY = 'title';
+    private const MESSAGE_KEY = 'message';
+    private const CREATION_DATE_KEY = 'creationDate';
 
     //  Constructors
     public function __construct()
@@ -22,21 +23,44 @@ class QuestionDAO extends DAO
     }
 
     //  Methods
+    public function getQuestionAuthor($questionID): array
+    {
+        $query = "SELECT * FROM users u INNER JOIN users_questions uq ON u.id = uq.userID WHERE uq.questionID = :questionID;";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':questionID', $questionID);
+        $statement->execute();
+
+        $results = array();
+        $userDAO = new UserDAO();
+
+        foreach ($statement as $result) {
+            array_push($results, $userDAO->createDTOFromArray($result));
+        }
+        
+        return $results;
+    }
 
     protected function createDTOFromArray($array): DTO
     {
         $id = $array[self::ID_KEY];
-        $pregunta = $array[self::PREGUNTA_KEY];
-        $fecha = $array[self::FECHA_KEY];
+        $title = $array[self::TITLE_KEY];
+        $message = $array[self::MESSAGE_KEY];
+        $creationDate = $array[self::CREATION_DATE_KEY];
 
-        return new QuestionDTO($id, $pregunta, $fecha);
+        return new QuestionDTO($id, $title, $message, $creationDate);
     }
     protected function createArrayFromDTO($dto): array
     {
-        return array(
-            self::ID_KEY => $dto->getID(),
-            self::PREGUNTA_KEY => $dto->getPregunta(),
-            self::FECHA_KEY => $dto->getFecha()
+        $dtoArray = array(
+            self::TITLE_KEY => $dto->getTitle(),
+            self::MESSAGE_KEY => $dto->getMessage()
         );
+
+        
+        if ($dto->getID() != -1)
+            $dtoArray[self::ID_KEY] = $dto->getID();
+
+        return $dtoArray;
     }
 }

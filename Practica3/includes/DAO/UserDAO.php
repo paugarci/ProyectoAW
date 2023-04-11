@@ -40,14 +40,26 @@ class UserDAO extends DAO
             array_push($results, $roleDAO->createDTOFromArray($result));
         }
 
-
-
         return $results;
+    }
+
+
+    public function getContact($userID): array
+    {
+        $query = 'SELECT name AS userName, surname AS sur, email AS em
+        FROM users 
+        WHERE id = :userID';
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+
+        return $statement->fetchAll();
     }
 
     protected function createDTOFromArray($array): DTO
     {
-        $id = isset($array[self::ID_KEY]) ? $array[self::ID_KEY] : -1;
+        $id = $array[self::ID_KEY] ?? -1;
         $name = $array[self::NAME_KEY];
         $surname = $array[self::SURNAME_KEY];
         $email = $array[self::EMAIL_KEY];

@@ -5,35 +5,34 @@ namespace es\ucm\fdi\aw\DAO;
 require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\DTO\DTO;
-use es\ucm\fdi\aw\DTO\UserRoleDTO;
+use es\ucm\fdi\aw\DTO\UserOrderDTO;
 
-class UserRoleDAO extends DAO
+class UserOrderDAO extends DAO
 {
-    private const TABLE_NAME = 'users_roles';
+    private const TABLE_NAME = 'users_orders';
+    
     private const USER_ID_KEY = 'userID';
-    private const ROLE_ID_KEY = 'roleID';
+    private const ORDER_ID_KEY = 'orderID';
 
+    //  Constructors
     public function __construct()
     {
         parent::__construct(self::TABLE_NAME);
     }
 
+    //  Methods
     protected function createDTOFromArray($array): DTO
     {
         $userID = $array[self::USER_ID_KEY];
-        $roleID = $array[self::ROLE_ID_KEY];
+        $orderID = $array[self::ORDER_ID_KEY];
 
-        return new UserRoleDTO($userID, $roleID);
+        return new UserQuestionDTO($userID, $orderID);
     }
-    
     protected function createArrayFromDTO($dto): array
     {
-        $dtoArray = array(
+        return array(
             self::USER_ID_KEY => $dto->getUserID(),
-            self::ROLE_ID_KEY => $dto->getRoleID(),
+            self::ORDER_ID_KEY => $dto->getOrderID()
         );
-
-        return $dtoArray;
     }
 }
-?>
