@@ -152,5 +152,4 @@ end:
 
 $content = ob_get_clean();
 require_once 'includes/templates/events_template.php';
-
 ?>

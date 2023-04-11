@@ -42,7 +42,7 @@ ob_start();
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
                     <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                    <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Inicia sesión para escribir en el foro" : "Haz una pregunta" ?></p>
+                    <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>
             </fieldset>
@@ -102,10 +102,10 @@ ob_start();
                     </div>
                 <?php endforeach ?>
             </div>
-            <fieldset class="col-2 mt-5<?= $isDisabled ?>">
+            <fieldset class="col-2 mt-5"<?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                        <p class="pt-2"><?= !isset($_SESSION["user"]) ? "Inicia sesión para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
+                        <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
                     </a>
                 </div>
             </fieldset>

@@ -34,7 +34,6 @@ setcookie(EVENTS_COOKIE_NAME, json_encode($eventsCookie));
 
 ob_start();
 ?>
-
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 300px">
     <ul class="nav nav-pills">
         <li class="nav-item">
@@ -72,7 +71,7 @@ ob_start();
     <?php if (!isset($_SESSION['user'])) : ?>
 
         <div class="alert alert-warning">
-            Debes iniciar sesión para acceder a esta página.
+            Debes identificarte para acceder a esta página.
         </div>
 
     <?php else : ?>
@@ -81,7 +80,6 @@ ob_start();
 
     <?php endif; ?>
 </div>
-
 
 <?php
 

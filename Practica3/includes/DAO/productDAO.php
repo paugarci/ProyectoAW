@@ -4,8 +4,8 @@ namespace es\ucm\fdi\aw\DAO;
 
 require_once 'includes/config.php';
 
-use es\ucm\fdi\aw\DTO\DTO;
-use es\ucm\fdi\aw\DTO\ProductDTO;
+use es\ucm\fdi\aw\DTO\DTO as DTO;
+use es\ucm\fdi\aw\DTO\ProductDTO as ProductDTO;
 
 class ProductDAO extends DAO
 {
