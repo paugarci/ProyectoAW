@@ -3,7 +3,6 @@
 use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
 use es\ucm\fdi\aw\DAO\UserAnswerDAO;
-use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 use es\ucm\fdi\aw\DTO\AnswerDTO;
 use es\ucm\fdi\aw\DTO\UserAnswerDTO;
@@ -18,31 +17,25 @@ $questionDTOResults = $questionDAO->read($questionID);
 
 $answerDAO = new AnswerDAO;
 
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['answerID']) && !empty($_GET['answerID'])) {
     $answerDAO->delete($_GET['answerID']);
     header("Location: {$_SESSION['url']}");
 }
 
-if (isset($_SESSION["user"])) {
-    $userDAO = new UserDAO;
-    $userRoles = $userDAO->getUserRoles($_SESSION["user"]->getID());
-
-    foreach ($userRoles as $role)
-        if ($role->getRoleName() == "admin")
-            $isAdmin = true;
-}
-
 if (count($questionDTOResults) == 0) {
     $title = "Pregunta no encontrada";
 
-    $error = '
+    $error .= <<<HTML_ERROR
         <div class="alert alert-danger m-2 text-center">
             No existe esta pregunta
-        </div>';
+        </div>
+        HTML_ERROR;
 } else if (count($questionDTOResults) > 1) {
     $title = "Pregunta no encontrada";
 
-    $error = <<<HTML_ERROR
+    $error .= <<<HTML_ERROR
         <div class="alert alert-danger m-2 text-center">
             Hay más de una pregunta con esta ID
         </div>
@@ -73,17 +66,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
 
         $title = "Pregunta no encontrada";
 
-        $error = <<<HTML_ERROR
+        $error .= <<<HTML_ERROR
         <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
             <b>Error:</b> Debes identificarte para poder escribir en el foro.
         </div>
-    HTML_ERROR;
+        HTML_ERROR;
     }
 }
 ob_start();
 ?>
-<?= $error ?? "" ?>
 <div class="container justify-content-center col-lg-8 shadow my-5">
+    <?= $error ?>
     <div class="mx-5 p-4">
         <h3><?= $question->getTitle(); ?></h3>
         <p class="text-sm"><span class="op-6 text-secondary">Publicado el <b class="text-dark"><?= $question->getCreationDate() ?></b><span class="text-secondary"> por </span><b class="text-dark"><?= $questionAuthor ?></b></span></p>
@@ -103,7 +96,7 @@ ob_start();
                                     <h5><?= $answerAuthor ?></h5>
                                 </b></p>
                         </div>
-                        <?php if (isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID() || isset($isAdmin)) : ?>
+                        <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
                             <div class="d-flex flex-col col-5 justify-content-end">
                                 <p class="text-sm"><?= $answer->getCreationDate() ?></h5>
                                 </p>
