@@ -11,11 +11,12 @@ class LoginForm extends Form
 {
     //  Constants
     private const FORM_ID = 'login_form';
+    private const URL_REDIRECTION = 'index.php';
 
     //  Constructors
-    public function __construct($urlRedirection)
+    public function __construct()
     {
-        parent::__construct(self::FORM_ID, array(parent::URL_REDIRECTION_KEY => $urlRedirection));
+        parent::__construct(self::FORM_ID, array(parent::URL_REDIRECTION_KEY => self::URL_REDIRECTION));
     }
 
     //  Methods

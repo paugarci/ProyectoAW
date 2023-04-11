@@ -2,6 +2,7 @@
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\DAO\UsersProductsDAO;
 
 require_once 'includes/config.php';
 
@@ -34,17 +35,12 @@ if (isset($_GET["offer"])) {
         $productDAO->updateColumn($productID, "offer", $offer);
     }
 }
-if(isset($_POST['quantity'])) {
-    $quantity = $_POST['quantity'];
-    echo "Cantidad: " . $quantity;
+if(isset($_GET['quantity']) && $_GET['quantity'] != 0) {
+    echo "SE INSERTO!!";
+    $usersPDAO = new UsersProductsDAO;
+    //HAY QUE HACER UN INSERT!!! :)
+    //$usersPDAO->updateColumn($_SESSION["user"],$productID,$_POST['quantity']);
     
-    if(isset($_SESSION['cart'][$productID])){
-      $_SESSION['cart'][$productID]['quantity'] += $quantity;
-    } else {
-      $_SESSION['cart'][$productID] = array('quantity' => $quantity);
-    }
-    header('Location: product.php?productID='.$productDTO->getID());
-    exit;
   }
   
 if (count($productDTOResults) == 0) {
@@ -74,10 +70,10 @@ if (count($productDTOResults) == 0) {
 }
 $error
 ?>
-<div class="container">
+<div class="container shadow">
     <div class="row m-3 p-4 d-flex flex-row shadow">
         <div class="col col-md-6 d-flex flex-col">
-            <img class="img-fluid object-fit-contain" src="<?= $productsPath . $product->getImgName(); ?>">
+            <img class="shadow" src="<?= $productsPath . $product->getImgName(); ?>">
         </div>
         <div class="col col-md-6">
             <div class="d-flex justify-content-start">
@@ -112,14 +108,14 @@ $error
                 </div>
             <?php } ?>
             <div class="buttons py-3">
+                <!-- AQUI HAY QUE HACER OTRO FORM PARA EL BOTON DE COMPRAR -->
                 <button class="btn btn-primary " id="buy-now">Buy Now</button>
-                <form class = "py-3" action="" method="post">
+                <form class = "py-3" action="product.php" method="get">
                     <label for="quantity"> Cantidad:</label>
                     <div class="form-floating">
-
-                        <input  type="number" id="quantity" name="quantity" min="1" max="100">
-
                         <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
+                        <input  type="number" id="quantity" name="quantity" min="1" max="100">
+                        
                         <button class="btn btn-outline-primary" id="add-to-cart">Añadir al carro</button>
                     </div>
                 </form>

@@ -9,11 +9,12 @@ use es\ucm\fdi\aw\DTO\AnswerDTO;
 
 class AnswerDAO extends DAO
 {
-    private const TABLE_NAME = 'answers';
-    
+
+    private const TABLE_NAME = 'foro_respuestas';
     private const ID_KEY = 'id';
-    private const MESSAGE_KEY = 'message';
-    private const CREATION_DATE_KEY = 'creationDate';
+    private const IDPREGUNTA_KEY = 'id_pregunta';
+    private const RESPUESTA_KEY = 'respuesta';
+    private const FECHA_KEY = 'fecha';
 
     //  Constructors
     public function __construct()
@@ -23,60 +24,24 @@ class AnswerDAO extends DAO
 
     //  Methods
 
-    public function getQuestionAnswers($questionID): array
-    {
-        $query = "SELECT * FROM answers a INNER JOIN users_answers ua ON a.id = ua.answerID WHERE ua.questionID = :questionID;";
-
-        $statement = $this->m_DatabaseProxy->prepare($query);
-        $statement->bindParam(':questionID', $questionID);
-        $statement->execute();
-
-        $results = array();
-        $answerDAO = new AnswerDAO;
-
-        foreach ($statement as $result) {
-            array_push($results, $answerDAO->createDTOFromArray($result));
-        }
-        
-        return $results;
-    }
-    public function getAnswerAuthor($answerID, $questionID): array
-    {
-        $query = "SELECT * FROM users u INNER JOIN users_answers ua ON u.id = ua.userID WHERE ua.questionID = :questionID AND ua.answerID = :answerID;";
-
-        $statement = $this->m_DatabaseProxy->prepare($query);
-        $statement->bindParam(':questionID', $questionID);
-        $statement->bindParam(':answerID', $answerID);
-        $statement->execute();
-
-        $results = array();
-        $userDAO = new UserDAO();
-
-        foreach ($statement as $result) {
-            array_push($results, $userDAO->createDTOFromArray($result));
-        }
-        
-        return $results;
-    }
-
     protected function createDTOFromArray($array): DTO
     {
         $id = $array[self::ID_KEY];
-        $message = $array[self::MESSAGE_KEY];
-        $creationDate = $array[self::CREATION_DATE_KEY];
+        $idpregunta = $array[self::IDPREGUNTA_KEY];
+        $respuesta = $array[self::RESPUESTA_KEY];
+        $fecha = $array[self::FECHA_KEY];
 
-        return new AnswerDTO($id, $message, $creationDate);
+        return new AnswerDTO($id, $idpregunta, $respuesta, $fecha);
     }
-
     protected function createArrayFromDTO($dto): array
     {
-        $dtoArray = array(
-            self::MESSAGE_KEY => $dto->getMessage()
+        return array(
+            self::ID_KEY => $dto->getID(),
+            self::IDPREGUNTA_KEY => $dto->getIDPregunta(),
+            self::RESPUESTA_KEY => $dto->getRespuesta(),
+            self::FECHA_KEY => $dto->getFecha()
         );
-        
-        if ($dto->getID() != -1)
-            $dtoArray[self::ID_KEY] = $dto->getID();
-
-        return $dtoArray;
     }
+
+    
 }

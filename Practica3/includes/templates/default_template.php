@@ -23,7 +23,7 @@ if (!isset($title))
 <body class="min-vh-100">
 	<div class="min-vh-100 d-flex flex-column">
 		<?php require dirname(__DIR__) . '/common/navbar.php' ?>
-		<main class="d-flex flex-fill">
+		<main class="flex-fill">
 			<?= $content ?>
 		</main>
 		<?php require dirname(__DIR__) . '/common/footer.php' ?>

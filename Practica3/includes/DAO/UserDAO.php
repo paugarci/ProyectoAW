@@ -45,7 +45,7 @@ class UserDAO extends DAO
 
     protected function createDTOFromArray($array): DTO
     {
-        $id = $array[self::ID_KEY] ?? -1;
+        $id = isset($array[self::ID_KEY]) ? $array[self::ID_KEY] : -1;
         $name = $array[self::NAME_KEY];
         $surname = $array[self::SURNAME_KEY];
         $email = $array[self::EMAIL_KEY];

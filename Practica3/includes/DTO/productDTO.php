@@ -9,17 +9,17 @@ class ProductDTO extends DTO
     private $m_ID;
     private $m_Name;
     private $m_Description;
-    private $m_ImgName;
+    private $m_ImgPath;
     private $m_Price;
     private $m_Offer;
     private $m_PriceOffer;
 
-    public function __construct($id, $name, $description, $imgName, $price, $offer)
+    public function __construct($id, $name, $description, $imgPath, $price, $offer)
     {
         $this->m_ID = $id;
         $this->m_Name = $name;
         $this->m_Description = $description;
-        $this->m_ImgName = $imgName;
+        $this->m_ImgPath = $imgPath;
         $this->m_Price = $price;
         $this->m_Offer = $offer;
         $this->m_PriceOffer = $price - $price*($offer/100);
@@ -41,7 +41,7 @@ class ProductDTO extends DTO
     
     public function getImgName()
     {
-        return $this->m_ImgName;
+        return $this->m_ImgPath;
     }
     
     public function getPrice()
@@ -61,9 +61,9 @@ class ProductDTO extends DTO
         $this->m_Description = $description;
     }
     
-    public function setImgName($imgName)
+    public function setImgPath($imgPath)
     {
-        $this->m_ImgName = $imgName;
+        $this->m_ImgPath = $imgPath;
     }
     
     public function setPrice($price)

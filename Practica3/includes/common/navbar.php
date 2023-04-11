@@ -2,8 +2,6 @@
 
 require_once 'includes/config.php';
 
-$_SESSION['url'] = $_SERVER['REQUEST_URI'];
-
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
 $menu = array(
@@ -58,7 +56,6 @@ $menu = array(
                 </div>
             <?php else : ?>
                 <form action="login.php">
-                    <input type="hidden" name="urlRedirection" value="<?= $_SESSION['url'] ?>">
                     <button class="btn btn-outline-primary m-1" type="submit">Iniciar sesión</button>
                 </form>
                 <form action="register.php">

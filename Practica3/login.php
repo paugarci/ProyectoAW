@@ -6,7 +6,7 @@ ob_start();
 ?>
 
 <div class="container justify-content-center col-lg-5">
-    <?= ($loginForm = new es\ucm\fdi\aw\forms\LoginForm($_GET['urlRedirection']))->handleForm(); ?>
+    <?= ($loginForm = new es\ucm\fdi\aw\forms\LoginForm())->handleForm(); ?>
 </div>
 
 <?php
