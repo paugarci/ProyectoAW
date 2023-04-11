@@ -40,7 +40,7 @@ class CreateEventForm extends Form
         $eventDate = $data['eventDate'];
 
         $eventDAO = new EventDAO();
-        $eventDTO = new EventDTO(null, $eventName, $eventDescription, $eventDate);
+        $eventDTO = new EventDTO(-1, $eventName, $eventDescription, $eventDate);
 
         if (!$eventDAO->create($eventDTO)) {
             $this->m_Errors['bad_create'] = 'Ha ocurrido un error inesperado al crear el evento.';

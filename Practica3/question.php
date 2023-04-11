@@ -51,9 +51,10 @@ if (count($questionDTOResults) == 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
     if (isset($_SESSION['user'])) {
         $answerMessage = $_POST["answerMessage"];
-        $answerDAO->create(new AnswerDTO(-1, $answerMessage, null));
+        $date = date('Y-m-d H:i:s');
+        $answerDAO->create(new AnswerDTO(-1, $answerMessage, $date));
 
-        $answer = $answerDAO->read(null, ["message" => $answerMessage])[0];
+        $answer = $answerDAO->read(null, ["creationDate" => $date])[0];
 
         $answerID = $answer->getID();
         $answerAuthorID = $_SESSION["user"]->getID();
@@ -75,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
 }
 ob_start();
 ?>
-<div class="container justify-content-center col-lg-8 shadow my-5">
+<div class="container col-lg-8 shadow my-5">
     <?= $error ?>
     <div class="mx-5 p-4">
         <h3><?= $question->getTitle(); ?></h3>

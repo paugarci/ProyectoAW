@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2023 a las 17:55:17
+-- Tiempo de generación: 11-04-2023 a las 13:08:09
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -47,7 +47,7 @@ CREATE TABLE `categories` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Estructura de tabla para la tabla `events`
 --
 
 CREATE TABLE `events` (
@@ -58,7 +58,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `events`
+-- Volcado de datos para la tabla `events`
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
@@ -67,7 +67,7 @@ INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events_users`
+-- Estructura de tabla para la tabla `events_users`
 --
 
 CREATE TABLE `events_users` (
@@ -77,7 +77,7 @@ CREATE TABLE `events_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `events_users`
+-- Volcado de datos para la tabla `events_users`
 --
 
 INSERT INTO `events_users` (`eventID`, `userID`, `eventRoleID`) VALUES
@@ -86,7 +86,7 @@ INSERT INTO `events_users` (`eventID`, `userID`, `eventRoleID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_roles`
+-- Estructura de tabla para la tabla `event_roles`
 --
 
 CREATE TABLE `event_roles` (
@@ -96,7 +96,7 @@ CREATE TABLE `event_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `event_roles`
+-- Volcado de datos para la tabla `event_roles`
 --
 
 INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
@@ -162,7 +162,7 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
-(94, 'adsfasdf', 'asdfasdf', '2023-04-10 03:45:26');
+(100, 'asdf', 'adsf', '2023-04-11 12:58:04');
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE `users_questions` (
 --
 
 INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
-(12, 94);
+(12, 100);
 
 -- --------------------------------------------------------
 
@@ -284,6 +284,12 @@ ALTER TABLE `answers`
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `events`
+--
+ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -352,13 +358,19 @@ ALTER TABLE `users_roles`
 -- AUTO_INCREMENT de la tabla `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -370,7 +382,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

@@ -14,6 +14,8 @@ $questions = $questionDAO->read();
 $userQuestionDAO = new UserQuestionDAO;
 $questionAuthors = $userQuestionDAO->read();
 
+$isDisabled = !isset($_SESSION["user"]) ? " disabled" : "";
+
 $answerDAO = new AnswerDAO;
 $numAnswers = count($answerDAO->read());
 
@@ -36,14 +38,14 @@ ob_start();
     <h2 class="m-3 d-flex justify-content-center">Foro</h2>
     <div class="row">
         <?php if (!isset($questions) || empty($questions)) : ?>
-            <div class="col-12">
+            <fieldset class="col-12"<?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
                     <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                        <p class="pt-2">Haz una<br>pregunta</p>
+                    <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Inicia sesión para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>
-            </div>
+            </fieldset>
         <?php else : ?>
             <div class="col-10 mb-3">
                 <div class="row text-left mb-5"></div>
@@ -63,7 +65,7 @@ ob_start();
                                     <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
+                                    <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
                                 </div>
                             </div>
                             <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
@@ -76,7 +78,7 @@ ob_start();
                                     </button>
                                 </div>
                                 <div class="modal fade" id="confirm-modal-<?= $question->getID(); ?>" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-title">Confirmar acción</h5>
@@ -100,13 +102,13 @@ ob_start();
                     </div>
                 <?php endforeach ?>
             </div>
-            <div class="col-2 mt-5">
+            <fieldset class="col-2 mt-5<?= $isDisabled ?>">
                 <div class="row d-flex justify-content-center">
                     <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                        <p class="pt-2">Haz una<br>pregunta</p>
+                        <p class="pt-2"><?= !isset($_SESSION["user"]) ? "Inicia sesión para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
                     </a>
                 </div>
-            </div>
+            </fieldset>
         <?php endif ?>
     </div>
 </div>
