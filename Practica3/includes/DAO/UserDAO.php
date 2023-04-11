@@ -44,6 +44,7 @@ class UserDAO extends DAO
     }
 
 
+    
     public function getContact($userID): array
     {
         $query = 'SELECT name AS userName, surname AS sur, email AS em
@@ -55,6 +56,17 @@ class UserDAO extends DAO
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function UpdateEmail($userID, $email) : bool
+    {
+        $query = 'UPDATE users SET email = :email WHERE id = :userID';
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':email', $email);
+
+
+        return $statement->execute();
     }
 
     protected function createDTOFromArray($array): DTO
