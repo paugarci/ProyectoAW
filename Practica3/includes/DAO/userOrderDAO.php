@@ -35,4 +35,15 @@ class UserOrderDAO extends DAO
             self::ORDER_ID_KEY => $dto->getOrderID()
         );
     }
+
+    public function insert($userID, $orderID): bool
+    {
+        $query = 'INSERT users_orders SET userID = :userID, orderID = :orderID' ;
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':orderID', $orderID);
+
+
+        return $statement->execute();
+    }
 }
