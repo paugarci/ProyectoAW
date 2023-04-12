@@ -1,10 +1,27 @@
 <?php
 
+use es\ucm\fdi\aw\DAO\UserDAO;
+
 if (!isset($content))
 	$content = 'No hay contenido que mostrar';
 if (!isset($title))
 	$title = 'Página sin título';
 
+
+$_SESSION['url'] = $_SERVER['REQUEST_URI'];
+
+if (isset($_SESSION["user"])) {
+	$userDAO = new UserDAO;
+	$userRoles = $userDAO->getUserRoles($_SESSION["user"]->getID());
+
+	$_SESSION["isAdmin"] = false;
+
+	foreach ($userRoles as $role) {
+		if ($role->getRoleName() == "admin") {
+			$_SESSION["isAdmin"] = true;
+		}
+	}
+}
 ?>
 
 <!DOCTYPE html>

@@ -11,7 +11,6 @@ require_once 'includes/config.php';
 <div class="px-3 py-2">
     <h1>Zeus Airsoft</h1>
     <p>Pagina de MI CUENTA</p>
-   
 </div>
 
 <?php 

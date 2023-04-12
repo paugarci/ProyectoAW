@@ -6,6 +6,7 @@ $_SESSION['url'] = $_SERVER['REQUEST_URI'];
 
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
+
 $menu = array(
     "index.php" => 'Inicio',
     "products.php" => 'Productos',
@@ -35,9 +36,9 @@ $menu = array(
                 <?php endforeach ?>
             </ul>
             <form action="shopping-cart.php">
-                <button type="submit" class="btn btn-secondary me-2"  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-cart" viewBox="0 0 16 16">
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                <button type="submit" class="rounded-circle btn btn-outline-light me-3 pt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                     </svg>
                 </button>
             </form>
@@ -48,8 +49,15 @@ $menu = array(
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="account.php">Cuenta</a></li>
-                        <li><a class="dropdown-item" href="orders.php">Pedidos</a></li>
+                        <li><a class="dropdown-item" href="#">Pedidos</a></li>
                         <li><a class="dropdown-item" href="#">Lista de deseos</a></li>
+                        
+                        <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="admin-panel.php">Administrar</a></li>
+                        <?php endif ?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -59,10 +67,10 @@ $menu = array(
             <?php else : ?>
                 <form action="login.php">
                     <input type="hidden" name="urlRedirection" value="<?= $_SESSION['url'] ?>">
-                    <button class="btn btn-outline-primary m-1" type="submit">Iniciar sesión</button>
+                    <button class="btn btn-primary m-1" type="submit">Iniciar sesión</button>
                 </form>
                 <form action="register.php">
-                    <button class="btn btn-primary m-1" type="submit">Registrarse</button>
+                    <button class="btn btn-secondary m-1" type="submit">Registrarse</button>
                 </form>
             <?php endif ?>
         </div>

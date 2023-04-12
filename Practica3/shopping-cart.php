@@ -15,7 +15,7 @@ echo "ID Usuario" . $uID;
     echo '<ul>';
     foreach($_SESSION['cart'] as $productID => $product){
       $productDAO = new ProductDAO;
-      $productDTO = $productDAO->getByID($productID);
+      $productDTO = $productDAO->read($productID);
       $subtotal = $product['quantity'] * $productDTO->getPrice();
       $total += $subtotal;
       echo '<li>' . $productDTO->getName() . ' x ' . $product['quantity'] . ' = ' . $subtotal . ' € <a href="remove_item.php?id=' . $productID . '">Eliminar</a></li>';

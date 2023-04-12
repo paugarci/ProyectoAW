@@ -1,11 +1,12 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2023 a las 21:15:15
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.2
+-- Tiempo de generación: 11-04-2023 a las 13:08:09
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,14 +32,7 @@ CREATE TABLE `answers` (
   `id` int(11) NOT NULL,
   `message` text NOT NULL,
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `answers`
---
-
-INSERT INTO `answers` (`id`, `message`, `creationDate`) VALUES
-(36, 'asdfghjkl', '2023-04-10 18:08:17');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -49,7 +43,7 @@ INSERT INTO `answers` (`id`, `message`, `creationDate`) VALUES
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,7 +56,7 @@ CREATE TABLE `events` (
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `events`
@@ -81,7 +75,7 @@ CREATE TABLE `events_users` (
   `eventID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `eventRoleID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `events_users`
@@ -100,7 +94,7 @@ CREATE TABLE `event_roles` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `maximum` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `event_roles`
@@ -169,7 +163,7 @@ CREATE TABLE `products` (
   `imgName` varchar(256) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `offer` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `products`
@@ -193,7 +187,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `imgName`, `price`, `offer`
 CREATE TABLE `products_categories` (
   `productID` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -206,15 +200,11 @@ CREATE TABLE `questions` (
   `title` varchar(255) NOT NULL,
   `message` text DEFAULT NULL,
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `questions`
 --
-
-INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
-(94, 'adsfasdf', 'asdfasdf', '2023-04-10 03:45:26'),
-(97, 'asweafgrthawrg', 'j', '2023-04-10 18:08:45');
 
 -- --------------------------------------------------------
 
@@ -225,7 +215,7 @@ INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
 CREATE TABLE `questions_answers` (
   `questionID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -236,7 +226,7 @@ CREATE TABLE `questions_answers` (
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `roleName` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -280,7 +270,7 @@ CREATE TABLE `users` (
   `surname` varchar(64) NOT NULL,
   `email` varchar(320) NOT NULL,
   `passwordHash` char(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -387,6 +377,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `payment_method`
 --
 ALTER TABLE `payment_method`
@@ -472,7 +468,8 @@ ALTER TABLE `users_roles`
 -- AUTO_INCREMENT de la tabla `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -487,6 +484,12 @@ ALTER TABLE `payment_method`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
@@ -496,7 +499,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

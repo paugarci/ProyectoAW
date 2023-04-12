@@ -17,7 +17,7 @@ $productsPath = 'images/products/';
 $error = "";
 
 if (isset($_GET["offer"])) {
-    if($_GET["offer"] < 0 || $_GET["offer"] > 100){
+    if ($_GET["offer"] < 0 || $_GET["offer"] > 100) {
         $title = "Descuento imposible de aplicar";
 
         $error = <<<HTML_ERROR
@@ -25,28 +25,29 @@ if (isset($_GET["offer"])) {
                 El descuento debe estar en un rango de 0-100
             </div>'; 
             HTML_ERROR;
-    }else{
+    } else {
         $offer = $_GET["offer"];
         $productDTOResults[0]->setOffer($offer);
         $price = $productDTOResults[0]->getPrice();
-        $price = $price - ($price * $productDTOResults[0]->getOffer())/100;
+        $price = $price - ($price * $productDTOResults[0]->getOffer()) / 100;
         $productDTOResults[0]->setOfferPrice($price);
         $productDAO->updateColumn($productID, "offer", $offer);
     }
 }
-if(isset($_POST['quantity'])) {
+
+if (isset($_POST['quantity'])) {
     $quantity = $_POST['quantity'];
     echo "Cantidad: " . $quantity;
-    
-    if(isset($_SESSION['cart'][$productID])){
-      $_SESSION['cart'][$productID]['quantity'] += $quantity;
+
+    if (isset($_SESSION['cart'][$productID])) {
+        $_SESSION['cart'][$productID]['quantity'] += $quantity;
     } else {
-      $_SESSION['cart'][$productID] = array('quantity' => $quantity);
+        $_SESSION['cart'][$productID] = array('quantity' => $quantity);
     }
-    header('Location: product.php?productID='.$productDTO->getID());
+    header('Location: product.php?productID=' . $productDTO->getID());
     exit;
-  }
-  
+}
+
 if (count($productDTOResults) == 0) {
     $title = "Producto no encontrado";
 
@@ -84,52 +85,40 @@ $error
                 <h3> <?= $product->getName() ?> </h3>
             </div>
             <hr class="mt-2">
-            <?php
-                if ($product->getOffer() != 0) {
-            ?>
-                <h3><?= number_format($product->getOfferPrice(),2)?>€</h3>   
-                <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(),2) ?>€</h5>
-            <?php
-            } else {
-            ?>
-                <h3><?=  number_format($product->getPrice(),2) ?>€</h3>
-            <?php
-            }
-            ?>
-            <?php if ($role == "admin") {  ?>
+            <?php if ($product->getOffer() != 0) : ?>
+                <h3><?= number_format($product->getOfferPrice(), 2) ?>€</h3>
+                <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(), 2) ?>€</h5>
+            <?php else : ?>
+                <h3><?= number_format($product->getPrice(), 2) ?>€</h3>
+            <?php endif ?>
+            <?php if ($_SESSION["isAdmin"] == true) :  ?>
                 <form action="product.php" method="get">
                     <div class="form-floating">
-                    
                         <textarea class="form-control" id="floatingTextarea" name="offer"></textarea>
                         <label for="floatingTextarea">Introduce el descuento</label>
                         <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
                         <button class="btn btn-primary" id="apply-offer">Aplicar Descuento</button>
                     </div>
-                    <div>
                 </form>
-
-
-                </div>
-            <?php } ?>
+            <?php endif ?>
             <div class="buttons py-3">
                 <button class="btn btn-primary " id="buy-now">Buy Now</button>
-                <form class = "py-3" action="" method="post">
-                    <label for="quantity"> Cantidad:</label>
-                    <div class="form-floating">
-
-                        <input  type="number" id="quantity" name="quantity" min="1" max="100">
-
+                <form class="py-3" action="" method="post">
+                    <label class="label-form" for="quantity"> Cantidad:</label>
+                    <div class="form-group">
+                        <input type="number" id="quantity" name="quantity" min="1" max="100">
                         <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
                         <button class="btn btn-outline-primary" id="add-to-cart">Añadir al carro</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="mt-5"><?= $product->getDescription() ?></div>
+        <div class="mt-5">
+            <?= $product->getDescription() ?>
+        </div>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
+require_once PROJECT_ROOT . '/includes/templates/default_template.php';
 ?>
-
-<?php require_once PROJECT_ROOT . '/includes/templates/default_template.php'; ?>
