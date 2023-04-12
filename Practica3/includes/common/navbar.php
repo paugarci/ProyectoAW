@@ -49,7 +49,7 @@ $menu = array(
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="account.php">Cuenta</a></li>
-                        <li><a class="dropdown-item" href="#">Pedidos</a></li>
+                        <li><a class="dropdown-item" href="orders.php">Pedidos</a></li>
                         <li><a class="dropdown-item" href="#">Lista de deseos</a></li>
                         
                         <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>
