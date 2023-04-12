@@ -69,15 +69,13 @@ ob_start();
 </div>
 <div class="flex-fill p-3">
     <?php if (!isset($_SESSION['user'])) : ?>
-
         <div class="alert alert-warning">
             Debes identificarte para acceder a esta página.
         </div>
 
     <?php else : ?>
-
         <?php echo isset($content) ? $content : 'No hay contenido para esta página' ?>
-
+    
     <?php endif; ?>
 </div>
 

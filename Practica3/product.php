@@ -9,6 +9,8 @@ ob_start();
 
 $productID = $_GET["productID"];
 $productDAO = new ProductDAO;
+$user = new UserDAO;
+$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
 
 $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
@@ -32,6 +34,7 @@ if (isset($_GET["offer"])) {
         $productDAO->updateColumn($productID, "offer", $offer);
     }
 }
+
 if (isset($_POST['quantity'])) {
     $quantity = $_POST['quantity'];
     echo "Cantidad: " . $quantity;
@@ -72,7 +75,6 @@ if (count($productDTOResults) == 0) {
 }
 $error
 ?>
-
 <div class="container">
     <div class="row m-3 p-4 d-flex flex-row shadow">
         <div class="col col-md-6 d-flex flex-col">
@@ -116,7 +118,6 @@ $error
         </div>
     </div>
 </div>
-
 <?php
 $content = ob_get_clean();
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';

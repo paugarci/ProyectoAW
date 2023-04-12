@@ -8,6 +8,7 @@ $title = 'Añadir producto';
 
 ob_start();
 ?>
+
 <?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] == false) : ?>
     <?php $title = 'Página no disponible'; ?>
     <div class="alert alert-danger m-2 flex-fill h-100" role="alert">

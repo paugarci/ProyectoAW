@@ -1,4 +1,5 @@
 -- phpMyAdmin SQL Dump
+
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
@@ -108,6 +109,50 @@ INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `state` varchar(1000) NOT NULL,
+  `date` date NOT NULL,
+  `amount` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `paymentMethod` varchar(1000) NOT NULL,
+  `address` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `orders`
+--
+
+INSERT INTO `orders` (`id`, `number`, `state`, `date`, `amount`, `quantity`, `paymentMethod`, `address`) VALUES
+(1, 12, 'En proceso', '2023-04-10', 123, 1, 'Visa', 'Calle Magdalena');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `payment_method`
+--
+
+CREATE TABLE `payment_method` (
+  `id` int(11) NOT NULL,
+  `name` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `payment_method`
+--
+
+INSERT INTO `payment_method` (`id`, `name`) VALUES
+(1, 'Tarjeta de crédito'),
+(2, 'Bizum'),
+(3, 'Transferencia bancaria');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `products`
 --
 
@@ -161,9 +206,6 @@ CREATE TABLE `questions` (
 -- Volcado de datos para la tabla `questions`
 --
 
-INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
-(100, 'asdf', 'adsf', '2023-04-11 12:58:04');
-
 -- --------------------------------------------------------
 
 --
@@ -198,6 +240,27 @@ INSERT INTO `roles` (`id`, `roleName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `states`
+--
+
+CREATE TABLE `states` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `states`
+--
+
+INSERT INTO `states` (`id`, `name`) VALUES
+(1, 'Pendiente'),
+(2, 'En proceso'),
+(3, 'Enviado'),
+(4, 'Entregado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -216,7 +279,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `passwordHash`) VALUES
 (6, 'Alexander', 'López Vega', 'alex.lopez.ve@gmail.com', '$2y$10$bOVt7M3p2mQtvQTkStsNj.x3Rw9rKmvvHrqTt.RF7z46bJONYM2AG'),
 (12, 'Hugo', 'Silva', 'hsilva@ucm.es', '$2y$10$J.hO7gzo7cEjUbkH4oy6nuBV80raqlHCo6h41t2vt5vqwwwXFm8Qy'),
-(13, 'Pepe', 'Gómez', 'pepegomez@gmail.com', '$2y$10$qHjUQ/YMGBNZAD7kDMvCvePRB9MooK4aKSd46EdL0NYWZZsTBrZmO');
+(13, 'Pepe', 'Gómez', 'pepegomez@gmail.com', '$2y$10$qHjUQ/YMGBNZAD7kDMvCvePRB9MooK4aKSd46EdL0NYWZZsTBrZmO'),
+(14, 'June', 'Zuazo', '1234@ucm.es', '$2y$10$u.JMyHOYDOBRqe2QXy4Qy.sK6UVcL2DgZDSMl4x2UH7t0OaiELQpy');
 
 -- --------------------------------------------------------
 
@@ -228,7 +292,25 @@ CREATE TABLE `users_answers` (
   `userID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL,
   `questionID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `users_answers`
+--
+
+INSERT INTO `users_answers` (`userID`, `answerID`, `questionID`) VALUES
+(14, 36, 94);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users_orders`
+--
+
+CREATE TABLE `users_orders` (
+  `userID` int(11) NOT NULL,
+  `orderID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -239,14 +321,15 @@ CREATE TABLE `users_answers` (
 CREATE TABLE `users_questions` (
   `userID` int(11) NOT NULL,
   `questionID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users_questions`
 --
 
 INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
-(12, 100);
+(12, 94),
+(14, 97);
 
 -- --------------------------------------------------------
 
@@ -257,7 +340,7 @@ INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
 CREATE TABLE `users_roles` (
   `userID` int(11) NOT NULL,
   `roleID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users_roles`
@@ -266,6 +349,7 @@ CREATE TABLE `users_roles` (
 INSERT INTO `users_roles` (`userID`, `roleID`) VALUES
 (6, 1),
 (12, 1),
+(14, 1),
 (6, 2),
 (12, 2),
 (13, 2);
@@ -287,9 +371,21 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `events`
 --
 ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `payment_method`
+--
+ALTER TABLE `payment_method`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -323,6 +419,12 @@ ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `states`
+--
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -335,6 +437,14 @@ ALTER TABLE `users_answers`
   ADD PRIMARY KEY (`userID`,`answerID`,`questionID`),
   ADD KEY `questionID` (`questionID`),
   ADD KEY `answerID` (`answerID`);
+
+--
+-- Indices de la tabla `users_orders`
+--
+ALTER TABLE `users_orders`
+  ADD PRIMARY KEY (`userID`) USING BTREE,
+  ADD KEY `userID` (`userID`) USING BTREE,
+  ADD KEY `orderID` (`orderID`);
 
 --
 -- Indices de la tabla `users_questions`
@@ -360,11 +470,18 @@ ALTER TABLE `users_roles`
 ALTER TABLE `answers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
+
 --
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `payment_method`
+--
+ALTER TABLE `payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `events`
@@ -391,10 +508,16 @@ ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `states`
+--
+ALTER TABLE `states`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
@@ -407,6 +530,13 @@ ALTER TABLE `users_answers`
   ADD CONSTRAINT `users_answers_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `users_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `users_answers_ibfk_3` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_orders`
+--
+ALTER TABLE `users_orders`
+  ADD CONSTRAINT `users_orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_orders_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users_questions`

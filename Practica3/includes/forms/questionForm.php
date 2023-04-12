@@ -56,7 +56,6 @@ class QuestionForm extends Form
 
         return <<<HTML_FORM
         <div class="p-4">
-
             <h2 class="mb-3 d-flex justify-content-center">Añada su pregunta al foro</h2>
 
             <hr class="my-4">

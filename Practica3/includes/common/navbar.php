@@ -2,6 +2,8 @@
 
 require_once 'includes/config.php';
 
+$_SESSION['url'] = $_SERVER['REQUEST_URI'];
+
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
 
@@ -48,6 +50,8 @@ $menu = array(
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="account.php">Cuenta</a></li>
                         <li><a class="dropdown-item" href="#">Pedidos</a></li>
+                        <li><a class="dropdown-item" href="#">Lista de deseos</a></li>
+                        
                         <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>
                             <li>
                                 <hr class="dropdown-divider">

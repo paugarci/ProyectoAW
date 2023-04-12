@@ -51,6 +51,7 @@ if (count($questionDTOResults) == 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
     if (isset($_SESSION['user'])) {
         $answerMessage = $_POST["answerMessage"];
+        
         $date = date('Y-m-d H:i:s');
         $answerDAO->create(new AnswerDTO(-1, $answerMessage, $date));
 
@@ -68,14 +69,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
         $title = "Pregunta no encontrada";
 
         $error .= <<<HTML_ERROR
-        <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
-            <b>Error:</b> Debes identificarte para poder escribir en el foro.
+        <div class="alert alert-warning m-2 justify-content-center align-center" role="alert">
+            Debes identificarte para poder escribir en el foro.
         </div>
         HTML_ERROR;
     }
 }
 ob_start();
 ?>
+
 <div class="container col-lg-8 shadow my-5">
     <?= $error ?>
     <div class="mx-5 p-4">
@@ -97,6 +99,7 @@ ob_start();
                                     <h5><?= $answerAuthor ?></h5>
                                 </b></p>
                         </div>
+
                         <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
                             <div class="d-flex flex-col col-5 justify-content-end">
                                 <p class="text-sm"><?= $answer->getCreationDate() ?></h5>

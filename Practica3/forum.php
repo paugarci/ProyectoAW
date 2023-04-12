@@ -2,6 +2,7 @@
 
 use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
+use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 
 require_once 'includes/config.php';
@@ -15,7 +16,6 @@ $userQuestionDAO = new UserQuestionDAO;
 $questionAuthors = $userQuestionDAO->read();
 
 $isDisabled = !isset($_SESSION["user"]) ? " disabled" : "";
-
 $answerDAO = new AnswerDAO;
 $numAnswers = count($answerDAO->read());
 
