@@ -6,12 +6,15 @@ require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\Application;
 use es\ucm\fdi\aw\DTO\DTO;
+use PDO;
 
 //  Note: possible SQL injection when using parameters. Investigate
 abstract class DAO
 {
     //  Constants
     private const ID_KEY = 'id';
+    private const ID_KEY1 = 'userID';
+    private const ID_KEY2 = 'productID';
 
     //  Fields
     protected $m_TableName;
@@ -25,7 +28,7 @@ abstract class DAO
     }
 
     //  Methods
-    public function create($dto) : bool
+    public function create($dto): bool
     {
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
@@ -48,32 +51,34 @@ abstract class DAO
 
         foreach ($dtoArrayKeys as $key)
             $statement->bindParam(":$key", $dtoArray[$key]);
-        
+        echo "<pre>";
+        var_dump($dtoArrayKeys);
         return $statement->execute();
     }
-    public function read($id = null, $filters = array()) : array
+
+    public function read($id = null, $filters = array()): array
     {
         if ($id != null)
             $filters[self::ID_KEY] = $id;
-    
+
         $filterConstraint = " WHERE ";
 
         $filterKeys = array_keys($filters);
         $numFilters = count($filters);
 
-        for ($i = 0; $i < $numFilters; ++$i)
-        {
+        for ($i = 0; $i < $numFilters; ++$i) {
             $filterConstraint .= "{$filterKeys[$i]} = :{$filterKeys[$i]}";
 
             if ($i < $numFilters - 1)
                 $filterConstraint .= ' AND ';
-        }        
+        }
 
         $query = "SELECT * FROM {$this->m_TableName}" . ($numFilters > 0 ? $filterConstraint : '');
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
+
         foreach ($filters as $filterKey => $filterValue)
-            $statement->bindParam(":$filterKey", $filterValue);
+            $statement->bindValue(":$filterKey", $filterValue);
+
 
         $statement->execute();
         $results = array();
@@ -83,67 +88,68 @@ abstract class DAO
 
         return $results;
     }
+
     public function update($dto) : bool
     {
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
         
-        $updateVariables = "{$dtoArrayKeys[0]} = {$dtoArray[$dtoArrayKeys[0]]}";
+        $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
+
+        for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
+            $column = $dtoArrayKeys[$i];
+            $updateVariables .= ", {$column} = :{$column}";
+        }
+
+        $idKey = self::ID_KEY;
+        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()};";
+        // $query = "UPDATE products SET id = 15, name = 'holi', description = 'nuevaDesc', imgName = 'nuevafoto.png', price = '123', offer = '0' WHERE id = 15;";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+
+        foreach ($dtoArrayKeys as $key) 
+            $statement->bindParam(":$key", $dtoArray[$key]);
+        
+        return $statement->execute();
+    }
+
+    public function updateWithCompoundKey($dto){
+        $dtoArray = $this->createArrayFromDTO($dto);
+        $dtoArrayKeys = array_keys($dtoArray);
+        
+        $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
             $column = $dtoArrayKeys[$i];
             $updateVariables .= ", $column = :$column";
         }
 
-        $idKey = self::ID_KEY;
-        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey = {$dto->getID()}";
+        $idKey1 = self::ID_KEY1;
+        $idKey2 = self::ID_KEY2;
+        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey1 = {$dto->getID1()} AND $idKey2 = {$dto->getID2()}";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
 
         foreach ($dtoArrayKeys as $key) {
-            $value = $dtoArray[$key];
-            $statement->bindParam(":$key", $value);
+            $statement->bindParam(":$key", $dtoArray[$key]);
+
         }
         
-
         return $statement->execute();
+
     }
 
-    public function updateColumn($id, $columnName, $columnValue) : bool
-        {
-            $idKey = self::ID_KEY;
-            $query = "UPDATE {$this->m_TableName} SET $columnName = :columnValue WHERE $idKey = :id";
-            $statement = $this->m_DatabaseProxy->prepare($query);
-            $statement->bindParam(":id", $id);
-            $statement->bindParam(":columnValue", $columnValue);
-            return $statement->execute();
-        }
-
-
-    public function delete($id) : bool
+    public function delete($id): bool
     {
         $idKey = self::ID_KEY;
         $query = "DELETE FROM {$this->m_TableName} WHERE $idKey = :$idKey";
 
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindParam($idKey, $id);
-        
+
         return $statement->execute();
     }
 
-    public function deleteById(String $key, $value) : bool
-    {
-        $idKey = $key;
-        $query = "DELETE FROM {$this->m_TableName} WHERE $idKey = :$idKey";
-
-        $statement = $this->m_DatabaseProxy->prepare($query);
-        $statement->bindParam($idKey, $value);
-        
-        return $statement->execute();
-    }
-
-    
-
-    protected abstract function createDTOFromArray($array) : DTO;
-    protected abstract function createArrayFromDTO($DTO) : array;
+    protected abstract function createDTOFromArray($array): DTO;
+    protected abstract function createArrayFromDTO($DTO): array;
 }
