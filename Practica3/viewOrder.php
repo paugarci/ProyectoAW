@@ -28,7 +28,7 @@ ob_start();
   <br>
   <?php foreach ($results as $result):
     if ($result['orderID'] == $orderID) :?>
-      <h2 class="m-3 d-flex justify-content-center">Pedido número: <?php echo $result['numberO']; ?></h2>
+      <h2 class="m-3 d-flex justify-content-center">Pedido número: <?php echo $orderID ?></h2>
 
       <!-- Sección de Entrega -->
 <div class="border rounded p-3 mb-3">

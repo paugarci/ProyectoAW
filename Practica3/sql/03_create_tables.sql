@@ -1,12 +1,11 @@
 -- phpMyAdmin SQL Dump
-
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2023 a las 13:08:09
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.2.0
+-- Tiempo de generación: 12-04-2023 a las 22:58:04
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +31,7 @@ CREATE TABLE `answers` (
   `id` int(11) NOT NULL,
   `message` text NOT NULL,
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,7 +42,7 @@ CREATE TABLE `answers` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,7 +55,7 @@ CREATE TABLE `events` (
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `events`
@@ -75,7 +74,7 @@ CREATE TABLE `events_users` (
   `eventID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `eventRoleID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `events_users`
@@ -94,7 +93,7 @@ CREATE TABLE `event_roles` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `maximum` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `event_roles`
@@ -114,7 +113,6 @@ INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `number` int(11) NOT NULL,
   `state` varchar(1000) NOT NULL,
   `date` date NOT NULL,
   `amount` int(11) NOT NULL,
@@ -127,8 +125,20 @@ CREATE TABLE `orders` (
 -- Volcado de datos para la tabla `orders`
 --
 
-INSERT INTO `orders` (`id`, `number`, `state`, `date`, `amount`, `quantity`, `paymentMethod`, `address`) VALUES
-(1, 12, 'En proceso', '2023-04-10', 123, 1, 'Visa', 'Calle Magdalena');
+INSERT INTO `orders` (`id`, `state`, `date`, `amount`, `quantity`, `paymentMethod`, `address`) VALUES
+(1, 'En proceso', '2023-04-10', 123, 1, 'Visa', 'Calle Magdalena'),
+(6, 'pendiente', '2023-04-12', 668, 1, 'Bizum', 'Calle Paula'),
+(7, 'pendiente', '2023-04-12', 376, 1, 'Transferencia Bancaria', 'Calle June'),
+(8, 'pendiente', '2023-04-12', 668, 1, 'Transferencia Bancaria', 'Calle Valencia'),
+(9, 'pendiente', '2023-04-12', 800, 1, 'Tarjeta Credito', 'Calle ángel'),
+(10, 'pendiente', '2023-04-12', 395, 1, 'Transferencia Bancaria', 'Calle Julian'),
+(11, 'pendiente', '2023-04-12', 315, 1, 'Bizum', 'Calle Ojalá'),
+(12, 'pendiente', '2023-04-12', 315, 1, 'Bizum', 'Calleeeee'),
+(13, 'pendiente', '2023-04-12', 340, 1, 'Tarjeta Credito', ''),
+(14, 'pendiente', '2023-04-12', 340, 1, 'Tarjeta Credito', 'Calle Suerte'),
+(15, 'pendiente', '2023-04-12', 376, 1, 'Tarjeta Credito', 'Esperanza'),
+(16, 'pendiente', '2023-04-12', 562, 1, 'Tarjeta Credito', 'Jeje'),
+(17, 'pendiente', '2023-04-12', 395, 1, 'Tarjeta Credito', 'Calle María');
 
 -- --------------------------------------------------------
 
@@ -163,7 +173,7 @@ CREATE TABLE `products` (
   `imgName` varchar(256) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `offer` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `products`
@@ -187,7 +197,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `imgName`, `price`, `offer`
 CREATE TABLE `products_categories` (
   `productID` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -200,11 +210,7 @@ CREATE TABLE `questions` (
   `title` varchar(255) NOT NULL,
   `message` text DEFAULT NULL,
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `questions`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -215,7 +221,7 @@ CREATE TABLE `questions` (
 CREATE TABLE `questions_answers` (
   `questionID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -226,7 +232,7 @@ CREATE TABLE `questions_answers` (
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `roleName` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -270,7 +276,7 @@ CREATE TABLE `users` (
   `surname` varchar(64) NOT NULL,
   `email` varchar(320) NOT NULL,
   `passwordHash` char(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -311,6 +317,14 @@ CREATE TABLE `users_orders` (
   `userID` int(11) NOT NULL,
   `orderID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `users_orders`
+--
+
+INSERT INTO `users_orders` (`userID`, `orderID`) VALUES
+(14, 1),
+(14, 17);
 
 -- --------------------------------------------------------
 
@@ -371,15 +385,15 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `events`
 --
 ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `orders`
+--
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -442,8 +456,7 @@ ALTER TABLE `users_answers`
 -- Indices de la tabla `users_orders`
 --
 ALTER TABLE `users_orders`
-  ADD PRIMARY KEY (`userID`) USING BTREE,
-  ADD KEY `userID` (`userID`) USING BTREE,
+  ADD KEY `userID` (`userID`),
   ADD KEY `orderID` (`orderID`);
 
 --
@@ -470,7 +483,6 @@ ALTER TABLE `users_roles`
 ALTER TABLE `answers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
-
 --
 -- AUTO_INCREMENT de la tabla `categories`
 --
@@ -478,16 +490,22 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `payment_method`
---
-ALTER TABLE `payment_method`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT de la tabla `events`
 --
 ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de la tabla `payment_method`
+--
+ALTER TABLE `payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -517,19 +535,11 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `users_answers`
---
-ALTER TABLE `users_answers`
-  ADD CONSTRAINT `users_answers_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_answers_ibfk_3` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users_orders`
@@ -537,20 +547,6 @@ ALTER TABLE `users_answers`
 ALTER TABLE `users_orders`
   ADD CONSTRAINT `users_orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `users_orders_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `users_questions`
---
-ALTER TABLE `users_questions`
-  ADD CONSTRAINT `users_questions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_questions_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `users_roles`
---
-ALTER TABLE `users_roles`
-  ADD CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

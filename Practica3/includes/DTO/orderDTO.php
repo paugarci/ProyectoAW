@@ -7,7 +7,6 @@ require_once 'includes/config.php';
 class OrderDTO extends DTO
 {
     private $m_ID;
-    private $m_Number;
     private $m_State;
     private $m_Date;
     private $m_Amount;
@@ -15,10 +14,9 @@ class OrderDTO extends DTO
     private $m_Payment;
     private $m_Address;
 
-    public function __construct($id, $number, $state, $date, $amount, $quantity, $payment, $address)
+    public function __construct($id,  $state, $date, $amount, $quantity, $payment, $address)
     {
         $this->m_ID = $id;
-        $this->m_Number = $number;
         $this->m_State = $state;
         $this->m_Date = $date;
         $this->m_Amount = $amount;
@@ -32,10 +30,6 @@ class OrderDTO extends DTO
         return $this->m_ID;
     }
 
-    public function getNumber()
-    {
-        return $this->m_Number;
-    }
 
     public function getState()
     {

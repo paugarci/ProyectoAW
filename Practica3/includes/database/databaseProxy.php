@@ -52,4 +52,9 @@ class DatabaseProxy
     {
         return $this->m_Connection->prepare($query);
     }
+
+    public function lastInsertId()
+    {
+        return $this->m_Connection->lastInsertId();
+    }
 }

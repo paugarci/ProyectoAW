@@ -102,7 +102,7 @@ $error
                 </form>
             <?php endif ?>
             <div class="buttons py-3">
-                <button class="btn btn-primary " id="buy-now">Buy Now</button>
+            <a class="btn btn-primary" href="purchase.php?productID=<?php echo $productID; ?>">Buy Now</a>
                 <form class="py-3" action="" method="post">
                     <label class="label-form" for="quantity"> Cantidad:</label>
                     <div class="form-group">

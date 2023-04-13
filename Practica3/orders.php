@@ -53,12 +53,11 @@ ob_start();
                         <tr>
                             <?php
                                 $orderID = $result['orderID'];
-                                $number = $result['numberO'];
                                 $state = $result['stateO'];
                                 $date = $result['dateO'];
                                 $amount = $result['amountO'];
                             ?>
-                            <td><a href="viewOrder.php?orderID=<?= $orderID ?>"><?= $number ?></a></td>
+                            <td><a href="viewOrder.php?orderID=<?= $orderID ?>"><?= $orderID ?></a></td>
                             <td><?= $state ?></td>
                             <td><?= $date ?></td>
                             <td><?= $amount ?></td>

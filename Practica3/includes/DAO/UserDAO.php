@@ -69,6 +69,19 @@ class UserDAO extends DAO
         return $statement->execute();
     }
 
+    public function UpdateContact($userID, $nombre, $apellido, $email): bool
+    {
+        $query = 'UPDATE users SET name = :nombre, surname = :apellido, email = :email WHERE id = :userID';
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':nombre', $nombre);
+        $statement->bindValue(':apellido', $apellido);
+        $statement->bindValue(':email', $email);
+
+
+        return $statement->execute();
+    }
+
     protected function createDTOFromArray($array): DTO
     {
         $id = $array[self::ID_KEY] ?? -1;
