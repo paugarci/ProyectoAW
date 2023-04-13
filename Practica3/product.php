@@ -30,7 +30,7 @@ if (isset($_GET["offer"])) {
         $price = $productDTOResults[0]->getPrice();
         $price = $price - ($price * $productDTOResults[0]->getOffer()) / 100;
         $productDTOResults[0]->setOfferPrice($price);
-        $productDAO->updateColumn($productID, "offer", $offer);
+        $productDAO->update($offer);
     }
 }
 

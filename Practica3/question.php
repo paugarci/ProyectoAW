@@ -51,7 +51,7 @@ if (count($questionDTOResults) == 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
     if (isset($_SESSION['user'])) {
         $answerMessage = $_POST["answerMessage"];
-        
+
         $date = date('Y-m-d H:i:s');
         $answerDAO->create(new AnswerDTO(-1, $answerMessage, $date));
 
@@ -99,7 +99,6 @@ ob_start();
                                     <h5><?= $answerAuthor ?></h5>
                                 </b></p>
                         </div>
-
                         <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $answerDAO->getAnswerAuthor($answer->getID(), $questionID)[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
                             <div class="d-flex flex-col col-5 justify-content-end">
                                 <p class="text-sm"><?= $answer->getCreationDate() ?></h5>
@@ -114,7 +113,7 @@ ob_start();
                                 </button>
                             </div>
                             <div class="modal fade" id="confirm-modal-<?= $answer->getID(); ?>" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modal-title">Confirmar acción</h5>
@@ -124,13 +123,8 @@ ob_start();
                                             <p>¿Deseas realmente eliminar esta respuesta?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                                            <form action="question.php" method="get">
-                                                <input type="hidden" name="answerID" value="<?= $answer->getID() ?>">
-                                                <input type="hidden" name="questionID" value="<?= $questionID ?>">
-                                                <input type="hidden" name="author" value="<?= $questionAuthor ?>">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                                            </form>
+                                            <a class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</a>
+                                            <a class="btn btn-danger" href="question.php?questionID=<?= $questionID ?>&author=<?= $questionAuthor ?>&answerID=<?= $answer->getID() ?>">Eliminar</a>
                                         </div>
                                     </div>
                                 </div>
