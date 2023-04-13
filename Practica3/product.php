@@ -10,7 +10,6 @@ ob_start();
 $productID = $_GET["productID"];
 $productDAO = new ProductDAO;
 $user = new UserDAO;
-$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
 
 $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
@@ -66,12 +65,6 @@ if (count($productDTOResults) == 0) {
 } else {
     $product = $productDTOResults[0];
     $title = $product->getName();
-
-    $price = strval($product->getPrice());
-    $numCharacters = strlen($price);
-    $intPart = intval($price);
-    $decimalPart = "";
-    $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
 }
 $error
 ?>
@@ -89,9 +82,9 @@ $error
                 <h3><?= number_format($product->getOfferPrice(), 2) ?>€</h3>
                 <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(), 2) ?>€</h5>
             <?php else : ?>
-                <h3><?= number_format($product->getPrice(), 2) ?>€</h3>
+                <h3><?= $product->getPrice() ?>€</h3>
             <?php endif ?>
-            <?php if ($_SESSION["isAdmin"] == true) :  ?>
+            <?php if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) :  ?>
                 <form action="product.php" method="get">
                     <div class="form-floating">
                         <textarea class="form-control" id="floatingTextarea" name="offer"></textarea>
