@@ -1,6 +1,8 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
+use es\ucm\fdi\aw\DAO\ReviewsDAO;
+use es\ucm\fdi\aw\DAO\UserReviewDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
 
 require_once 'includes/config.php';
@@ -8,12 +10,25 @@ require_once 'includes/config.php';
 ob_start();
 
 $productID = $_GET["productID"];
+
+//Products
 $productDAO = new ProductDAO;
 $user = new UserDAO;
 
 $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
 $error = "";
+
+//User Intermediate
+$userReviewDAO = new UserReviewDAO;
+
+//User
+$user = new UserDAO;
+//$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
+
+//Reviews
+$reviewsDAO = new ReviewsDAO;
+$reviewsDTOResults = $reviewsDAO->read();
 
 if (isset($_GET["offer"])) {
     if ($_GET["offer"] < 0 || $_GET["offer"] > 100) {
@@ -106,9 +121,30 @@ $error
                 </form>
             </div>
         </div>
-        <div class="mt-5">
+        <div class="mt-5 py-2">
             <?= $product->getDescription() ?>
         </div>
+        
+        <h2 id="reviews">Reseñas (<?= count($reviewsDTOResults) ?>)</h2>
+            <?php foreach ($reviewsDTOResults as $review): ?>
+                <div class="card m-1 ps-4 pt-2 pb-2">
+                    <?php $user = $userReviewDAO->getUserReviews($review->getID())[0] ?>
+                    <div class="row">
+                        Usuario: <?= $user->getName() ?> <?= $user->getSurname() ?>
+                    </div>
+                    <div class="row">
+                        Comentario: <?= $review->getComment() ?>
+                    </div>
+                    <div class="row">
+                        Valoración: <?= $review->getReview() ?>
+                    </div>
+                    <div class="row">
+                        Fecha: <?= $review->getDate() ?>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+        <?= ($reviewForm = new es\ucm\fdi\aw\forms\ReviewForm($productID))->handleForm(); ?>
     </div>
 </div>
 <?php

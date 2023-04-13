@@ -1,6 +1,7 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
+use es\ucm\fdi\aw\DAO\reviewsDAO;
 
 require_once 'includes/config.php';
 

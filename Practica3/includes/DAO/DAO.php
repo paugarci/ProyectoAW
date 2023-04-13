@@ -49,7 +49,7 @@ abstract class DAO
 
         foreach ($dtoArrayKeys as $key)
             $statement->bindParam(":$key", $dtoArray[$key]);
-
+        
         return $statement->execute();
     }
     public function read($id = null, $filters = array()): array
