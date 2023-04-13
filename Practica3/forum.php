@@ -88,11 +88,8 @@ ob_start();
                                                 <p>¿Deseas realmente eliminar esta pregunta?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                                                <form action="forum.php" method="get">
-                                                    <input type="hidden" name="questionID" value="<?= $question->getID(); ?>">
-                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                </form>
+                                                <a class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</a>
+                                                <a href="forum.php?questionID=<?= $question->getID(); ?>" class="btn btn-danger">Eliminar</a>
                                             </div>
                                         </div>
                                     </div>
