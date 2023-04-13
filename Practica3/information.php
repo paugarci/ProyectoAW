@@ -3,8 +3,8 @@
 require_once 'includes/config.php';
 ob_start();
 
-?>
 
+$content=<<<EOS
 <div class="m-5"> 
   <div class="m-5 "> 
     <h1 class="text-center">GASTOS DE ENVÍO</h1><br> 
@@ -527,11 +527,9 @@ ob_start();
   </section> 
 </div> 
 
-<?php
+EOS;
 
 $title = 'Información';
-$content = ob_get_clean();
 
 require_once INCLUDES_ROOT . '/templates/default_template.php';
 
-?>

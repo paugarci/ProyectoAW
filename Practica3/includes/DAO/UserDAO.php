@@ -44,9 +44,48 @@ class UserDAO extends DAO
         return $results;
     }
 
+
+    
+    public function getContact($userID): array
+    {
+        $query = 'SELECT name AS userName, surname AS sur, email AS em
+        FROM users 
+        WHERE id = :userID';
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function UpdateEmail($userID, $email) : bool
+    {
+        $query = 'UPDATE users SET email = :email WHERE id = :userID';
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':email', $email);
+
+
+        return $statement->execute();
+    }
+
+    public function UpdateContact($userID, $nombre, $apellido, $email): bool
+    {
+        $query = 'UPDATE users SET name = :nombre, surname = :apellido, email = :email WHERE id = :userID';
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':nombre', $nombre);
+        $statement->bindValue(':apellido', $apellido);
+        $statement->bindValue(':email', $email);
+
+
+        return $statement->execute();
+    }
+
     protected function createDTOFromArray($array): DTO
     {
-        $id = isset($array[self::ID_KEY]) ? $array[self::ID_KEY] : -1;
+        $id = $array[self::ID_KEY] ?? -1;
         $name = $array[self::NAME_KEY];
         $surname = $array[self::SURNAME_KEY];
         $email = $array[self::EMAIL_KEY];
