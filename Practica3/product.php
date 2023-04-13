@@ -10,7 +10,7 @@ ob_start();
 $productID = $_GET["productID"];
 $productDAO = new ProductDAO;
 $user = new UserDAO;
-$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
+//$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
 
 $productDTOResults = $productDAO->read($productID);
 $productsPath = 'images/products/';
@@ -91,7 +91,7 @@ $error
             <?php else : ?>
                 <h3><?= number_format($product->getPrice(), 2) ?>€</h3>
             <?php endif ?>
-            <?php if ($_SESSION["isAdmin"] == true) :  ?>
+            <?php if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) :  ?>
                 <form action="product.php" method="get">
                     <div class="form-floating">
                         <textarea class="form-control" id="floatingTextarea" name="offer"></textarea>

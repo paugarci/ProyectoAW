@@ -9,15 +9,14 @@ use es\ucm\fdi\aw\DAO\ProductDAO;
 require_once 'includes/config.php';
 
 
-$userID = $_SESSION['user']->getID();
+
 
 
 $orderDAO = new OrderDAO;
 
 $userOrderDAO = new UserOrderDAO;
 
-$userDAO = new UserDAO;
-$users = $userDAO->getContact($userID);
+
 
 $productID = $_GET["productID"];
 $productDAO = new ProductDAO;
@@ -27,9 +26,17 @@ $product = $productDTOResults[0];
 
 ob_start();
 ?>
+<div class="flex-fill p-3">
+    <?php if (!isset($_SESSION['user'])) : ?>
+        <div class="alert alert-warning">
+            Debes identificarte para acceder a esta página.
+        </div>
 
-
-<div class="container">
+    <?php else : ?>
+        <?php $userID = $_SESSION['user']->getID();
+        $userDAO = new UserDAO;
+        $users = $userDAO->getContact($userID); ?>
+        <div class="container">
 <form method="post">
 <h2 class="m-3 d-flex justify-content-center">Tramitar pedido</h2>
   <div style="display: flex;">
@@ -119,6 +126,11 @@ if(isset($_POST['buy'])) {
 ?>
 
     
+    
+    <?php endif; ?>
+</div>
+
+
                                 
 <?php
 //end:
