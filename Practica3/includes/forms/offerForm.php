@@ -27,7 +27,7 @@ class OfferForm extends Form
     //  Methods
     protected function processForm($data)
     {   
-        if (!isset($data['offer'])){
+        if (!isset($data['offer']) || $data['offer'] < 0 || $data['offer'] > 100){
             $this->m_Errors['empty_offer'] = 'Debes introducir un porcentaje de descuento.';
         }
         $productDAO = new ProductDAO;
@@ -37,7 +37,7 @@ class OfferForm extends Form
      
         $productDTOResults->setOffer($offer);
         $price = $productDTOResults->getPrice();
-        $price = $price - ($price * $productDTOResults->getOffer())/100;
+        $price = $price - ($price * (float)$productDTOResults->getOffer())/100;
         $productDTOResults->setOfferPrice($price);
         
         $productDAO->update($productDTOResults);
@@ -56,16 +56,17 @@ class OfferForm extends Form
                 HTML_ERROR;
             }
         }
-        return <<<HTML_FORM
+        return <<<HTML
+        {$errorsHTML}
         <div class="form-floating">
-            <input type="number" min="0" class="" name="offer">
+            <input type="number" min="0" class="" name="offer" style="width:50px; height:50px; ">
             
             <div class="invalid-feedback">
                     Por favor, introduzca un descuento entre 0 y 100.
                 </div>
             <button class="btn btn-outline-primary" id="apply-offer">Aplicar Descuento</button>
         </div>
-        HTML_FORM;
+        HTML;
     }
 }
 ?>

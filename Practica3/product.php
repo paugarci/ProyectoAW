@@ -14,6 +14,7 @@ $role = "guest";
 if(isset($_SESSION["user"])){
     $role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
 }
+
 $productDTOResults = $productDAO->read($productID)[0];
 $productsPath = 'images/products/';
 $error = "";

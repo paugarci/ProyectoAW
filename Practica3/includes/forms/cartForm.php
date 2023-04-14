@@ -106,13 +106,12 @@ class CartForm extends Form
        
         return <<<HTML
             {$errorsHTML}
-            
-            <div class="form-floating">
-                <input type="number" min="1" class="" name="amount" value="1">
+            <div class="form-floating py-3 d-flex">
+            <input type="number" min="1" class="text-center" name="amount" value="1" style="width:50px; height:50px; ">
                 <div class="invalid-feedback">
                     Por favor, introduzca una cantidad entre 1 y 100.
                 </div>
-                <button class="btn btn-outline-primary" id="amount">Añadir al carrito</button>
+                <button class="btn btn-outline-primary ms-4" id="amount">Añadir al carrito</button>
             </div>
         HTML;
         
