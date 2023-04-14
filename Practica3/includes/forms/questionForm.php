@@ -24,17 +24,15 @@ class QuestionForm extends Form
     //  Methods
     protected function processForm($data)
     {
-        if (!isset($data['title']) || empty($data['title']))
-            $this->m_Errors['empty_question_title'] = 'El título de la pregunta no puede estar vacío.';
-        
         $title = $data['title'];
         $message = $data['message'];
+        $date = date('Y-m-d H:i:s');
 
         $questionDAO = new QuestionDAO;
-        $questionDTO = new QuestionDTO(-1, $title, $message, null);
+        $questionDTO = new QuestionDTO(-1, $title, $message, $date);
 
         $questionDAO->create($questionDTO);
-        $questionDTO = $questionDAO->read(null, ["title" => $title, "message" => $message])[0];
+        $questionDTO = $questionDAO->read(null, ["creationDate" => $date])[0];
 
         $userID = $_SESSION['user']->getID();
 
@@ -85,3 +83,4 @@ class QuestionForm extends Form
         HTML_FORM;
     }
 }
+?>

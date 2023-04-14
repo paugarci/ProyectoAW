@@ -14,6 +14,7 @@ $questions = $questionDAO->read();
 $userQuestionDAO = new UserQuestionDAO;
 $questionAuthors = $userQuestionDAO->read();
 
+$isDisabled = !isset($_SESSION["user"]) ? " disabled" : "";
 $answerDAO = new AnswerDAO;
 $numAnswers = count($answerDAO->read());
 
@@ -36,34 +37,30 @@ ob_start();
     <h2 class="m-3 d-flex justify-content-center">Foro</h2>
     <div class="row">
         <?php if (!isset($questions) || empty($questions)) : ?>
-            <div class="col-12">
+            <fieldset class="col-12" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
-                    <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                        <p class="pt-2">Haz una<br>pregunta</p>
+                    <a class="btn btn-primary w-100 m-3" href="add-question.php" role="button">
+                        <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>
-            </div>
+            </fieldset>
         <?php else : ?>
             <div class="col-10 mb-3">
                 <div class="row text-left mb-5"></div>
                 <?php foreach ($questions as $question) : ?>
                     <div class="card row-hover pos-relative py-3 px-3 mb-3 border-primary border-top-0 border-bottom-0 rounded-0 shadow">
                         <div class="row d-flex align-items-center">
-                            <form action="question.php" method="get">
-                                <?php $questionAuthor = $questionDAO->getQuestionAuthor($question->getID())[0]->getName() . " " . $questionDAO->getQuestionAuthor($question->getID())[0]->getSurname(); ?>
-                                <input type="hidden" name="questionID" value="<?= $question->getID(); ?>">
-                                <input type="hidden" name="author" value="<?= $questionAuthor ?>">
-                                <button type="submit" class="btn btn-link text-primary text-decoration-none">
-                                    <h5><?= $question->getTitle(); ?></h5>
-                                </button>
-                            </form>
+                            <?php $questionAuthor = $questionDAO->getQuestionAuthor($question->getID())[0]->getName() . " " . $questionDAO->getQuestionAuthor($question->getID())[0]->getSurname(); ?>
+                            <a class="text-primary text-decoration-none" href="question.php?questionID=<?= $question->getID(); ?>&author=<?= $questionAuthor ?>">
+                                <h5><?= $question->getTitle(); ?></h5>
+                            </a>
                             <div class="row">
                                 <div class="col d-flex justify-content-start">
                                     <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
+                                    <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i
                                 </div>
                             </div>
                             <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>
@@ -76,7 +73,7 @@ ob_start();
                                     </button>
                                 </div>
                                 <div class="modal fade" id="confirm-modal-<?= $question->getID(); ?>" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-title">Confirmar acción</h5>
@@ -86,11 +83,8 @@ ob_start();
                                                 <p>¿Deseas realmente eliminar esta pregunta?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                                                <form action="forum.php" method="get">
-                                                    <input type="hidden" name="questionID" value="<?= $question->getID(); ?>">
-                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                </form>
+                                                <a class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</a>
+                                                <a href="forum.php?questionID=<?= $question->getID(); ?>" class="btn btn-danger">Eliminar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -100,13 +94,13 @@ ob_start();
                     </div>
                 <?php endforeach ?>
             </div>
-            <div class="col-2 mt-5">
+            <fieldset class="col-2 mt-5" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                        <p class="pt-2">Haz una<br>pregunta</p>
+                        <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
                     </a>
                 </div>
-            </div>
+            </fieldset>
         <?php endif ?>
     </div>
 </div>

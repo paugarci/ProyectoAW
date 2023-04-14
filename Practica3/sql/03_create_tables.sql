@@ -1,31 +1,6 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2023 a las 10:43:00
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.2.0
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `zeus_airsoft`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `answers`
---
 
 CREATE TABLE `answers` (
   `id` int(11) NOT NULL,
@@ -33,22 +8,10 @@ CREATE TABLE `answers` (
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categories`
---
-
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `events`
---
 
 CREATE TABLE `events` (
   `id` int(11) NOT NULL,
@@ -57,18 +20,8 @@ CREATE TABLE `events` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `events`
---
-
 INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
 (12, 'Asalto al fortificado', 'Esta es la descripción del evento. Debe contener un texto medianamente largo que describe en profundidad las actividades que se realizarán a lo largo del evento para informar a los participantes.', '2023-04-15');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `events_users`
---
 
 CREATE TABLE `events_users` (
   `eventID` int(11) NOT NULL,
@@ -76,18 +29,8 @@ CREATE TABLE `events_users` (
   `eventRoleID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `events_users`
---
-
 INSERT INTO `events_users` (`eventID`, `userID`, `eventRoleID`) VALUES
 (12, 6, 3);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `event_roles`
---
 
 CREATE TABLE `event_roles` (
   `id` int(11) NOT NULL,
@@ -95,21 +38,32 @@ CREATE TABLE `event_roles` (
   `maximum` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `event_roles`
---
-
 INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
 (1, 'Fusilero', 45),
 (2, 'Tirador selecto', 4),
 (3, 'Apoyo', 4),
 (4, 'Francotirador', 4);
 
--- --------------------------------------------------------
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `state` varchar(1000) NOT NULL,
+  `date` date NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `paymentMethod` varchar(1000) NOT NULL,
+  `address` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Estructura de tabla para la tabla `products`
---
+CREATE TABLE `payment_method` (
+  `id` int(11) NOT NULL,
+  `name` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `payment_method` (`id`, `name`) VALUES
+(1, 'Tarjeta de crédito'),
+(2, 'Bizum'),
+(3, 'Transferencia bancaria');
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
@@ -119,10 +73,6 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `offer` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `products`
---
 
 INSERT INTO `products` (`id`, `name`, `description`, `imgName`, `price`, `offer`) VALUES
 (1, 'Colt M4A1 5.56x45', 'La carabina Colt M4A1 es una variante completamente automática de la carabina M4 básica y fue diseñada principalmente para uso en operaciones especiales. Sin embargo, EE. UU. El Comando de Operaciones Especiales ( USSOCOM ) pronto adoptará el M4A1 para casi todas las unidades de operaciones especiales, seguido más tarde por la introducción general del M4A1 en servicio con los EE. UU. Ejército y Cuerpo de Marines.', 'm4a1.jpg', 668.11, 0),
@@ -134,22 +84,10 @@ INSERT INTO `products` (`id`, `name`, `description`, `imgName`, `price`, `offer`
 (8, 'Subfusil MP7 GBB', 'Características:\r\n* Mira trasera ajustable\r\n* Hop-Up ajustable\r\n* Cargador largo\r\n* Guardamanos RIS\r\n* Culata de 4 posiciones\r\n* Gas Blow Back\r\n \r\nEspecificaciones:\r\n* Tipo: GBB\r\n* Construcción: Metal y Nylon\r\n* Capacidad del cargador: 40bbs\r\n* Longitud: 380-590 mm\r\n* Longitud del cañón: 165 mm\r\n* Peso: 2.1 kg\r\n* Velocidad de salida: 360-380 FPS\r\n* Hop-Up: Sí, ajustable\r\n* Alimentación recomendada: Gas de Invierno\r\n\r\nEste modelo de la MP7 que fabrica es una brutalidad, el disparo es excepcional, la textura y el feeling, inigualables, si quieres hacerte con una primaria para CQB, éste es tú modelo sin lugar a dudas.', 'subfusil.jpg', 0, 0),
 (15, 'Hola', 'nuevaDesc', 'allahuakbar.png', 123, 0);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `products_categories`
---
-
 CREATE TABLE `products_categories` (
   `productID` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `questions`
---
 
 CREATE TABLE `questions` (
   `id` int(11) NOT NULL,
@@ -158,49 +96,31 @@ CREATE TABLE `questions` (
   `creationDate` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `questions`
---
-
-INSERT INTO `questions` (`id`, `title`, `message`, `creationDate`) VALUES
-(94, 'adsfasdf', 'asdfasdf', '2023-04-10 03:45:26');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `questions_answers`
---
-
 CREATE TABLE `questions_answers` (
   `questionID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `roles`
---
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `roleName` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `roles`
---
-
 INSERT INTO `roles` (`id`, `roleName`) VALUES
 (1, 'admin'),
 (2, 'user'),
 (3, 'guest');
 
--- --------------------------------------------------------
+CREATE TABLE `states` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Estructura de tabla para la tabla `users`
---
+INSERT INTO `states` (`id`, `name`) VALUES
+(1, 'Pendiente'),
+(2, 'En proceso'),
+(3, 'Enviado'),
+(4, 'Entregado');
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
@@ -210,21 +130,11 @@ CREATE TABLE `users` (
   `passwordHash` char(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `users`
---
-
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `passwordHash`) VALUES
 (6, 'Alexander', 'López Vega', 'alex.lopez.ve@gmail.com', '$2y$10$bOVt7M3p2mQtvQTkStsNj.x3Rw9rKmvvHrqTt.RF7z46bJONYM2AG'),
 (12, 'Hugo', 'Silva', 'hsilva@ucm.es', '$2y$10$J.hO7gzo7cEjUbkH4oy6nuBV80raqlHCo6h41t2vt5vqwwwXFm8Qy'),
 (13, 'Dragos Ionut', 'Camarasan', 'dragosca@ucm.es', '$2y$10$e4IOMlAGUKEI7CBH1AxDfuK8lbd1A62F6bQ7oxUtt5k/rva14EVL.'),
-(14, 'Pepe', 'Gómez', 'pepegomez@gmail.com', '$2y$10$qHjUQ/YMGBNZAD7kDMvCvePRB9MooK4aKSd46EdL0NYWZZsTBrZmO');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users_answers`
---
+(14, 'June', 'Zuazo', '1234@ucm.es', '$2y$10$u.JMyHOYDOBRqe2QXy4Qy.sK6UVcL2DgZDSMl4x2UH7t0OaiELQpy');
 
 CREATE TABLE `users_answers` (
   `userID` int(11) NOT NULL,
@@ -232,11 +142,10 @@ CREATE TABLE `users_answers` (
   `questionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users_products`
---
+CREATE TABLE `users_orders` (
+  `userID` int(11) NOT NULL,
+  `orderID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `users_products` (
   `userID` int(11) NOT NULL,
@@ -244,243 +153,123 @@ CREATE TABLE `users_products` (
   `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `users_products`
---
-
-INSERT INTO `users_products` (`userID`, `productID`, `amount`) VALUES
-(6, 3, 3),
-(13, 1, 5),
-(13, 2, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users_questions`
---
-
 CREATE TABLE `users_questions` (
   `userID` int(11) NOT NULL,
   `questionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `users_questions`
---
-
-INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
-(12, 94);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users_roles`
---
 
 CREATE TABLE `users_roles` (
   `userID` int(11) NOT NULL,
   `roleID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `users_roles`
---
-
 INSERT INTO `users_roles` (`userID`, `roleID`) VALUES
 (6, 1),
 (13, 1),
+(12, 1),
+(14, 1),
 (6, 2),
 (12, 2),
 (13, 2),
 (14,2);
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `answers`
---
 ALTER TABLE `answers`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `categories`
---
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `events`
---
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `events_users`
---
-ALTER TABLE `events_users`
-  ADD PRIMARY KEY (`eventID`,`userID`),
-  ADD KEY `userID` (`userID`),
-  ADD KEY `eventRoleID` (`eventRoleID`);
-
---
--- Indices de la tabla `event_roles`
---
-ALTER TABLE `event_roles`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `products`
---
+ALTER TABLE `payment_method`
+  ADD PRIMARY KEY (`id`);
+  
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `products_categories`
---
 ALTER TABLE `products_categories`
   ADD PRIMARY KEY (`productID`,`categoryID`);
 
---
--- Indices de la tabla `questions`
---
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `questions_answers`
---
 ALTER TABLE `questions_answers`
   ADD PRIMARY KEY (`questionID`,`answerID`);
 
---
--- Indices de la tabla `roles`
---
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `users`
---
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `users_answers`
---
 ALTER TABLE `users_answers`
   ADD PRIMARY KEY (`userID`,`answerID`,`questionID`),
   ADD KEY `questionID` (`questionID`),
   ADD KEY `answerID` (`answerID`);
 
---
--- Indices de la tabla `users_products`
---
 ALTER TABLE `users_products`
   ADD PRIMARY KEY (`userID`,`productID`),
   ADD KEY `productID` (`productID`);
 
---
--- Indices de la tabla `users_questions`
---
+ALTER TABLE `users_orders`
+  ADD PRIMARY KEY (`userID`) USING BTREE,
+  ADD KEY `userID` (`userID`) USING BTREE,
+  ADD KEY `orderID` (`orderID`);
+
 ALTER TABLE `users_questions`
   ADD KEY `userID` (`userID`),
   ADD KEY `questionID` (`questionID`);
 
---
--- Indices de la tabla `users_roles`
---
 ALTER TABLE `users_roles`
   ADD PRIMARY KEY (`roleID`,`userID`),
   ADD KEY `userID` (`userID`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `answers`
---
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `categories`
---
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `events`
---
 ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
---
--- AUTO_INCREMENT de la tabla `products`
---
+ALTER TABLE `payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
---
--- AUTO_INCREMENT de la tabla `questions`
---
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
---
--- AUTO_INCREMENT de la tabla `roles`
---
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
---
--- AUTO_INCREMENT de la tabla `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `states`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `events_users`
---
 ALTER TABLE `events_users`
   ADD CONSTRAINT `events_users_ibfk_1` FOREIGN KEY (`eventID`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `events_users_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `events_users_ibfk_3` FOREIGN KEY (`eventRoleID`) REFERENCES `event_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `users_answers`
---
-ALTER TABLE `users_answers`
-  ADD CONSTRAINT `users_answers_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_answers_ibfk_3` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
---
--- Filtros para la tabla `users_products`
---
 ALTER TABLE `users_products`
   ADD CONSTRAINT `users_products_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `users_products_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `users_questions`
---
-ALTER TABLE `users_questions`
-  ADD CONSTRAINT `users_questions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_questions_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `users_roles`
---
-ALTER TABLE `users_roles`
-  ADD CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `users_orders`
+  ADD CONSTRAINT `users_orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_orders_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

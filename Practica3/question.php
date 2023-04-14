@@ -51,9 +51,11 @@ if (count($questionDTOResults) == 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
     if (isset($_SESSION['user'])) {
         $answerMessage = $_POST["answerMessage"];
-        $answerDAO->create(new AnswerDTO(-1, $answerMessage, null));
 
-        $answer = $answerDAO->read(null, ["message" => $answerMessage])[0];
+        $date = date('Y-m-d H:i:s');
+        $answerDAO->create(new AnswerDTO(-1, $answerMessage, $date));
+
+        $answer = $answerDAO->read(null, ["creationDate" => $date])[0];
 
         $answerID = $answer->getID();
         $answerAuthorID = $_SESSION["user"]->getID();
@@ -67,15 +69,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
         $title = "Pregunta no encontrada";
 
         $error .= <<<HTML_ERROR
-        <div class="alert alert-danger m-2 justify-content-center align-center" role="alert">
-            <b>Error:</b> Debes identificarte para poder escribir en el foro.
+        <div class="alert alert-warning m-2 justify-content-center align-center" role="alert">
+            Debes identificarte para poder escribir en el foro.
         </div>
         HTML_ERROR;
     }
 }
 ob_start();
 ?>
-<div class="container justify-content-center col-lg-8 shadow my-5">
+
+<div class="container col-lg-8 shadow my-5">
     <?= $error ?>
     <div class="mx-5 p-4">
         <h3><?= $question->getTitle(); ?></h3>
@@ -110,7 +113,7 @@ ob_start();
                                 </button>
                             </div>
                             <div class="modal fade" id="confirm-modal-<?= $answer->getID(); ?>" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modal-title">Confirmar acción</h5>
@@ -120,13 +123,8 @@ ob_start();
                                             <p>¿Deseas realmente eliminar esta respuesta?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
-                                            <form action="question.php" method="get">
-                                                <input type="hidden" name="answerID" value="<?= $answer->getID() ?>">
-                                                <input type="hidden" name="questionID" value="<?= $questionID ?>">
-                                                <input type="hidden" name="author" value="<?= $questionAuthor ?>">
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                                            </form>
+                                            <a class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</a>
+                                            <a class="btn btn-danger" href="question.php?questionID=<?= $questionID ?>&author=<?= $questionAuthor ?>&answerID=<?= $answer->getID() ?>">Eliminar</a>
                                         </div>
                                     </div>
                                 </div>

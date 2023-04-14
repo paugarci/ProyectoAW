@@ -51,8 +51,7 @@ abstract class DAO
 
         foreach ($dtoArrayKeys as $key)
             $statement->bindParam(":$key", $dtoArray[$key]);
-        echo "<pre>";
-        var_dump($dtoArrayKeys);
+
         return $statement->execute();
     }
 

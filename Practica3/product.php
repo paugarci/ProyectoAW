@@ -1,6 +1,8 @@
 <?php
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
+use es\ucm\fdi\aw\DAO\ReviewsDAO;
+use es\ucm\fdi\aw\DAO\UserReviewDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UsersProductsDAO;
 
@@ -9,6 +11,8 @@ require_once 'includes/config.php';
 ob_start();
 
 $productID = $_GET["productID"];
+
+//Products
 $productDAO = new ProductDAO;
 $user = new UserDAO;
 $role = "guest";
@@ -20,28 +24,70 @@ $productDTOResults = $productDAO->read($productID)[0];
 $productsPath = 'images/products/';
 $error = "";
 
-// if(isset($_POST['quantity'])) {
-//     $quantity = $_POST['quantity'];
-//     echo "Cantidad: " . $quantity;
-    
-//     if(isset($_SESSION['cart'][$productID])){
-//       $_SESSION['cart'][$productID]['quantity'] += $quantity;
-//     } else {
-//       $_SESSION['cart'][$productID] = array('quantity' => $quantity);
-//     }
-//     header('Location: product.php?productID='.$productDTO->getID());
-//     exit;
-//   }
-  
 if (isset($productDTOResults)) {
     $product = $productDTOResults;
-    $title = $product->getName();
+  
+//User Intermediate
+$userReviewDAO = new UserReviewDAO;
 
-    $price = strval($product->getPrice());
-    $numCharacters = strlen($price);
-    $intPart = intval($price);
-    $decimalPart = "";
-    $decimalPart = (str_contains($price, ".")) ? substr($price, -2) : "00";
+//User
+$user = new UserDAO;
+//$role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
+
+//Reviews
+$reviewsDAO = new ReviewsDAO;
+$reviewsDTOResults = $reviewsDAO->read();
+
+if (isset($_GET["offer"])) {
+    if ($_GET["offer"] < 0 || $_GET["offer"] > 100) {
+        $title = "Descuento imposible de aplicar";
+
+        $error = <<<HTML_ERROR
+            <div class="alert alert-danger m-2 text-center">
+                El descuento debe estar en un rango de 0-100
+            </div>'; 
+            HTML_ERROR;
+    } else {
+        $offer = $_GET["offer"];
+        $productDTOResults[0]->setOffer($offer);
+        $price = $productDTOResults[0]->getPrice();
+        $price = $price - ($price * $productDTOResults[0]->getOffer()) / 100;
+        $productDTOResults[0]->setOfferPrice($price);
+        $productDAO->update($offer);
+    }
+}
+
+if (isset($_POST['quantity'])) {
+    $quantity = $_POST['quantity'];
+    echo "Cantidad: " . $quantity;
+
+    if (isset($_SESSION['cart'][$productID])) {
+        $_SESSION['cart'][$productID]['quantity'] += $quantity;
+    } else {
+        $_SESSION['cart'][$productID] = array('quantity' => $quantity);
+    }
+    header('Location: product.php?productID=' . $productDTO->getID());
+    exit;
+}
+
+if (count($productDTOResults) == 0) {
+    $title = "Producto no encontrado";
+
+    $error = '
+        <div class="alert alert-danger m-2 text-center">
+            No existe este producto
+        </div>';
+} else if (count($productDTOResults) > 1) {
+    $title = "Producto no encontrado";
+
+    $error = <<<HTML_ERROR
+        <div class="alert alert-danger m-2 text-center">
+            Hay más de un producto con esta ID
+        </div>
+    HTML_ERROR;
+} else {
+    $product = $productDTOResults[0];
+    $title = $product->getName();
 }
 $error
 ?>
@@ -85,14 +131,36 @@ $error
                     <?= ($cartForm = new es\ucm\fdi\aw\forms\CartForm(null,$productID))->handleForm(); ?>
                 <?php } else { ?>
                     <?= ($cartForm = new es\ucm\fdi\aw\forms\CartForm($_SESSION["user"]->getID(),$productID))->handleForm(); ?>
-                <?php } ?>
+                <?php } ?
             </div>
         </div>
-        <div class="mt-5"><?= $product->getDescription() ?></div>
+        <div class="mt-5 py-2">
+            <?= $product->getDescription() ?>
+        </div>
+        
+        <h2 id="reviews">Reseñas (<?= count($reviewsDTOResults) ?>)</h2>
+            <?php foreach ($reviewsDTOResults as $review): ?>
+                <div class="card m-1 ps-4 pt-2 pb-2">
+                    <?php $user = $userReviewDAO->getUserReviews($review->getID())[0] ?>
+                    <div class="row">
+                        Usuario: <?= $user->getName() ?> <?= $user->getSurname() ?>
+                    </div>
+                    <div class="row">
+                        Comentario: <?= $review->getComment() ?>
+                    </div>
+                    <div class="row">
+                        Valoración: <?= $review->getReview() ?>
+                    </div>
+                    <div class="row">
+                        Fecha: <?= $review->getDate() ?>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+        <?= ($reviewForm = new es\ucm\fdi\aw\forms\ReviewForm($productID))->handleForm(); ?>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
+require_once PROJECT_ROOT . '/includes/templates/default_template.php';
 ?>
-
-<?php require_once PROJECT_ROOT . '/includes/templates/default_template.php'; ?>

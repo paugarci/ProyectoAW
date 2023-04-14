@@ -8,8 +8,7 @@ require_once 'includes/config.php';
 $title = 'Carrito';
 
 ob_start();
-?>
-<?php
+
   $prodDAO = new ProductDAO;
   $usersDAO = new UsersProductsDAO;
   $productsPath = 'images/products/';
@@ -44,8 +43,7 @@ ob_start();
         <th scope="col"></th>
       </tr>
     </thead>
-      
-    
+     
         <?php 
         $val = 0;
         foreach($my_array as $prod):
