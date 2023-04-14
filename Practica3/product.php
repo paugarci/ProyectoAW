@@ -2,6 +2,7 @@
 
 use es\ucm\fdi\aw\DAO\ProductDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\DAO\UsersProductsDAO;
 
 require_once 'includes/config.php';
 
@@ -78,6 +79,7 @@ $error
                 <?php endif ?>
             </div>
             <div class="buttons py-3">
+                <!-- AQUI HAY QUE HACER OTRO FORM PARA EL BOTON DE COMPRAR -->
                 <button class="btn btn-primary " id="buy-now">Buy Now</button>
                 <?php if(!isset($_SESSION["user"])){ ?>
                     <?= ($cartForm = new es\ucm\fdi\aw\forms\CartForm(null,$productID))->handleForm(); ?>
