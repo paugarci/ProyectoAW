@@ -4,6 +4,7 @@ use es\ucm\fdi\aw\DAO\ProductDAO;
 use es\ucm\fdi\aw\DAO\ReviewsDAO;
 use es\ucm\fdi\aw\DAO\UserReviewDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\DAO\UsersProductsDAO;
 
 require_once 'includes/config.php';
 
@@ -14,11 +15,18 @@ $productID = $_GET["productID"];
 //Products
 $productDAO = new ProductDAO;
 $user = new UserDAO;
+$role = "guest";
+if(isset($_SESSION["user"])){
+    $role = $user->getUserRoles($_SESSION["user"]->getID())[0]->getRoleName();
+}
 
-$productDTOResults = $productDAO->read($productID);
+$productDTOResults = $productDAO->read($productID)[0];
 $productsPath = 'images/products/';
 $error = "";
 
+if (isset($productDTOResults)) {
+    $product = $productDTOResults;
+  
 //User Intermediate
 $userReviewDAO = new UserReviewDAO;
 
@@ -88,37 +96,42 @@ $error
         <div class="col col-md-6 d-flex flex-col">
             <img class="img-fluid object-fit-contain" src="<?= $productsPath . $product->getImgName(); ?>">
         </div>
-        <div class="col col-md-6">
+        <div class="col col-md-6 ">
             <div class="d-flex justify-content-start">
                 <h3> <?= $product->getName() ?> </h3>
             </div>
             <hr class="mt-2">
-            <?php if ($product->getOffer() != 0) : ?>
-                <h3><?= number_format($product->getOfferPrice(), 2) ?>€</h3>
-                <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(), 2) ?>€</h5>
-            <?php else : ?>
-                <h3><?= $product->getPrice() ?>€</h3>
-            <?php endif ?>
-            <?php if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == true) :  ?>
-                <form action="product.php" method="get">
-                    <div class="form-floating">
-                        <textarea class="form-control" id="floatingTextarea" name="offer"></textarea>
-                        <label for="floatingTextarea">Introduce el descuento</label>
-                        <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
-                        <button class="btn btn-primary" id="apply-offer">Aplicar Descuento</button>
+            <?php
+                if ($product->getOffer() != 0) {
+            ?>
+                <?php
+                    if ($product->getOffer() ==100) {
+                ?>
+                <div class="row ">
+                    <h3 class ="col md-5 ms-3"><?= number_format($product->getOfferPrice(),2)?>€</h3>   
+                    <h3 class="text-decoration text-success col md-5"> GRATIS! </h3>
+                    <h5 class="text-decoration-line-through text-danger row m-3"><?= number_format($product->getPrice(),2) ?>€</h5>
                     </div>
-                </form>
-            <?php endif ?>
+                <?php } else { ?>
+                    <h3><?= number_format($product->getOfferPrice(),2)?>€</h3>   
+                    <h5 class="text-decoration-line-through text-danger"><?= number_format($product->getPrice(),2) ?>€</h5>
+                <?php } ?>
+            <?php } else { ?>
+                <h3><?=  number_format($product->getPrice(),2) ?>€</h3>
+            <?php } ?>
+            <div class="d-flex flex-row">
+                <?php if ($role == "admin"): ?>
+                    <?= ($offerForm = new es\ucm\fdi\aw\forms\OfferForm($productID))->handleForm(); ?>
+                <?php endif ?>
+            </div>
             <div class="buttons py-3">
-            <a class="btn btn-primary" href="purchase.php?productID=<?php echo $productID; ?>">Buy Now</a>
-                <form class="py-3" action="" method="post">
-                    <label class="label-form" for="quantity"> Cantidad:</label>
-                    <div class="form-group">
-                        <input type="number" id="quantity" name="quantity" min="1" max="100">
-                        <input type="hidden" name="productID" value="<?= $productID ?>"><!-- Esto es para que envie al .php el id del arma-->
-                        <button class="btn btn-outline-primary" id="add-to-cart">Añadir al carro</button>
-                    </div>
-                </form>
+                <!-- AQUI HAY QUE HACER OTRO FORM PARA EL BOTON DE COMPRAR -->
+                <button class="btn btn-primary " id="buy-now">Buy Now</button>
+                <?php if(!isset($_SESSION["user"])){ ?>
+                    <?= ($cartForm = new es\ucm\fdi\aw\forms\CartForm(null,$productID))->handleForm(); ?>
+                <?php } else { ?>
+                    <?= ($cartForm = new es\ucm\fdi\aw\forms\CartForm($_SESSION["user"]->getID(),$productID))->handleForm(); ?>
+                <?php } ?
             </div>
         </div>
         <div class="mt-5 py-2">

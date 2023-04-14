@@ -45,7 +45,6 @@ class ChangeRoleForm extends Form
             }
 
             $userRoleDAO->create(new UserRoleDTO($userID, $roleID));
-            unset($_SESSION["isAdmin"]);
         }
         if (isset($_POST["deleteRole"])) {
             $userRoleDAO->deleteCompoundKey($userID, $roleID);

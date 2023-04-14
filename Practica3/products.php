@@ -31,8 +31,24 @@ ob_start();
                 </div>
                 <div class="row mb-3">
                     <div class="col text-start">
-                        <div class="text-decoration-none">
-                            <b class="fs-4"><?= $productDTO->getPrice() ?>€</b>
+                        <div class="text-black text-decoration-none">
+                        <?php if ($productDTO->getOffer() != 0) { ?>
+                            <?php if ($productDTO->getOffer() == 100 || $productDTO->getPrice() == 0) { ?>  
+                                <b class=" text-decoration-line-through text-danger"><?= $productDTO->getPrice() ?>€</b>
+                                <b class="text-decoration text-success"> GRATIS! </b>
+                            <?php } else { ?>
+                                <b><?= number_format($productDTO->getOfferPrice(),2) ?>€</b>
+                                <b class="text-decoration-line-through text-danger"><?= $productDTO->getPrice() ?>€</b>
+                                <b class="text-decoration text-danger">OFERTA! </b>
+                            <?php } ?>
+                        <?php }else { ?>
+                            <?php if ($productDTO->getPrice() == 0) { ?>  
+                                <b class=" fs-4"><?= $productDTO->getPrice() ?>€</b>
+                                <b class="text-decoration text-success"> GRATIS! </b>
+                            <?php }else { ?>
+                                <b class="fs-4"><?= $productDTO->getPrice() ?>€</b>
+                            <?php } ?>
+                        <?php } ?>
                         </div>
                     </div>
                     <?php if (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true) : ?>

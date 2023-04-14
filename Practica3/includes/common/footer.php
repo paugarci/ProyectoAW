@@ -102,14 +102,14 @@
                     <p>&copy; 2023 Zeus-Airsoft</p>
                 </div>
                 <div class="nav-link  ms-5 ">
-                    <p><a href="info.php#politica " class="text-white">Aviso Legal y política de
+                    <p><a href="information.php#politica " class="text-white">Aviso Legal y política de
                             Privacidad</a></p>
                 </div>
                 <div class="nav-link  text-white ">
                     <p>-</p>
                 </div>
                 <div class="nav-link  me-5 ">
-                    <p><a href="info.php#cookies" class="text-white">Uso de cookies</a></p>
+                    <p><a href="information.php#cookies" class="text-white">Uso de cookies</a></p>
                 </div>
                 <div class="nav-link    ms-5 text-white ">
                     <p>Desarrollado por Zeus-Team</p>
