@@ -51,7 +51,7 @@ ob_start();
         foreach($my_array as $prod):
             if ($prod->getID1() == $uID):
               $producto = $prodDAO->read($prod->getID2())[0]; 
-              $subtotal = $subtotal + ($producto->getPrice() * $prod->getAmount());
+              $subtotal = $subtotal + ($producto->getOfferPrice() * $prod->getAmount());
               $url = "product.php?productID=" . $producto->getID();
               ?>
               <tbody>
@@ -60,8 +60,8 @@ ob_start();
                 <td> <div class="d-flex justify-content-end"><div class="img-fluid" id="product-img" style="width: 80px; height: 60px;"><a href="<?php echo $url; ?>"><img class="img-fluid mt-2" src="<?= $productsPath . $producto->getImgName(); ?>"></a></div></div></td>
                 <td><a  href="<?php echo $url; ?>"><p class ="mt-3"><?= $producto->getName() ?></p></a></td>
                 <td ><input type="number" min="1" class="text-center" name="amount" value="<?= $prod->getAmount() ?>" style="width:50px; height:30px;" id="amount-<?= $producto->getID() ?>" onchange="actualizarTabla(<?= $prod->getID2() ?>)"></td>
-                <td><p class ="mt-3" id="price-<?= $producto->getID() ?>"><?= $producto->getPrice() * $prod->getAmount() ?></p></td>
-                <p id="price-unity-<?= $producto->getID() ?>" style="display:none"><?= $producto->getPrice()?></p>
+                <td><p class ="mt-3" id="price-<?= $producto->getID() ?>"><?= $producto->getOfferPrice() * $prod->getAmount() ?></p></td>
+                <p id="price-unity-<?= $producto->getID() ?>" style="display:none"><?= $producto->getOfferPrice()?></p>
 
                 <td>
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-modal-<?= $producto->getID(); ?>">
