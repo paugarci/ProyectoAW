@@ -55,9 +55,9 @@ class CreateEventForm extends Form
             ]
         )[0];
 
-        $eventID = $eventDTO->getID();
+        $this->m_EventID = $eventDTO->getID();
         
-        $this->m_URLRedirection = "readEvent.php?eventID=$eventID";
+        $this->m_URLRedirection = "readEvent.php?eventID={$this->m_EventID}";
     }
     protected function generateFormFields($data)
     {
