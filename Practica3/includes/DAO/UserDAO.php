@@ -6,7 +6,6 @@ require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\DTO\DTO;
 use es\ucm\fdi\aw\DTO\UserDTO;
-use es\ucm\fdi\aw\DTO\ReviewsDTO;
 
 class UserDAO extends DAO
 {

@@ -40,7 +40,7 @@ ob_start();
             <fieldset class="col-12" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
-                    <a class="btn btn-primary w-100 m-3" href="add-question.php" role="button">
+                    <a class="btn btn-primary w-100 m-3" href="addQuestion.php" role="button">
                         <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>

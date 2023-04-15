@@ -2,12 +2,12 @@
 
 
 
-use es\ucm\fdi\aw\DAO\UsersProductsDAO;
+use es\ucm\fdi\aw\DAO\UserProductDAO;
 use es\ucm\fdi\aw\DAO\ProductDAO;
 
 require_once 'includes/config.php';
-$usersProductsDAO = new UsersProductsDAO;
-$productDAO = new ProductDAO();
+$userProductDAO = new UserProductDAO;
+$productDAO = new ProductDAO;
 
 
 // Comprueba que se recibieron los parámetros correctos
@@ -22,7 +22,7 @@ $productID = $_POST['product_id'];
 $quantity = $_POST['quantity'];
 if ($cantidad > 0) {
     // Si la actualización fue exitosa, calcula el nuevo subtotal y envía una respuesta JSON
-    $my_array = isset($_SESSION["user"]) ? $usersProductsDAO->getUserCart($uID) : $_SESSION["carritoTemporal"];
+    $my_array = isset($_SESSION["user"]) ? $userProductDAO->getUserCart($uID) : $_SESSION["carritoTemporal"];
     foreach ($my_array as $prod) {
         if ($prod->getID1() == $uID) {
             $producto = $productDAO->read($prod->getID2())[0];
@@ -30,7 +30,7 @@ if ($cantidad > 0) {
             $amount =  $prodDTO->getAmount() + $cantidad;
             if (isset($_SESSION["user"])){
                 $producto->setAmount($amount);
-                $usersProductsDAO->updateWithCompoundKey($producto);
+                $usersroductDAO->updateWithCompoundKey($producto);
             }
         }
     }

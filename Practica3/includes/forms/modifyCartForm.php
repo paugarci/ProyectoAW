@@ -2,11 +2,8 @@
 
 namespace es\ucm\fdi\aw\forms;
 
-use es\ucm\fdi\aw\DAO\ProductDAO;
-use es\ucm\fdi\aw\DAO\UserDAO;
-use es\ucm\fdi\aw\DTO\UserDTO;
-use es\ucm\fdi\aw\DAO\UsersProductsDAO;
-use es\ucm\fdi\aw\DTO\UsersProductsDTO;
+use es\ucm\fdi\aw\DAO\UserProductDAO;
+use es\ucm\fdi\aw\DTO\UserProductDTO;
 
 
 
@@ -16,8 +13,8 @@ require_once 'includes/config.php';
 class ModifyCartForm extends Form
 {
     //  Constants
-    private const FORM_ID = 'modify_cart_form';
-    private const URL_REDIRECTION = 'shopping-cart.php';
+    private const FORM_ID = 'modifyCart_form';
+    private const URL_REDIRECTION = 'shoppingCart.php';
     private $productID;
     private $userID;
     private $amount;
@@ -46,7 +43,7 @@ class ModifyCartForm extends Form
             if (empty($_SESSION["carritoTemporal"])){
                 $_SESSION["carritoTemporal"] = array();
                 if ($data['amount'] > 0 && !empty($data['amount']))
-                    $_SESSION["carritoTemporal"][0] = new UsersProductsDTO( -1, $this->productID, $data['amount']);
+                    $_SESSION["carritoTemporal"][0] = new UserProductDTO( -1, $this->productID, $data['amount']);
                 
             }else{
                 if ($data['amount'] > 0 && !empty($data['amount'])){
@@ -67,7 +64,7 @@ class ModifyCartForm extends Form
                 return;
             }else if ($data['amount'] > 0 && !empty($data['amount'])){
                 echo('<pre>');
-                $cartDAO = new UsersProductsDAO();
+                $cartDAO = new UserProductDAO;
                 $prodDTO = $cartDAO->getCartProduct($this->userID, $this->productID);
                 if ( $prodDTO->getAmount() != 0){ //aqui otro formulario??
                     $prodDTO->setAmount($data['amount']);

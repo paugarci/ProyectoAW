@@ -5,9 +5,9 @@ namespace es\ucm\fdi\aw\DAO;
 require_once 'includes/config.php';
 
 use es\ucm\fdi\aw\DTO\DTO;
-use es\ucm\fdi\aw\DTO\UsersProductsDTO;
+use es\ucm\fdi\aw\DTO\UserProductDTO;
 
-class UsersProductsDAO extends DAO
+class UserProductDAO extends DAO
 {
     private const TABLE_NAME = 'users_products';
     private const ID_KEY1 = 'userID';
@@ -28,10 +28,10 @@ class UsersProductsDAO extends DAO
         $statement->execute();
 
         $results = array();
-        $userProductsDAO = new UsersProductsDAO();
+        $userProductDAO = new UserProductDAO();
 
         foreach ($statement as $result) {
-            array_push($results, $userProductsDAO->createDTOFromArray($result));
+            array_push($results, $userProductDAO->createDTOFromArray($result));
         }
         
         return $results;
@@ -46,11 +46,11 @@ class UsersProductsDAO extends DAO
         $statement->bindParam(':productID', $productID);
         $statement->execute();
 
-        $amount = $statement->fetchColumn(); //devuelve la columna amount
-        $userProductsDTO = new UsersProductsDTO($userID, $productID, $amount);
+        $amount = $statement->fetchColumn();
+        $userProductDTO = new UserProductDTO($userID, $productID, $amount);
         
         
-        return $userProductsDTO;   
+        return $userProductDTO;   
     }
 
     protected function createDTOFromArray($array): DTO
@@ -61,7 +61,7 @@ class UsersProductsDAO extends DAO
         $amount = $array[self::AMOUNT_KEY];
         
 
-        return new UsersProductsDTO($userID, $productID,$amount);
+        return new UserProductDTO($userID, $productID,$amount);
     }
     
     protected function createArrayFromDTO($dto): array

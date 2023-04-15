@@ -5,8 +5,8 @@ namespace es\ucm\fdi\aw\forms;
 use es\ucm\fdi\aw\DAO\ProductDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DTO\UserDTO;
-use es\ucm\fdi\aw\DAO\UsersProductsDAO;
-use es\ucm\fdi\aw\DTO\UsersProductsDTO;
+use es\ucm\fdi\aw\DAO\UserProductDAO;
+use es\ucm\fdi\aw\DTO\UserProductDTO;
 
 
 
@@ -45,7 +45,7 @@ class CartForm extends Form
             if (empty($_SESSION["carritoTemporal"])){
                 $_SESSION["carritoTemporal"] = array();
                 if ($data['amount'] > 0 && !empty($data['amount']))
-                    $_SESSION["carritoTemporal"][0] = new UsersProductsDTO( -1, $this->productID, $data['amount']);
+                    $_SESSION["carritoTemporal"][0] = new UserProductDTO( -1, $this->productID, $data['amount']);
                 
             }else{
                 if ($data['amount'] > 0 && !empty($data['amount'])){
@@ -61,7 +61,7 @@ class CartForm extends Form
                     }
                     if ($encontrado==false){
                         $index = count($mi_array);
-                        $mi_array[$index] = new UsersProductsDTO( -1, $this->productID, $data['amount']);
+                        $mi_array[$index] = new UserProductDTO( -1, $this->productID, $data['amount']);
                     }
                     $_SESSION["carritoTemporal"] = $mi_array;
                 }
@@ -72,15 +72,15 @@ class CartForm extends Form
                 return;
             }else if ($data['amount'] > 0 && !empty($data['amount'])){
                 echo('<pre>');
-                $cartDAO = new UsersProductsDAO();
+                $cartDAO = new UserProductDAO();
                 $prodDTO = $cartDAO->getCartProduct($this->userID, $this->productID);
                 if ( $prodDTO->getAmount() != 0){ 
                     $amount =  $prodDTO->getAmount() + $data['amount'];
                     $prodDTO->setAmount($amount);
                     $cartDAO->updateWithCompoundKey($prodDTO);
                 }else{
-                    $usersProductsDTO = new UsersProductsDTO( $this->userID, $this->productID, $data['amount']);
-                    $cartDAO->create($usersProductsDTO);
+                    $userProductDTO = new UserProductDTO( $this->userID, $this->productID, $data['amount']);
+                    $cartDAO->create($userProductDTO);
                 }
             }else{
                 $this->m_Errors['empty_amount'] = 'Debes introducir una cantidad valida';

@@ -1,10 +1,8 @@
 <?php
-
 require_once 'includes/config.php';
+
 ob_start();
-
-
-$content=<<<EOS
+?>
 <div class="m-5"> 
   <div class="m-5 "> 
     <h1 class="text-center">GASTOS DE ENVÍO</h1><br> 
@@ -56,7 +54,7 @@ $content=<<<EOS
     <li>Todos los productos disponibles en la tienda los tenemos en stock físico y para enviar inmediatamente.</li> 
   </ul> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
   <h1 class="text-center">DEVOLUCION Y GARANTÍAS</h1><br> 
 
   <p>Zeus-Airsoft sólo acepta devoluciones por posibles defectos en el producto</p> 
@@ -129,7 +127,7 @@ $content=<<<EOS
 
   <p>Dueño de la tienda Sergio Garcia Diez con NIF XXXXXXXXX</p> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
   <h1 class="text-center">INFORMACIÓN VENTA Y REGLAMENTO</h1><br> 
   <p>Debido a varias preguntas por parte los clientes, agregamos la siguiente información sobre la venta de réplicas en 
     nuestra tienda.</p> 
@@ -176,7 +174,7 @@ $content=<<<EOS
       href="https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202">https://www.boe.es/buscar/doc.php?id=BOE-A-1993-6202</a> 
   </p> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
   <h1 class="text-center">CONDICIONES Y FORMAS DE PAGO</h1><br> 
   <p> Todas las réplicas que vende Zeus-Airsoft tienen número de serie unico del fabricante 
     En caso de querer comprar una réplica la factura puede ir a nombre del menor siempre que se tenga más de 14 años, 
@@ -221,7 +219,7 @@ $content=<<<EOS
     finalizar el pedido puede revisar el importe de la comision, ya que lo calcula directamente el sistema y se lo 
     muestra antes de confirmar el mismo.</p> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
 
   <section id="politica"> 
     <h1 class="text-center">AVISO LEGAL Y POLITICA DE PRIVACIDAD ADAPTADO RGPD (Versión Mayo-18)</h1><br> 
@@ -341,7 +339,7 @@ $content=<<<EOS
       contrato.</p> 
   </section> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
   <section id="cookies"> 
 
     <h1 class="text-center">Uso de cookies-RGPD - Version Mayo-18</h1> <br> 
@@ -409,7 +407,7 @@ $content=<<<EOS
     </p> 
   </section> 
   <br> 
-  <hr class="border border-primary border-3 opacity-75"> 
+  <hr class="border border-dark border-2 opacity-75"> 
   <section id="condiciones"> 
     <h1 class="text-center">Terminos y Condiciones</h1><br> 
     <p> <u> 
@@ -527,9 +525,10 @@ $content=<<<EOS
   </section> 
 </div> 
 
-EOS;
+<?php
+$content = ob_get_clean();
 
 $title = 'Información';
 
 require_once INCLUDES_ROOT . '/templates/default_template.php';
-
+?>

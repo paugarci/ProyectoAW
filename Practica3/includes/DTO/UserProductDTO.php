@@ -4,7 +4,7 @@ namespace es\ucm\fdi\aw\DTO;
 
 require_once 'includes/config.php';
 
-class UsersProductsDTO extends DTO
+class UserProductDTO extends DTO
 {
     //  Fields
     private $m_UserID;

@@ -11,8 +11,6 @@ $orderDAO = new OrderDAO;
 
 $userOrderDAO = new UserOrderDAO;
 
-
-
 $productID = $_GET["productID"];
 $productDAO = new ProductDAO;
 $productDTOResults = $productDAO->read($productID);
@@ -45,7 +43,6 @@ ob_start();
                             <br>
                             <label for="fecha"><strong>Fecha de pedido:</strong>&nbsp;</label><?php echo date('Y-m-d'); ?>
                         </div>
-
                         <!-- Sección de Contacto -->
                         <div class="border rounded p-3 mb-3">
                             <?php foreach ($users as $user) : ?>
@@ -62,7 +59,6 @@ ob_start();
                                 <input type="text" id="email" name="email" value="<?php echo $user['em']; ?>">
                             <?php endforeach; ?>
                         </div>
-
                         <!-- Sección de Pago -->
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Pago</strong></h3>
@@ -72,7 +68,6 @@ ob_start();
                                 <option value="Transferencia Bancaria">Transferencia bancaria</option>
                                 <option value="Bizum">Bizum</option>
                             </select>
-
                             <br>
                         </div>
                     </div>
@@ -83,13 +78,11 @@ ob_start();
                             <h3><strong>Resumen de pedido</strong></h3>
                             <p><strong>Total:</strong> <?= number_format($product->getPrice(), 2) ?> €</p>
                             <button type="submit" name="buy" class="btn btn-success">Comprar</button>
-
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-
 
         <?php
         if (isset($_POST['buy'])) {
@@ -100,32 +93,19 @@ ob_start();
             $metodo = $_POST['metodo_pago'];
             $price = number_format($product->getPrice(), 2);
             $date = date('Y-m-d');
-
-
             $orderDAO->InsertOrder($price, $metodo, $dir, $date);
-
-
             // Obtener el ID del order recién insertado
             $order_id = $orderDAO->getLastInsertID();
-
             // Insertar en otra tabla utilizando el ID del order
             $userOrderDAO->insert($userID, $order_id);
-
             $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email);
-
-
-
             header('Location: orders.php');
             exit();
         }
         ?>
 
-
-
     <?php endif; ?>
 </div>
-
-
 
 <?php
 //end:
