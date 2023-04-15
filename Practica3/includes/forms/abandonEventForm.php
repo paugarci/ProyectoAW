@@ -42,15 +42,17 @@ class AbandonEventForm extends Form
 
         $userID = $_SESSION['user']->getID();
 
-        $result = $eventDAO->abandonEvent($userID, $this->m_EventID);
+        $result = $eventDAO->abandonEvent($userID, $data['eventID']);
 
         if (!$result)
             $this->m_Errors['bad_abandon_event'] = 'No se ha podido abandonar el evento.';
     }
     protected function generateFormFields($data)
     {
+        $eventID = $this->m_EventID;
+
         return <<<HTML
-            <button type="submit" class="btn btn-outline-danger" name="eventID" value="{$this->m_EventID}">Abandonar</button>
+            <button type="submit" class="btn btn-outline-danger" name="eventID" value="$eventID">Abandonar</button>
         HTML;
     }
 }
