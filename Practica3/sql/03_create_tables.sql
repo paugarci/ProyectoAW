@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2023 a las 11:13:49
+-- Tiempo de generación: 16-04-2023 a las 16:08:38
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -331,13 +331,6 @@ CREATE TABLE `users_answers` (
   `questionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `users_answers`
---
-
-INSERT INTO `users_answers` (`userID`, `answerID`, `questionID`) VALUES
-(14, 36, 94);
-
 -- --------------------------------------------------------
 
 --
@@ -484,6 +477,7 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `questions_answers`
   ADD PRIMARY KEY (`questionID`,`answerID`),
+  ADD KEY `questionID` (`questionID`,`answerID`),
   ADD KEY `answerID` (`answerID`);
 
 --
@@ -516,7 +510,8 @@ ALTER TABLE `users`
 ALTER TABLE `users_answers`
   ADD PRIMARY KEY (`userID`,`answerID`,`questionID`),
   ADD KEY `questionID` (`questionID`),
-  ADD KEY `answerID` (`answerID`);
+  ADD KEY `answerID` (`answerID`),
+  ADD KEY `userID` (`userID`,`answerID`,`questionID`);
 
 --
 -- Indices de la tabla `users_orders`
@@ -553,6 +548,12 @@ ALTER TABLE `users_roles`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -580,7 +581,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT de la tabla `reviews`
@@ -637,8 +638,16 @@ ALTER TABLE `product_user_reviews`
 -- Filtros para la tabla `questions_answers`
 --
 ALTER TABLE `questions_answers`
-  ADD CONSTRAINT `questions_answers_ibfk_1` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `questions_answers_ibfk_2` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `questions_answers_ibfk_1` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `questions_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_answers`
+--
+ALTER TABLE `users_answers`
+  ADD CONSTRAINT `users_answers_ibfk_1` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_answers_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_answers_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users_orders`

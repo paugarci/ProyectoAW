@@ -45,7 +45,7 @@ if (count($questionDTOResults) == 0) {
     $title = $question->getTitle();
 
     $userQuestionDAO = new UserQuestionDAO;
-    $answers = $answerDAO->read();
+    $answers = $answerDAO->getQuestionAnswers($questionID);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {

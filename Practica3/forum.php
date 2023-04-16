@@ -16,11 +16,8 @@ $questionAuthors = $userQuestionDAO->read();
 
 $isDisabled = !isset($_SESSION["user"]) ? " disabled" : "";
 $answerDAO = new AnswerDAO;
-$numAnswers = count($answerDAO->read());
 
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['questionID']) && !empty($_GET['questionID'])) {
-
-    $answerDAO = new AnswerDAO;
     $answersToDelete = $answerDAO->getQuestionAnswers($_GET['questionID']);
 
     $questionDAO->delete($_GET['questionID']);
@@ -60,6 +57,7 @@ ob_start();
                                     <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
                                 </div>
                                 <div class="col d-flex justify-content-end">
+                                    <?php $numAnswers = count($answerDAO->getQuestionAnswers($question->getID())) ?>
                                     <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
                                 </div>
                             </div>
