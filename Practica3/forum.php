@@ -96,7 +96,7 @@ ob_start();
             </div>
             <fieldset class="col-2 mt-5" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
-                    <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
+                    <a class="btn btn-primary w-100 m-3" href="adQuestion.php" role="button">
                         <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
                     </a>
                 </div>
