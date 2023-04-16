@@ -1,21 +1,27 @@
 <?php
 
-use es\ucm\fdi\aw\DAO\UserDAO;
+use es\ucm\fdi\aw\forms\AccountForm;
 
 require_once 'includes/config.php';
 
+ob_start();
+$title = 'Mi cuenta';
+?>
+<?php
+if (isset($_SESSION["user"])) {
+    $userID = $_SESSION["user"]->getID();
+?>
+    <div class="container shadow p-4">
+        <h1 class="mb-4 text-center">Datos del usuario</h1>
+
+        <?= ($modUser = new AccountForm($userID))->handleForm(); ?>
+    </div>
+<?php
+}
+
 ?>
 
-<?php ob_start(); ?>
-
-<div class="px-3 py-2">
-    <h1>Zeus Airsoft</h1>
-    <p>Pagina de MI CUENTA</p>
-</div>
-
-<?php 
-
-$title = 'Inicio';
+<?php
 $content = ob_get_clean();
 
 
