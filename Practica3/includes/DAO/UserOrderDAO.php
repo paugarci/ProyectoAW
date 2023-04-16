@@ -26,7 +26,7 @@ class UserOrderDAO extends DAO
         $userID = $array[self::USER_ID_KEY];
         $orderID = $array[self::ORDER_ID_KEY];
 
-        return new UserQuestionDTO($userID, $orderID);
+        return new UserOrderDTO($userID, $orderID);
     }
     protected function createArrayFromDTO($dto): array
     {

@@ -11,9 +11,9 @@ if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] == false) : ?>
     </div>
 <?php else : ?>
     <?php $title = 'Panel de administración'; ?>
-    <div class="p-3">
-        <h2 class="d-flex justify-content-center">Panel de administración</h2>
-        <div class="row d-flex flex-row justify-content-center">
+    <div class="container p-3">
+        <h2 class="d-flex justify-content-center my-3">Panel de administración</h2>
+        <div class="row justify-content-center">
             <div class="col-sm-10 col-md-6 col-lg-6 col-xl-4 m-2 p-2 card">
                 <div class="p-4">
                     <h4 class="d-flex justify-content-center">Modificar rol de usuarios</h4>
