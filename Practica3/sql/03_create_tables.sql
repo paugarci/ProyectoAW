@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-04-2023 a las 13:54:04
+-- Tiempo de generación: 16-04-2023 a las 11:13:49
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -122,6 +122,14 @@ CREATE TABLE `orders` (
   `address` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `orders`
+--
+
+INSERT INTO `orders` (`id`, `number`, `state`, `date`, `amount`, `quantity`, `paymentMethod`, `address`) VALUES
+(0, 0, 'cancelado', '2023-04-13', '668.00', 1, 'Tarjeta Credito', ''),
+(1, 12, 'En proceso', '2023-04-10', '123.00', 1, 'Visa', 'Calle Magdalena');
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +192,26 @@ CREATE TABLE `products_categories` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `product_user_reviews`
+--
+
+CREATE TABLE `product_user_reviews` (
+  `review_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `product_user_reviews`
+--
+
+INSERT INTO `product_user_reviews` (`review_id`, `product_id`, `user_id`) VALUES
+(46, 1, 13),
+(47, 1, 13);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `questions`
 --
 
@@ -204,6 +232,27 @@ CREATE TABLE `questions_answers` (
   `questionID` int(11) NOT NULL,
   `answerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `review` int(1) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `comment`, `review`, `date`) VALUES
+(46, 'Sin comentario', 5, '2023-04-10 14:16:12'),
+(47, 'hola xd', 5, '2023-04-13 20:17:44');
 
 -- --------------------------------------------------------
 
@@ -267,7 +316,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `passwordHash`) VALUES
 (6, 'Alexander', 'López Vega', 'alex.lopez.ve@gmail.com', '$2y$10$bOVt7M3p2mQtvQTkStsNj.x3Rw9rKmvvHrqTt.RF7z46bJONYM2AG'),
 (12, 'Hugo', 'Silva', 'hsilva@ucm.es', '$2y$10$J.hO7gzo7cEjUbkH4oy6nuBV80raqlHCo6h41t2vt5vqwwwXFm8Qy'),
-(13, 'Pepe', 'Gómez', 'pepegomez@gmail.com', '$2y$10$qHjUQ/YMGBNZAD7kDMvCvePRB9MooK4aKSd46EdL0NYWZZsTBrZmO'),
+(13, 'Dragos Ionut', 'Camarasan', 'dragosca@ucm.es', '$2y$10$e4IOMlAGUKEI7CBH1AxDfuK8lbd1A62F6bQ7oxUtt5k/rva14EVL.'),
 (14, 'June', 'Zuazo', '1234@ucm.es', '$2y$10$u.JMyHOYDOBRqe2QXy4Qy.sK6UVcL2DgZDSMl4x2UH7t0OaiELQpy');
 
 -- --------------------------------------------------------
@@ -300,6 +349,25 @@ CREATE TABLE `users_orders` (
   `orderID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `users_orders`
+--
+
+INSERT INTO `users_orders` (`userID`, `orderID`) VALUES
+(12, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users_products`
+--
+
+CREATE TABLE `users_products` (
+  `userID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -310,14 +378,6 @@ CREATE TABLE `users_questions` (
   `userID` int(11) NOT NULL,
   `questionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `users_questions`
---
-
-INSERT INTO `users_questions` (`userID`, `questionID`) VALUES
-(12, 94),
-(14, 97);
 
 -- --------------------------------------------------------
 
@@ -337,10 +397,12 @@ CREATE TABLE `users_roles` (
 INSERT INTO `users_roles` (`userID`, `roleID`) VALUES
 (6, 1),
 (12, 1),
+(13, 1),
 (14, 1),
 (6, 2),
 (12, 2),
-(13, 2);
+(13, 2),
+(14, 2);
 
 --
 -- Índices para tablas volcadas
@@ -365,6 +427,20 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `events_users`
+--
+ALTER TABLE `events_users`
+  ADD KEY `eventID` (`eventID`),
+  ADD KEY `eventRoleID` (`eventRoleID`),
+  ADD KEY `userID` (`userID`);
+
+--
+-- Indices de la tabla `event_roles`
+--
+ALTER TABLE `event_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `orders`
 --
 ALTER TABLE `orders`
@@ -386,7 +462,16 @@ ALTER TABLE `products`
 -- Indices de la tabla `products_categories`
 --
 ALTER TABLE `products_categories`
-  ADD PRIMARY KEY (`productID`,`categoryID`);
+  ADD PRIMARY KEY (`productID`,`categoryID`),
+  ADD KEY `categoryID` (`categoryID`);
+
+--
+-- Indices de la tabla `product_user_reviews`
+--
+ALTER TABLE `product_user_reviews`
+  ADD PRIMARY KEY (`review_id`,`product_id`,`user_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `questions`
@@ -398,7 +483,14 @@ ALTER TABLE `questions`
 -- Indices de la tabla `questions_answers`
 --
 ALTER TABLE `questions_answers`
-  ADD PRIMARY KEY (`questionID`,`answerID`);
+  ADD PRIMARY KEY (`questionID`,`answerID`),
+  ADD KEY `answerID` (`answerID`);
+
+--
+-- Indices de la tabla `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `roles`
@@ -435,9 +527,17 @@ ALTER TABLE `users_orders`
   ADD KEY `orderID` (`orderID`);
 
 --
+-- Indices de la tabla `users_products`
+--
+ALTER TABLE `users_products`
+  ADD PRIMARY KEY (`userID`,`productID`),
+  ADD KEY `productID` (`productID`);
+
+--
 -- Indices de la tabla `users_questions`
 --
 ALTER TABLE `users_questions`
+  ADD PRIMARY KEY (`userID`,`questionID`),
   ADD KEY `userID` (`userID`),
   ADD KEY `questionID` (`questionID`);
 
@@ -451,12 +551,6 @@ ALTER TABLE `users_roles`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
---
--- AUTO_INCREMENT de la tabla `answers`
---
-ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -486,7 +580,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+
+--
+-- AUTO_INCREMENT de la tabla `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -511,11 +611,62 @@ ALTER TABLE `users`
 --
 
 --
+-- Filtros para la tabla `events_users`
+--
+ALTER TABLE `events_users`
+  ADD CONSTRAINT `events_users_ibfk_1` FOREIGN KEY (`eventID`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `events_users_ibfk_2` FOREIGN KEY (`eventRoleID`) REFERENCES `event_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `events_users_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `products_categories`
+--
+ALTER TABLE `products_categories`
+  ADD CONSTRAINT `products_categories_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `products_categories_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `product_user_reviews`
+--
+ALTER TABLE `product_user_reviews`
+  ADD CONSTRAINT `product_user_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_user_reviews_ibfk_2` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_user_reviews_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `questions_answers`
+--
+ALTER TABLE `questions_answers`
+  ADD CONSTRAINT `questions_answers_ibfk_1` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `questions_answers_ibfk_2` FOREIGN KEY (`answerID`) REFERENCES `answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `users_orders`
 --
 ALTER TABLE `users_orders`
   ADD CONSTRAINT `users_orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `users_orders_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_products`
+--
+ALTER TABLE `users_products`
+  ADD CONSTRAINT `users_products_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_products_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_questions`
+--
+ALTER TABLE `users_questions`
+  ADD CONSTRAINT `users_questions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_questions_ibfk_2` FOREIGN KEY (`questionID`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `users_roles`
+--
+ALTER TABLE `users_roles`
+  ADD CONSTRAINT `users_roles_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_roles_ibfk_2` FOREIGN KEY (`roleID`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

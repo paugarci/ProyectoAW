@@ -2,7 +2,6 @@
 
 use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
-use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 
 require_once 'includes/config.php';
@@ -41,7 +40,7 @@ ob_start();
             <fieldset class="col-12" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
-                    <a class="btn btn-primary w-100 m-3" href="add-question.php" role="button">
+                    <a class="btn btn-primary w-100 m-3" href="addQuestion.php" role="button">
                         <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>
@@ -61,7 +60,7 @@ ob_start();
                                     <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                    <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
+                                    <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i
                                 </div>
                             </div>
                             <?php if ((isset($_SESSION["user"]) && $_SESSION["user"]->getID() == $questionDAO->getQuestionAuthor($question->getID())[0]->getID()) || (isset($_SESSION["isAdmin"]) && $_SESSION['isAdmin'] == true)) : ?>

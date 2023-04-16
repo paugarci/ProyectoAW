@@ -48,9 +48,11 @@ class ProductDTO extends DTO
     {
         return $this->m_Price;
     }
+    
     public function getOffer() {
         return $this->m_Offer;
     }
+    
     public function setName($name)
     {
         $this->m_Name = $name;
@@ -70,6 +72,7 @@ class ProductDTO extends DTO
     {
         $this->m_Price = $price;
     }
+    
     public function setOffer($offer) {
         $this->m_Offer = $offer;
     }
