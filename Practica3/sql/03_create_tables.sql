@@ -115,6 +115,7 @@ INSERT INTO `event_roles` (`id`, `name`, `maximum`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
   `state` varchar(1000) NOT NULL,
   `date` date NOT NULL,
   `amount` decimal(10,2) NOT NULL,
@@ -519,7 +520,8 @@ ALTER TABLE `users_answers`
 -- Indices de la tabla `users_orders`
 --
 ALTER TABLE `users_orders`
-  ADD KEY `userID` (`userID`),
+  ADD PRIMARY KEY (`userID`) USING BTREE,
+  ADD KEY `userID` (`userID`) USING BTREE,
   ADD KEY `orderID` (`orderID`);
 
 --
@@ -565,12 +567,6 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT de la tabla `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `payment_method`

@@ -13,7 +13,7 @@ class ChangeRoleForm extends Form
 {
     //  Constants
     private const FORM_ID = 'change-role_form';
-    private const URL_REDIRECTION = 'admin-panel.php';
+    private const URL_REDIRECTION = 'adminPanel.php';
 
     //  Constructors
     public function __construct()
@@ -45,7 +45,6 @@ class ChangeRoleForm extends Form
             }
 
             $userRoleDAO->create(new UserRoleDTO($userID, $roleID));
-            unset($_SESSION["isAdmin"]);
         }
         if (isset($_POST["deleteRole"])) {
             $userRoleDAO->deleteCompoundKey($userID, $roleID);

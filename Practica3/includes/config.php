@@ -3,8 +3,8 @@
 //  Project constants
 define('NAMESPACE_PREFIX', 'es\\ucm\\fdi\\aw\\');
 define('PROJECT_ROOT', dirname(__DIR__));
-define('INCLUDES_ROOT', PROJECT_ROOT . '\\includes');
-define('IMAGES_ROOT', PROJECT_ROOT . '\\images');
+define('INCLUDES_ROOT', PROJECT_ROOT . '/includes');
+define('IMAGES_ROOT', PROJECT_ROOT . '/images');
 
 //  Database constants
 define('DATABASE_HOST', 'localhost');

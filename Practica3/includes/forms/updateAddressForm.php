@@ -40,7 +40,7 @@ class UpdateAddressForm extends Form
 
         $userID = $_SESSION['user']->getID();
 
-        $result = $eventDAO->updateOrder($userID, $this->m_OrderID);
+        $result = $orderDAO->updateOrder($userID, $this->m_OrderID);
 
         if (!$result)
             $this->m_Errors['bad_update_order'] = 'No se ha podido modificar la dirección.';

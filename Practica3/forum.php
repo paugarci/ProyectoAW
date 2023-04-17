@@ -2,7 +2,6 @@
 
 use es\ucm\fdi\aw\DAO\AnswerDAO;
 use es\ucm\fdi\aw\DAO\QuestionDAO;
-use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\UserQuestionDAO;
 
 require_once 'includes/config.php';
@@ -17,11 +16,8 @@ $questionAuthors = $userQuestionDAO->read();
 
 $isDisabled = !isset($_SESSION["user"]) ? " disabled" : "";
 $answerDAO = new AnswerDAO;
-$numAnswers = count($answerDAO->read());
 
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['questionID']) && !empty($_GET['questionID'])) {
-
-    $answerDAO = new AnswerDAO;
     $answersToDelete = $answerDAO->getQuestionAnswers($_GET['questionID']);
 
     $questionDAO->delete($_GET['questionID']);
@@ -38,11 +34,11 @@ ob_start();
     <h2 class="m-3 d-flex justify-content-center">Foro</h2>
     <div class="row">
         <?php if (!isset($questions) || empty($questions)) : ?>
-            <fieldset class="col-12"<?= $isDisabled ?>>
+            <fieldset class="col-12" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
                     <h5>El foro está vacío</h5>
-                    <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
-                    <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
+                    <a class="btn btn-primary w-100 m-3" href="addQuestion.php" role="button">
+                        <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para escribir en el foro" : "Haz una pregunta" ?></p>
                     </a>
                 </div>
             </fieldset>
@@ -52,19 +48,16 @@ ob_start();
                 <?php foreach ($questions as $question) : ?>
                     <div class="card row-hover pos-relative py-3 px-3 mb-3 border-primary border-top-0 border-bottom-0 rounded-0 shadow">
                         <div class="row d-flex align-items-center">
-                            <form action="question.php" method="get">
-                                <?php $questionAuthor = $questionDAO->getQuestionAuthor($question->getID())[0]->getName() . " " . $questionDAO->getQuestionAuthor($question->getID())[0]->getSurname(); ?>
-                                <input type="hidden" name="questionID" value="<?= $question->getID(); ?>">
-                                <input type="hidden" name="author" value="<?= $questionAuthor ?>">
-                                <button type="submit" class="btn btn-link text-primary text-decoration-none">
-                                    <h5><?= $question->getTitle(); ?></h5>
-                                </button>
-                            </form>
+                            <?php $questionAuthor = $questionDAO->getQuestionAuthor($question->getID())[0]->getName() . " " . $questionDAO->getQuestionAuthor($question->getID())[0]->getSurname(); ?>
+                            <a class="text-primary text-decoration-none" href="question.php?questionID=<?= $question->getID(); ?>&author=<?= $questionAuthor ?>">
+                                <h5><?= $question->getTitle(); ?></h5>
+                            </a>
                             <div class="row">
                                 <div class="col d-flex justify-content-start">
                                     <p class="text-sm"><span class="op-6">Publicado el <b><?= $question->getCreationDate() ?></b> por <b><?= $questionAuthor ?></b></span></p>
                                 </div>
                                 <div class="col d-flex justify-content-end">
+                                    <?php $numAnswers = count($answerDAO->getQuestionAnswers($question->getID())) ?>
                                     <i>(<?= $numAnswers; ?><?php $numAnswers == 1 ? print(" respuesta") : print(" respuestas") ?>)</i>
                                 </div>
                             </div>
@@ -99,9 +92,9 @@ ob_start();
                     </div>
                 <?php endforeach ?>
             </div>
-            <fieldset class="col-2 mt-5"<?= $isDisabled ?>>
+            <fieldset class="col-2 mt-5" <?= $isDisabled ?>>
                 <div class="row d-flex justify-content-center">
-                    <a class="btn btn-primary w-100 m-3" href="ask-question.php" role="button">
+                    <a class="btn btn-primary w-100 m-3" href="addQuestion.php" role="button">
                         <p class="pt-3"><?= !isset($_SESSION["user"]) ? "Identifícate para<br>escribir en el foro" : "Haz una<br>pregunta" ?></p>
                     </a>
                 </div>
