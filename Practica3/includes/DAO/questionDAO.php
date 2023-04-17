@@ -4,6 +4,7 @@ namespace es\ucm\fdi\aw\DAO;
 
 require_once 'includes/config.php';
 
+use es\ucm\fdi\aw\DAO\QuestionDAO as DAOQuestionDAO;
 use es\ucm\fdi\aw\DTO\DTO;
 use es\ucm\fdi\aw\DTO\QuestionDTO;
 
@@ -20,6 +21,18 @@ class QuestionDAO extends DAO
     public function __construct()
     {
         parent::__construct(self::TABLE_NAME);
+    }
+
+    public function getLastQuestion(): QuestionDTO
+    {
+        $query = "SELECT * FROM questions ORDER BY id DESC LIMIT 1";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->execute();
+
+        $questionDAO = new QuestionDAO;
+        
+        return $questionDAO->createDTOFromArray($statement->fetch());
     }
 
     //  Methods

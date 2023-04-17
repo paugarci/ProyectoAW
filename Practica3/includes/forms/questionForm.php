@@ -32,12 +32,13 @@ class QuestionForm extends Form
         $questionDTO = new QuestionDTO(-1, $title, $message, $date);
 
         $questionDAO->create($questionDTO);
-        $questionDTO = $questionDAO->read(null, ["creationDate" => $date])[0];
+        $questionDTO = $questionDAO->getLastQuestion();
 
         $userID = $_SESSION['user']->getID();
+        $questionID = $questionDTO->getID();
 
         $userQuestionDAO = new UserQuestionDAO;
-        $userQuestionDTO = new UserQuestionDTO($userID, $questionDTO->getID());
+        $userQuestionDTO = new UserQuestionDTO($userID, $questionID);
         $userQuestionDAO->create($userQuestionDTO);
     }
     protected function generateFormFields($data)
@@ -83,4 +84,3 @@ class QuestionForm extends Form
         HTML_FORM;
     }
 }
-?>

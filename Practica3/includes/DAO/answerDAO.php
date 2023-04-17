@@ -23,6 +23,18 @@ class AnswerDAO extends DAO
 
     //  Methods
 
+    public function getLastAnswer(): DTO
+    {
+        $query = "SELECT * FROM answers ORDER BY id DESC LIMIT 1";
+
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->execute();
+
+        $answerDAO = new AnswerDAO;
+        
+        return $answerDAO->createDTOFromArray($statement->fetch());
+    }
+
     public function getQuestionAnswers($questionID): array
     {
         $query = "SELECT * FROM answers a INNER JOIN users_answers ua ON a.id = ua.answerID WHERE ua.questionID = :questionID;";

@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['answerMessage'])) {
         $date = date('Y-m-d H:i:s');
         $answerDAO->create(new AnswerDTO(-1, $answerMessage, $date));
 
-        $answer = $answerDAO->read(null, ["creationDate" => $date])[0];
+        $answer = $answerDAO->getLastAnswer();
 
         $answerID = $answer->getID();
         $answerAuthorID = $_SESSION["user"]->getID();
