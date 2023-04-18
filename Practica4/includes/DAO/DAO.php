@@ -13,8 +13,6 @@ abstract class DAO
 {
     //  Constants
     private const ID_KEY = 'id';
-    private const ID_KEY1 = 'userID';
-    private const ID_KEY2 = 'productID';
 
     //  Fields
     protected $m_TableName;
@@ -112,31 +110,7 @@ abstract class DAO
         return $statement->execute();
     }
 
-    public function updateWithCompoundKey($dto){
-        $dtoArray = $this->createArrayFromDTO($dto);
-        $dtoArrayKeys = array_keys($dtoArray);
-        
-        $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
-
-        for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
-            $column = $dtoArrayKeys[$i];
-            $updateVariables .= ", $column = :$column";
-        }
-
-        $idKey1 = self::ID_KEY1;
-        $idKey2 = self::ID_KEY2;
-        $query = "UPDATE {$this->m_TableName} SET $updateVariables WHERE $idKey1 = {$dto->getID1()} AND $idKey2 = {$dto->getID2()}";
-
-        $statement = $this->m_DatabaseProxy->prepare($query);
-
-        foreach ($dtoArrayKeys as $key) {
-            $statement->bindParam(":$key", $dtoArray[$key]);
-
-        }
-        
-        return $statement->execute();
-
-    }
+    
 
     public function delete($id): bool
     {
