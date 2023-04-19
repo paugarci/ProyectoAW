@@ -30,10 +30,12 @@ if (isset($_SESSION["user"])) {
     $my_array = $usersDAO->getUserCart($uID);
 } else if (!empty($_SESSION["carritoTemporal"])) { //Hay que crear el carrito a corde al usuario sin registrar
     $uID = -1;
-
     $my_array = $_SESSION["carritoTemporal"];
 }
-$cartCount = count($my_array);
+
+foreach($my_array as $elem){
+    $cartCount = $cartCount + $elem->getAmount();    
+}
 
 $current_page = basename($_SERVER['PHP_SELF']);
 $logoPath = 'images/logo.png';
@@ -68,7 +70,7 @@ $menu = array(
                 <?php endforeach ?>
             </ul>
             <form action="shoppingCart.php">
-                <button type="submit" class="rounded-circle btn btn-outline-light me-3 pt-1">
+                <button type="submit" class="rounded-circle btn btn-outline-light me-3 pt-1"  onclick="modifyCart()" onmouseover="showCart()" onmouseout="hideCart()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                     </svg>
@@ -76,11 +78,12 @@ $menu = array(
                         <span id="contador" class="badge bg-danger rounded-circle"><?= $cartCount ?></span>
                     <?php endif ?>
                 </button>
-                <div id="cart-dropdown" class="dropdown-menu bg-white" onmouseover="showCart()" onmouseout="hideCart()">
-                    <?php if (empty($my_array)) : ?>
-                        <p class="text-center">El carrito está vacío.</p>
-                    <?php else : ?>
-                        <ul>
+                <div class="dropdown" >
+                    
+                        <ul  id="cart-dropdown" class="dropdown-menu dropdown-menu-dark" onmouseover="showCart()" onmouseout="hideCart()">
+                            <?php if (empty($my_array)) : ?>
+                                <p class="text-center">El carrito está vacío.</p>
+                            <?php else : ?>
                             <?php $cartCount = 0;
                             foreach ($my_array as $product) : ?>
                                 <?php if ($product->getID1() == $uID) :
@@ -88,17 +91,19 @@ $menu = array(
                                     $subtotal = $subtotal + ($producto->getOfferPrice() * $product->getAmount());
 
                                 ?>
-                                    <li>
-                                        <?php echo $product->getAmount() ?> -
-                                        <?php echo $producto->getName() ?> -
-                                        <button onclick="removeFromCart(<?php echo $producto->getID() ?>)">Eliminar</button>
+                                    <li class="dropdown-item" >
+                                        <?php echo "Cantidad: " . $product->getAmount() ?>
+                                        <a class="dropdown-item" href="product.php?productID=<?= $producto->getID() ?>"><?php echo "Producto " . $producto->getName() ?> </a> 
+                                        <?= ($delete =  new es\ucm\fdi\aw\forms\DeleteProductFromCartForm($producto->getID()))->handleForm(); ?>
 
                                     </li>
-
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                 <?php endif ?>
                             <?php endforeach ?>
-                            <li>
-                                <?php echo $subtotal ?>
+                            <li class = "text-danger">
+                                <?php echo "Subtotal " .  $subtotal ?>
                             </li>
                         </ul>
                     <?php endif ?>
@@ -137,17 +142,7 @@ $menu = array(
         </div>
     </div>
     <script>
-        function modifyCart() {
-            let contador = 0;
-
-            const boton = document.querySelector('.btn');
-            const contadorElemento = document.getElementById('contador');
-
-            boton.addEventListener('click', () => {
-                contador++;
-                contadorElemento.textContent = contador.toString();
-            });
-        }
+        
 
         function showCart() {
             document.getElementById("cart-dropdown").classList.add("show");
@@ -160,50 +155,5 @@ $menu = array(
         document.querySelector('.btn-outline-secondary').onmouseover = showCart;
         document.querySelector('.btn-outline-secondary').onmouseleave = hideCart;
 
-        function removeFromCart(id) {
-            // Comprobar si el carrito está vacío
-            if (my_array.length == 0) {
-                return;
-            }
-
-            // Buscar el producto en el carrito por su ID
-            var index = -1;
-            for (var i = 0; i < my_array.length; i++) {
-                if (my_array[i]["id"] == id) {
-                    index = i;
-                    break;
-                }
-            }
-
-            // Si el producto no está en el carrito, salir de la función
-            if (index == -1) {
-                return;
-            }
-
-            // Eliminar el producto del carrito
-            my_array.splice(index, 1);
-
-            // Actualizar el contador del carrito
-            cartCount = my_array.length;
-            document.getElementById("contador").innerHTML = cartCount;
-
-            // Actualizar el carrito en la base de datos
-            if (uID != -1) {
-                $.ajax({
-                    url: "updateCart.php",
-                    method: "POST",
-                    data: {
-                        "user_id": uID,
-                        "cart": JSON.stringify(my_array)
-                    },
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr);
-                    }
-                });
-            }
-        }
     </script>
 </nav>

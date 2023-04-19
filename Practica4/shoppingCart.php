@@ -82,21 +82,29 @@ if (count($my_array) == 0) { ?>
 
       </table>
     </div>
-    <h4 class="mt-4 mb-4 fw-bold justify-content-end d-flex">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
+    <hr class="border border-dark border-2 opacity-25 mt-4"> 
+    <div class = "row">
+      <div class="col-md-6 mt-4 mb-4 fw-bold justify-content-start d-flex ">
+        <a class="btn btn-primary " id="buy-now" href="purchase.php?productID=<?= $productID ?>">Comprar elementos del carrito</a>
+
+      </div>
+      <h4 class="col-md-6 mt-4 mb-4 fw-bold justify-content-end d-flex ">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
+
+    </div>
   </div>
   <script>
     function actualizarTabla(productID) {
       // Obtener la cantidad de productos del input
-      const cantidad = parseInt(document.getElementById(`amount-${productID}`).value);
+      const cantidad = parseInt(document.getElementById('amount-${productID}').value);
       console.log(cantidad)
       // Calcular el nuevo precio para el producto
-      const PxU = parseFloat(document.getElementById(`price-unity-${productID}`).textContent);
+      const PxU = parseFloat(document.getElementById('price-unity-${productID}').textContent);
       console.log(PxU)
       const nuevoPrecio = cantidad * PxU;
       console.log(nuevoPrecio)
 
       // Actualizar el texto dentro del <td> que contiene el precio
-      document.getElementById(`price-${productID}`).textContent = nuevoPrecio.toFixed(2);
+      document.getElementById('price-${productID}').textContent = nuevoPrecio.toFixed(2);
 
       // Calcular el subtotal de la tabla sumando los precios de todos los productos
       let subtotal = 0;

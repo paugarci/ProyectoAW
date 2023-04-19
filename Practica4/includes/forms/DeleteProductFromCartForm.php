@@ -10,7 +10,7 @@ require_once 'includes/config.php';
 class DeleteProductFromCartForm extends Form
 {
     //  Constants
-    private const FORM_ID = 'delete_product_from_cart_form';
+    private const FORM_ID = 'del_prod';
     private const URL_REDIRECTION = 'shoppingCart.php';
 
     //  Fields
@@ -19,9 +19,9 @@ class DeleteProductFromCartForm extends Form
     //  Constructors
     public function __construct($m_ProductID)
     {
+        parent::__construct(self::FORM_ID, array(parent::URL_REDIRECTION_KEY => self::URL_REDIRECTION));
         
         $this->m_ProductID = $m_ProductID;
-        parent::__construct(self::FORM_ID, array(parent::URL_REDIRECTION_KEY => self::URL_REDIRECTION));
     }
 
     //  Methods
@@ -46,11 +46,7 @@ class DeleteProductFromCartForm extends Form
             unset($_SESSION["carritoTemporal"][$clave]);
             $_SESSION["carritoTemporal"] = array_values($_SESSION["carritoTemporal"]);
             $result = true;
-            
-            
         }
-        
-       
         
         if (!$result)
             $this->m_Errors['bad_abandon_event'] = 'No se ha podido elminiar el producto.';
