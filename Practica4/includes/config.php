@@ -7,7 +7,7 @@ define('INCLUDES_ROOT', PROJECT_ROOT . '/includes');
 define('IMAGES_ROOT', PROJECT_ROOT . '/images');
 
 //  Database constants
-define('DATABASE_HOST', 'vm08.db.swarm.test');
+define('DATABASE_HOST', 'localhost');
 define('DATABASE_NAME', 'zeus_airsoft');
 define('DATABASE_USERNAME', 'default_user');
 define('DATABASE_PASSWORD', 'unacontrasenyamuyperoquemuylarga');
