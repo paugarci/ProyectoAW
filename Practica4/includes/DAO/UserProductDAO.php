@@ -53,6 +53,8 @@ class UserProductDAO extends DAO
         return $userProductDTO;   
     }
 
+    
+
     protected function createDTOFromArray($array): DTO
     {
         
