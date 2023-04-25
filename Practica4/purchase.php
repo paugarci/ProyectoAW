@@ -2,23 +2,40 @@
 
 use es\ucm\fdi\aw\DAO\OrderDAO;
 use es\ucm\fdi\aw\DAO\UserOrderDAO;
+use es\ucm\fdi\aw\DAO\UserProductDAO;
 use es\ucm\fdi\aw\DAO\UserDAO;
 use es\ucm\fdi\aw\DAO\ProductDAO;
 
 require_once 'includes/config.php';
 
 $orderDAO = new OrderDAO;
-
+$userDAO = new UserDAO;
 $userOrderDAO = new UserOrderDAO;
 
-$productID = $_GET["productID"];
-$productDAO = new ProductDAO;
-$productDTOResults = $productDAO->read($productID);
+$userProductDAO = new UserProductDAO;
 
-$product = $productDTOResults[0];
+$cartCount = 0;
 
+
+if (isset($_GET["subtotal"])){
+    $subtotal = $_GET["subtotal"];
+    $my_array = array();
+
+    $uID = $_SESSION["user"]->getID();
+    $my_array = $userProductDAO->getUserCart($uID);
+    $cartCount = count($my_array);
+
+} else {
+    $productID = $_GET["productID"];
+    $productDAO = new ProductDAO;
+    $productDTOResults = $productDAO->read($productID);
+    
+    $product = $productDTOResults[0];
+    
+}
 ob_start();
 ?>
+
 <div class="flex-fill p-3">
     <?php if (!isset($_SESSION['user'])) : ?>
         <div class="alert alert-warning">
@@ -76,7 +93,13 @@ ob_start();
                     <div style="width: 30%;">
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Resumen de pedido</strong></h3>
-                            <p><strong>Total:</strong> <?= number_format($product->getPrice(), 2) ?> €</p>
+                            <p><strong>Total:</strong> 
+                            
+                                <?php if (!isset($subtotal)) : 
+                                number_format($product->getPrice(), 2) ?> 
+                                <?php else : echo $subtotal ?><?php endif; ?>
+                                €</p>
+                            
                             <button type="submit" name="buy" class="btn btn-success">Comprar</button>
                         </div>
                     </div>
@@ -91,14 +114,23 @@ ob_start();
             $apellido = $_POST['apellido'];
             $new_email = $_POST['email'];
             $metodo = $_POST['metodo_pago'];
-            $price = number_format($product->getPrice(), 2);
             $date = date('Y-m-d');
-            $orderDAO->InsertOrder($price, $metodo, $dir, $date);
-            // Obtener el ID del order recién insertado
-            $order_id = $orderDAO->getLastInsertID();
-            // Insertar en otra tabla utilizando el ID del order
-            $userOrderDAO->insert($userID, $order_id);
-            $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email);
+            if (!isset($subtotal)){
+                $price = number_format($product->getPrice(), 2);
+                $orderDAO->InsertOrder($price, $metodo, $dir, $date);
+                // Obtener el ID del order recién insertado
+                $order_id = $orderDAO->getLastInsertID();
+                // Insertar en otra tabla utilizando el ID del order
+                $userOrderDAO->insert($userID, $order_id);
+                $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email); 
+            }
+            else{
+                $price = $subtotal;
+                $orderDAO->InsertOrderCart($price, $metodo, $dir, $date, $cartCount);
+                $order_id = $orderDAO->getLastInsertID();
+                $userOrderDAO->insert($userID, $order_id);
+                $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email);
+            }
             header('Location: orders.php');
             exit();
         }
