@@ -70,12 +70,7 @@ if (count($my_array) == 0) { ?>
                 <p id="price-unity-<?= $producto->getID() ?>" style="display:none"><?= $producto->getOfferPrice() ?></p>
 
                 <td>
-                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#product-modal-<?= $producto->getID(); ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"></path>
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"></path>
-                    </svg>
-                  </button>
+                  <?= ($delete =  new es\ucm\fdi\aw\forms\DeleteProductFromCartForm($producto->getID()))->handleForm(); ?>
                 </td>
 
               </tr>
@@ -87,22 +82,28 @@ if (count($my_array) == 0) { ?>
 
       </table>
     </div>
-    <h4 class="mt-4 mb-4 fw-bold justify-content-end d-flex">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
-    <a class="btn btn-primary " id="buy-now" href="purchase.php?subtotal=<?= $subtotal ?>">Comprar</a>
+
+    <hr class="border border-dark border-2 opacity-25 mt-4"> 
+    <div class = "row">
+      <div class="col-md-6 mt-4 mb-4 fw-bold justify-content-start d-flex ">
+        <a class="btn btn-primary " id="buy-now" href="purchase.php?productID=<?= $productID ?>">Comprar elementos del carrito</a>
+      </div>
+      <h4 class="col-md-6 mt-4 mb-4 fw-bold justify-content-end d-flex ">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
+    </div>
   </div>
   <script>
     function actualizarTabla(productID) {
       // Obtener la cantidad de productos del input
-      const cantidad = parseInt(document.getElementById(`amount-${productID}`).value);
+      const cantidad = parseInt(document.getElementById('amount-${productID}').value);
       console.log(cantidad)
       // Calcular el nuevo precio para el producto
-      const PxU = parseFloat(document.getElementById(`price-unity-${productID}`).textContent);
+      const PxU = parseFloat(document.getElementById('price-unity-${productID}').textContent);
       console.log(PxU)
       const nuevoPrecio = cantidad * PxU;
       console.log(nuevoPrecio)
 
       // Actualizar el texto dentro del <td> que contiene el precio
-      document.getElementById(`price-${productID}`).textContent = nuevoPrecio.toFixed(2);
+      document.getElementById('price-${productID}').textContent = nuevoPrecio.toFixed(2);
 
       // Calcular el subtotal de la tabla sumando los precios de todos los productos
       let subtotal = 0;
