@@ -17,7 +17,7 @@ $productsPath = 'images/products/';
 $cartCount = 0;
 
 
-if (isset($_GET["subtotal"])){
+if (isset($_GET["subtotal"])) {
     $subtotal = $_GET["subtotal"];
     $my_array = array();
 
@@ -25,18 +25,13 @@ if (isset($_GET["subtotal"])){
     $my_array = $userProductDAO->getUserCart($uID);
 
     $cartCount = count($my_array);
-
-    
-    
-
-
 } else {
     $productID = $_GET["productID"];
     $productDAO = new ProductDAO;
     $productDTOResults = $productDAO->read($productID);
-    
+
     $product = $productDTOResults[0];
-    
+
     $url = "product.php?productID=" . $product->getID();
 }
 ob_start();
@@ -61,7 +56,8 @@ ob_start();
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Entrega</strong></h3>
                             <label for="direccion"><strong>Dirección de envío: </strong> </label>
-                            <input type="text" id="direccion" name="direccion" value="<?php //echo $result['stateO']; ?>">
+                            <input type="text" id="direccion" name="direccion" value="<?php //echo $result['stateO']; 
+                                                                                        ?>">
                             <br>
                             <br>
                             <label for="fecha"><strong>Fecha de pedido:</strong>&nbsp;</label><?php echo date('Y-m-d'); ?>
@@ -99,7 +95,7 @@ ob_start();
                     <div style="width: 30%;">
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Resumen de pedido</strong></h3>
-                            <?php if (!isset($subtotal)) : ?>                                                              
+                            <?php if (!isset($subtotal)) : ?>
                                 <table>
                                     <tr>
                                         <td><strong>x1</strong></td>
@@ -115,24 +111,23 @@ ob_start();
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <?php if ($userProduct->getID1() == $uID) {
                                                 $producto = $prodDAO->read($userProduct->getID2())[0];
-                                            }?>
-                                            
-                                            <td><a href="<?php echo $url; ?>"><img class="img-fluid" style="width: 120px;" src="<?= $productsPath . $producto->getImgName(); ?>"></a></td>
-                                            <?php } ?>
-                                            
-                                            
-                                        </tr>
-                                    
-                                </table>                                    
-                            <?php endif; ?>
+                                            } ?>
 
-                            <p><strong>Total:</strong> 
-                            
-                                <?php if (!isset($subtotal)) : 
-                                echo number_format($product->getPrice(), 2) ?> 
-                                <?php else : echo $subtotal ?><?php endif; ?>
-                                €</p>
-                            
+                                            <td><a href="<?php echo $url; ?>"><img class="img-fluid" style="width: 120px;" src="<?= $productsPath . $producto->getImgName(); ?>"></a></td>
+                                        <?php } ?>
+
+
+                                        </tr>
+
+                                </table>
+                            <?php endif; ?>
+                            <p><strong>Total:</strong>
+
+                                <?php if (!isset($subtotal)) :
+                                    echo number_format($product->getPrice(), 2) ?>
+                                    <?php else : echo $subtotal ?><?php endif; ?>
+                                    €</p>
+
                             <button type="submit" name="buy" class="btn btn-success">Comprar</button>
                         </div>
                     </div>
@@ -148,16 +143,15 @@ ob_start();
             $new_email = $_POST['email'];
             $metodo = $_POST['metodo_pago'];
             $date = date('Y-m-d');
-            if (!isset($subtotal)){
+            if (!isset($subtotal)) {
                 $price = number_format($product->getPrice(), 2);
                 $orderDAO->InsertOrder($price, $metodo, $dir, $date);
                 // Obtener el ID del order recién insertado
                 $order_id = $orderDAO->getLastInsertID();
                 // Insertar en otra tabla utilizando el ID del order
                 $userOrderDAO->insert($userID, $order_id);
-                $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email); 
-            }
-            else{
+                $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email);
+            } else {
                 $price = $subtotal;
                 $orderDAO->InsertOrderCart($price, $metodo, $dir, $date, $cartCount);
                 $order_id = $orderDAO->getLastInsertID();
@@ -178,3 +172,10 @@ ob_start();
 $content = ob_get_clean();
 require_once INCLUDES_ROOT . '/templates/default_template.php';
 ?>
+
+<style>
+    #buy-now {
+        font-size: 24px;
+        padding: 12px 24px;
+    }
+</style>

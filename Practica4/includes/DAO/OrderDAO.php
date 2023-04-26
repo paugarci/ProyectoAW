@@ -26,7 +26,7 @@ class OrderDAO extends DAO
     }
 
     //  Methods
-    
+
     protected function createDTOFromArray($array): DTO
     {
         $id = $array[self::ID_KEY];
@@ -51,7 +51,7 @@ class OrderDAO extends DAO
 
         );
 
-        
+
         if ($dto->getID() != -1)
             $dtoArray[self::ID_KEY] = $dto->getID();
 
@@ -72,8 +72,8 @@ class OrderDAO extends DAO
         return $statement->fetchAll();
     }
 
-    
-    
+
+
     public function cancelOrder($orderID): bool
     {
         $query = 'UPDATE orders SET state = "cancelado" WHERE id = :orderID AND state != "cancelado"';
@@ -97,7 +97,7 @@ class OrderDAO extends DAO
 
     public function InsertOrder($price, $metodo, $dir, $date): bool
     {
-        $query = 'INSERT orders SET state = "pendiente", date = :date, amount = :price, quantity = "1", paymentMethod = :metodo, address= :dir' ;
+        $query = 'INSERT orders SET state = "pendiente", date = :date, amount = :price, quantity = "1", paymentMethod = :metodo, address= :dir';
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindValue(':price', $price);
         $statement->bindValue(':metodo', $metodo);
@@ -110,8 +110,8 @@ class OrderDAO extends DAO
 
     public function InsertOrderCart($price, $metodo, $dir, $date, $cartCount): bool
     {
-        
-        $query = 'INSERT orders SET state = "pendiente", date = :date, amount = :price, quantity = :cartCount, paymentMethod = :metodo, address= :dir' ;
+
+        $query = 'INSERT orders SET state = "pendiente", date = :date, amount = :price, quantity = :cartCount, paymentMethod = :metodo, address= :dir';
         $statement = $this->m_DatabaseProxy->prepare($query);
         $statement->bindValue(':price', $price);
         $statement->bindValue(':metodo', $metodo);
@@ -122,11 +122,11 @@ class OrderDAO extends DAO
         return $statement->execute();
     }
 
-    
 
 
-    public function getLastInsertID() {
+
+    public function getLastInsertID()
+    {
         return $this->m_DatabaseProxy->lastInsertId();
     }
-    
 }

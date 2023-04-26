@@ -23,7 +23,7 @@ class UserProductDAO extends DAO
     {
         $query = "SELECT * FROM users_products WHERE userID = :userID";
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
+
         $statement->bindParam(':userID', $userID);
         $statement->execute();
 
@@ -33,46 +33,49 @@ class UserProductDAO extends DAO
         foreach ($statement as $result) {
             array_push($results, $userProductDAO->createDTOFromArray($result));
         }
-        
+
         return $results;
     }
 
     public function getCartProduct($userID, $productID): DTO
     {
-        $query = "SELECT u.amount FROM users_products u WHERE u.userID = :userID and u.productID = :productID" ;
+        $query = "SELECT u.amount FROM users_products u WHERE u.userID = :userID and u.productID = :productID";
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
+
         $statement->bindParam(':userID', $userID);
         $statement->bindParam(':productID', $productID);
         $statement->execute();
 
         $amount = $statement->fetchColumn();
         $userProductDTO = new UserProductDTO($userID, $productID, $amount);
-        
-        
-        return $userProductDTO;   
+
+
+        return $userProductDTO;
     }
 
     public function deleteCart(): bool
     {
-        
-        $query = 'DELETE FROM users_products' ;
+        $query = 'DELETE FROM users_products';
         $statement = $this->m_DatabaseProxy->prepare($query);
-        
 
         return $statement->execute();
     }
 
+
     public function getAmount($productID): bool
     {
-        
-        $query = 'SELECT amount FROM users_products WHERE productID = :productID' ;
+        $query = 'SELECT amount FROM users_products WHERE productID = :productID';
         $statement = $this->m_DatabaseProxy->prepare($query);
+        $statement->bindParam(':productID', $productID);
 
-    public function updateWithCompoundKey($dto){
+        return $statement->execute();
+    }
+
+    public function updateWithCompoundKey($dto)
+    {
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
-        
+
         $updateVariables = "{$dtoArrayKeys[0]} = :{$dtoArrayKeys[0]}";
 
         for ($i = 1; $i < count($dtoArrayKeys); ++$i) {
@@ -88,11 +91,9 @@ class UserProductDAO extends DAO
 
         foreach ($dtoArrayKeys as $key) {
             $statement->bindParam(":$key", $dtoArray[$key]);
-
         }
-        
-        return $statement->execute();
 
+        return $statement->execute();
     }
 
     public function deleteProduct($userID, $productID): bool
@@ -108,15 +109,15 @@ class UserProductDAO extends DAO
 
     protected function createDTOFromArray($array): DTO
     {
-        
+
         $userID = $array[self::USER_ID_KEY];
         $productID = $array[self::PRODUCT_ID_KEY];
         $amount = $array[self::AMOUNT_KEY];
-        
 
-        return new UserProductDTO($userID, $productID,$amount);
+
+        return new UserProductDTO($userID, $productID, $amount);
     }
-    
+
     protected function createArrayFromDTO($dto): array
     {
         $dtoArray = array(
@@ -127,8 +128,4 @@ class UserProductDAO extends DAO
 
         return $dtoArray;
     }
-
-    
-
 }
-?>
