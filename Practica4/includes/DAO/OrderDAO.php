@@ -122,6 +122,8 @@ class OrderDAO extends DAO
         return $statement->execute();
     }
 
+    
+
 
     public function getLastInsertID() {
         return $this->m_DatabaseProxy->lastInsertId();
