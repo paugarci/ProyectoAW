@@ -82,14 +82,13 @@ if (count($my_array) == 0) { ?>
 
       </table>
     </div>
+
     <hr class="border border-dark border-2 opacity-25 mt-4"> 
     <div class = "row">
       <div class="col-md-6 mt-4 mb-4 fw-bold justify-content-start d-flex ">
         <a class="btn btn-primary " id="buy-now" href="purchase.php?productID=<?= $productID ?>">Comprar elementos del carrito</a>
-
       </div>
       <h4 class="col-md-6 mt-4 mb-4 fw-bold justify-content-end d-flex ">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
-
     </div>
   </div>
   <script>
@@ -127,3 +126,11 @@ $content = ob_get_clean();
 
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';
 ?>
+
+<style>
+  #buy-now {
+    font-size: 24px;
+    padding: 12px 24px;
+  }
+</style>
+

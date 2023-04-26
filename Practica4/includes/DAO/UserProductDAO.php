@@ -53,6 +53,22 @@ class UserProductDAO extends DAO
         return $userProductDTO;   
     }
 
+    public function deleteCart(): bool
+    {
+        
+        $query = 'DELETE FROM users_products' ;
+        $statement = $this->m_DatabaseProxy->prepare($query);
+        
+
+        return $statement->execute();
+    }
+
+    public function getAmount($productID): bool
+    {
+        
+        $query = 'SELECT amount FROM users_products WHERE productID = :productID' ;
+        $statement = $this->m_DatabaseProxy->prepare($query);
+
     public function updateWithCompoundKey($dto){
         $dtoArray = $this->createArrayFromDTO($dto);
         $dtoArrayKeys = array_keys($dtoArray);
