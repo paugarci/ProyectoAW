@@ -11,9 +11,9 @@ require_once 'includes/config.php';
 $orderDAO = new OrderDAO;
 $userDAO = new UserDAO;
 $userOrderDAO = new UserOrderDAO;
-
+$prodDAO = new ProductDAO;
 $userProductDAO = new UserProductDAO;
-
+$productsPath = 'images/products/';
 $cartCount = 0;
 
 
@@ -23,7 +23,12 @@ if (isset($_GET["subtotal"])){
 
     $uID = $_SESSION["user"]->getID();
     $my_array = $userProductDAO->getUserCart($uID);
+
     $cartCount = count($my_array);
+
+    
+    
+
 
 } else {
     $productID = $_GET["productID"];
@@ -32,6 +37,7 @@ if (isset($_GET["subtotal"])){
     
     $product = $productDTOResults[0];
     
+    $url = "product.php?productID=" . $product->getID();
 }
 ob_start();
 ?>
@@ -93,10 +99,37 @@ ob_start();
                     <div style="width: 30%;">
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Resumen de pedido</strong></h3>
+                            <?php if (!isset($subtotal)) : ?>                                                              
+                                <table>
+                                    <tr>
+                                        <td><strong>x1</strong></td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td><a href="<?php echo $url; ?>"><img class="img-fluid" style="width: 120px;" src="<?= $productsPath . $product->getImgName(); ?>"></a></td>
+                                    </tr>
+                                </table>
+                            <?php else : ?>
+                                <table>
+                                    <?php foreach ($my_array as $userProduct) { ?>
+                                        <tr>
+                                            <td><strong>x<?php echo $userProduct->getAmount(); ?></strong></td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <?php if ($userProduct->getID1() == $uID) {
+                                                $producto = $prodDAO->read($userProduct->getID2())[0];
+                                            }?>
+                                            
+                                            <td><a href="<?php echo $url; ?>"><img class="img-fluid" style="width: 120px;" src="<?= $productsPath . $producto->getImgName(); ?>"></a></td>
+                                            <?php } ?>
+                                            
+                                            
+                                        </tr>
+                                    
+                                </table>                                    
+                            <?php endif; ?>
+
                             <p><strong>Total:</strong> 
                             
                                 <?php if (!isset($subtotal)) : 
-                                number_format($product->getPrice(), 2) ?> 
+                                echo number_format($product->getPrice(), 2) ?> 
                                 <?php else : echo $subtotal ?><?php endif; ?>
                                 €</p>
                             
@@ -130,6 +163,7 @@ ob_start();
                 $order_id = $orderDAO->getLastInsertID();
                 $userOrderDAO->insert($userID, $order_id);
                 $userDAO->UpdateContact($userID, $nombre, $apellido, $new_email);
+                $userProductDAO->deleteCart();
             }
             header('Location: orders.php');
             exit();

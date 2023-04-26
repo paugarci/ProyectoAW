@@ -13,7 +13,6 @@ $prodDAO = new ProductDAO;
 $usersDAO = new UserProductDAO;
 $productsPath = 'images/products/';
 $subtotal = 0;
-$var = 'cesta';
 $my_array = array();
 if (isset($_SESSION["user"])) {
   $uID = $_SESSION["user"]->getID();
