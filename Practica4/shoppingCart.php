@@ -88,6 +88,7 @@ if (count($my_array) == 0) { ?>
       </table>
     </div>
     <h4 class="mt-4 mb-4 fw-bold justify-content-end d-flex">Subtotal: <span id="subtotal"> <?= $subtotal ?> </span> €</h4>
+    <a class="btn btn-primary " id="buy-now" href="purchase.php?subtotal=<?= $subtotal ?>">Comprar</a>
   </div>
   <script>
     function actualizarTabla(productID) {
@@ -124,3 +125,11 @@ $content = ob_get_clean();
 
 require_once PROJECT_ROOT . '/includes/templates/default_template.php';
 ?>
+
+<style>
+  #buy-now {
+    font-size: 24px;
+    padding: 12px 24px;
+  }
+</style>
+
