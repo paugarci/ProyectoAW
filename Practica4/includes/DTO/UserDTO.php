@@ -50,6 +50,10 @@ class UserDTO extends DTO
     {
         return $this->m_Email;
     }
+    public function setEmail($email)
+    {
+        $this->m_Email = $email;
+    }
 
     public function getPasswordHash()
     {

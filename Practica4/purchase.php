@@ -42,7 +42,6 @@ if (isset($_GET["subtotal"])){
     $productDTOResults = $productDAO->read($productID);
     
     $product = $productDTOResults[0];
-    
     $url = "product.php?productID=" . $product->getID();
 }
 ob_start();
@@ -96,7 +95,6 @@ ob_start();
                                 ?>
                             </tbody>
                             </table>
-
                             <label for="fecha"><strong>Fecha de pedido:</strong>&nbsp;</label><?php echo date('Y-m-d'); ?>
                         </div>
                         <!-- Sección de Contacto -->
@@ -134,7 +132,7 @@ ob_start();
                     <div style="width: 30%;">
                         <div class="border rounded p-3 mb-3">
                             <h3><strong>Resumen de pedido</strong></h3>
-                            <?php if (!isset($subtotal)) : ?>                                                              
+                            <?php if (!isset($subtotal)) : ?>
                                 <table>
                                     <tr>
                                         <td><strong>x1</strong></td>
@@ -173,9 +171,7 @@ ob_start();
                                 <input type="hidden" name="dir" id="dir-input">
                                 <!-- Agrega otros campos de entrada aquí -->
                                 <button type="submit" name="buy" class="btn btn-success" href="purchase.php?medoto=<?= $metodo ?>">Comprar</button>
-                                </form>
-                            
-
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -251,3 +247,10 @@ ob_start();
 $content = ob_get_clean();
 require_once INCLUDES_ROOT . '/templates/default_template.php';
 ?>
+
+<style>
+    #buy-now {
+        font-size: 24px;
+        padding: 12px 24px;
+    }
+</style>
